@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="CreateReportAndContract:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/CreateReportAndContract_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="CreateReportAndContract" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.apache.poi:poi:3.11" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi-ooxml:3.11" />
+          <element id="library" level="project" name="Maven: org.apache.poi:poi-ooxml-schemas:3.11" />
+          <element id="library" level="project" name="Maven: org.apache.xmlbeans:xmlbeans:2.6.0" />
+          <element id="library" level="project" name="Maven: stax:stax-api:1.0.1" />
+          <element id="library" level="project" name="Maven: org.postgresql:postgresql:42.2.5" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="CreateReportAndContract/web/Web" />
+    </root>
+  </artifact>
+</component>
