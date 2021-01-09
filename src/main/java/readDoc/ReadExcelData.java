@@ -2,9 +2,9 @@ package readDoc;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
+import servlet.Servlet;
 
 import java.io.*;
-import java.sql.Time;
 import java.util.*;
 
 /**
@@ -39,11 +39,12 @@ public class ReadExcelData {
 	final int academRecord = 20;   // академических записей (число)
 
 
-	String fileName = "Primer_raspisania.xlsx";
-	//String fileName = "fileToRead";
+//	String fileName = "Primer_raspisania.xlsx";
+	String fileName = "fileToRead";
 //	private LinkedList<String> columnStrData;
 
-
+Servlet sev = new Servlet();
+//sev
 	/**
 	 * * имя столбцов д/л group: groupid, groupcode,
 	 * *    programm, datestart, timestart, dateend,
@@ -55,24 +56,12 @@ public class ReadExcelData {
 
 	// основной метод класса для проверки считывания данных с таблицы
 	public static void main(String[] args) throws IOException {
-//		ExReadExcelColums exr = new ExReadExcelColums();
-
 		ReadExcelData exr = new ReadExcelData();
 		exr.getString(0);
 //		exr.buildingTable();
 //		exr.getDate(columnIndex);
 //		exr.getTime(columnIndex);
 	}
-
-	private LinkedList<Integer> groupid;
-	//	private LinkedList<String> groupcode;
-	private LinkedList<String> programm;
-	private LinkedList<Date> datestart;
-	private LinkedList<Time> timestart;
-	private LinkedList<Date> dateend;
-	private LinkedList<Time> timeend;
-	private LinkedList<String> classrum;
-	private LinkedList<String> typelessons;
 
 
 	private LinkedList<Date> columndataDate;
@@ -159,10 +148,10 @@ public class ReadExcelData {
 			}
 			ios.close();
 			/*			просмотр прочитанного			 */
-//			Iterator it = columndataStr.iterator();
-//			while (it.hasNext()) {
-//				System.out.println(it.next());
-//			}
+			Iterator it = columndataStr.iterator();
+			while (it.hasNext()) {
+				System.out.println(it.next());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

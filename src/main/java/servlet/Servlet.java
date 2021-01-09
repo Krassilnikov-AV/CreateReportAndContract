@@ -12,29 +12,28 @@ import java.nio.file.*;
 @MultipartConfig
 @WebServlet("/servlet")
 public class Servlet extends HttpServlet {
-	private static final String SERVER_PATH = "D:\\REPOSITORIES-2";
+//	private static final String SERVER_PATH = "D:\\REPOSITORIES-2";   // при отсутствии выбора пути сервера
 
-//	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-//		throws ServletException, IOException {
-//		response.setContentType("text/html;charset=UTF-8");
-//
-//	}
-
-//	@Override
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		processRequest(request, response);
-//	}
+	String path = null;
+	String name = "";
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");       // распознавание русского текста
+		path = request.getParameter("path");
 		Part part = request.getPart("file");
-		download(part.getInputStream(), part.getSubmittedFileName());
-		request.getRequestDispatcher("/index.html").forward(request, response);  // позволяет н выкидывать новую страницу
+		name = part.getSubmittedFileName();          // получить в классе чтения, создать в свойствах->читать и
+		// получать в необходимом классе для чтения
+		download(part.getInputStream(), name);
+
+		request.getRequestDispatcher("/index.html").forward(request, response);  // позволяет не выкидывать новую
+		// страницу
+
 	}
 
 	private void download(InputStream fileStream, String name) {
 		try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
-			Files.newOutputStream(Paths.get(SERVER_PATH + File.separator + name))
+			Files.newOutputStream(Paths.get(path + File.separator + name))
 		)) {
 			int read;
 			byte[] readByte = new byte[1024];
