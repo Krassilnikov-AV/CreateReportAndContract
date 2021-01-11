@@ -15,10 +15,14 @@ public class ConfigurateApp {
 	private String databaseUser;
 	private String databasePassword;
 	private String databaseUrl;
+	final String CONFIG = "D:\\REPOSITORIES-2\\CreateReportAndContract\\src\\main\\resources\\config.properties";
 
-	public  void init() throws IOException {
-		final String CONFIG;
-		CONFIG = "src/main/java/resources/config.properties";
+	public ConfigurateApp()  {
+			init();
+	}
+
+	public  void init() {
+
 		Properties ps = new Properties();
 
 		try (FileInputStream fs = new FileInputStream(CONFIG)) {

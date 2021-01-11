@@ -2,7 +2,6 @@ package readDoc;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
-import servlet.Servlet;
 
 import java.io.*;
 import java.util.*;
@@ -39,12 +38,10 @@ public class ReadExcelData {
 	final int academRecord = 20;   // академических записей (число)
 
 
-//	String fileName = "Primer_raspisania.xlsx";
-	String fileName = "fileToRead";
+	String fileName = "Primer_raspisania.xlsx";
+//	String fileName = "fileToRead";
 //	private LinkedList<String> columnStrData;
 
-Servlet sev = new Servlet();
-//sev
 	/**
 	 * * имя столбцов д/л group: groupid, groupcode,
 	 * *    programm, datestart, timestart, dateend,

@@ -43,8 +43,8 @@ public class SQLQueryDate {
 	 * INSERT INTO <table_name> (<col_name1>, <col_name2>, <col_name3>, …)
 	 * VALUES (<value1>, <value2>, <value3>, …);
 	 */
-	String insertTimeStartSQL = "INSERT INTO schedule(timestart) VALUES(?)";
-	String insertDateStartSQL = "INSERT INTO schedule(datestart) VALUES(?)";
+//	String insertTimeStartSQL = "INSERT INTO schedule(timestart) VALUES(?)";
+//	String insertDateStartSQL = "INSERT INTO schedule(datestart) VALUES(?)";
 
 
 	//	String insertSQL = "INSERT INTO schedule(program) VALUES(?)";
@@ -53,8 +53,8 @@ public class SQLQueryDate {
 //	String selectSQL = "SELECT datestart, timestart FROM schedule";
 //	String selectSQL = "SELECT programm FROM raspisanie";
 
-	private ConnectionApp con = new ConnectionApp();
-	private ReadExcelData read = new ReadExcelData();
+	ConnectionApp con = new ConnectionApp();
+	ReadExcelData read = new ReadExcelData();
 
 	/**
 	 * метод добавления данных  с применением executeBatch()

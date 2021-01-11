@@ -1,10 +1,14 @@
 package servlet;
 
+import connection.ConnectionApp;
+import query.SQLQueryDate;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 import java.io.*;
 import java.nio.file.*;
+import java.sql.SQLException;
 
 /**
  * Класс Servlet
@@ -16,6 +20,8 @@ public class Servlet extends HttpServlet {
 
 	String path = null;
 	String name = "";
+	ConnectionApp conApp = new ConnectionApp();
+	SQLQueryDate sqlQuery = new SQLQueryDate();
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,10 +31,25 @@ public class Servlet extends HttpServlet {
 		name = part.getSubmittedFileName();          // получить в классе чтения, создать в свойствах->читать и
 		// получать в необходимом классе для чтения
 		download(part.getInputStream(), name);
-
+		doGet(request, response);
 		request.getRequestDispatcher("/index.html").forward(request, response);  // позволяет не выкидывать новую
 		// страницу
+	}
 
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		boolean delete = req.getParameter("delete") !=null;
+
+		if(delete) {
+//			conApp.getNameURL();
+			try {
+				sqlQuery.deletedDataSQL();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		req.getRequestDispatcher("/index.html").forward(req, resp);  // позволяет не выкидывать новую
+		// страницу
 	}
 
 	private void download(InputStream fileStream, String name) {

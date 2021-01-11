@@ -11,7 +11,7 @@ import java.sql.*;
  */
 public class ConnectionApp {
 
-	static ConfigurateApp conf = new ConfigurateApp();
+	private ConfigurateApp conf = new ConfigurateApp();
 
 	public static void main(String[] args) throws SQLException, IOException {
 		ConnectionApp conApp = new ConnectionApp();
@@ -34,7 +34,7 @@ public class ConnectionApp {
 	/*
 	метод, который возвращает url базы данных, прописанной в property файле
 }*/
-	private String getURL() {
+	public String getURL() {
 		String databaseDriver = conf.getDatabaseDriver();
 		String databaseHost = conf.getDatabaseHost();
 		String databasePort = conf.getDatabasePort();
@@ -46,16 +46,16 @@ public class ConnectionApp {
 
 	public Connection getPostConnection() throws SQLException, IOException {
 //		System.out.println("Устанавливаем соединение с БД...");
-		conf.init();
+
 		Connection connection = DriverManager.getConnection(getURL(),
 			conf.getDatabaseUser(),
 			conf.getDatabasePassword());
 		return connection;
 	}
 
-	private void getNameURL() throws IOException {
-		conf.init();
-		System.out.println("Название базы данных: " + conf.getDatabaseName());
-		System.out.println("URL базы данных: " + getURL());
+	public  void getNameURL() throws IOException {
+
+//		System.out.println("Название базы данных: " + conf.getDatabaseName());
+//		System.out.println("URL базы данных: " + getURL());
 	}
 }
