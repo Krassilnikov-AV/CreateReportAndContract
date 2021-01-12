@@ -1,21 +1,21 @@
 package connection;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 
 public class ConfigurateApp {
 
-	private String path;         // путь для сохранения на сервере
+//	private String path;         // путь для сохранения на сервере
 	private String databaseDriver;
 	private String databaseHost;
 	private String databasePort;
 	private String databaseName;
 	private String databaseUser;
 	private String databasePassword;
-	private String databaseUrl;
-	final String CONFIG = "D:\\REPOSITORIES-2\\CreateReportAndContract\\src\\main\\resources\\config.properties";
+//	private String databaseUrl;
+//	final String CONFIG = "D:\\REPOSITORIES-2\\CreateReportAndContract\\src\\main\\resources\\config.properties";
+	final String CONFIG = "src\\main\\resources\\config.properties";
 
 	public ConfigurateApp()  {
 			init();
@@ -25,7 +25,9 @@ public class ConfigurateApp {
 
 		Properties ps = new Properties();
 
-		try (FileInputStream fs = new FileInputStream(CONFIG)) {
+		try (Reader fs = new FileReader("config.properties")) {
+			File f = new File("config.properties");
+//			FileInputStream fs1 = new FileInputStream(f);
 			ps.load(fs);
 
 			if (ps.getProperty("database.host").length() > 0) {
@@ -56,9 +58,9 @@ public class ConfigurateApp {
 		}
 	}
 
-	public String getPath() {
-		return path;
-	}
+//	public String getPath() {
+//		return path;
+//	}
 
     public String getDatabaseDriver() {
         return databaseDriver;
@@ -87,13 +89,13 @@ public class ConfigurateApp {
 	 *
 	 * @return
 	 */
-	public String getDatabaseUrl() {
-		return databaseUrl;
-	}
+//	public String getDatabaseUrl() {
+//		return databaseUrl;
+//	}
 
 
 	@Override
 	public String toString() {
-		return path + databaseDriver + databaseHost + databasePort + databaseName + databaseUser + databasePassword;
+		return databaseDriver + databaseHost + databasePort + databaseName + databaseUser + databasePassword;
 	}
 }

@@ -52,6 +52,7 @@ public class Servlet extends HttpServlet {
 		// страницу
 	}
 
+
 	private void download(InputStream fileStream, String name) {
 		try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(
 			Files.newOutputStream(Paths.get(path + File.separator + name))
@@ -61,6 +62,7 @@ public class Servlet extends HttpServlet {
 			while ((read = fileStream.read(readByte)) != -1) {
 				bufferedOutputStream.write(readByte, 0, read);
 			}
+
 			bufferedOutputStream.flush();     // загрузка на диск
 		} catch (IOException e) {
 			System.out.println("the file is corrupted!!!");

@@ -15,11 +15,11 @@ public class ConnectionApp {
 
 	public static void main(String[] args) throws SQLException, IOException {
 		ConnectionApp conApp = new ConnectionApp();
-
+//
 		SQLQueryDate SQLQueryDate = new SQLQueryDate();
 		conApp.getNameURL();
-
-		SQLQueryDate.deletedDataSQL();
+//
+//		SQLQueryDate.deletedDataSQL();
 		SQLQueryDate.insertExecuteBatchQuerySQL();
 //		SQLQueryDate.insertExecuteUpdateQuerySQL();
 
@@ -40,7 +40,8 @@ public class ConnectionApp {
 		String databasePort = conf.getDatabasePort();
 		String databaseName = conf.getDatabaseName();
 
-		String url =databaseDriver.concat("://").concat(databaseHost).concat(":").concat(databasePort).concat("/").concat(databaseName);
+//		String url =databaseDriver.concat("://").concat(databaseHost).concat(":").concat(databasePort).concat("/").concat(databaseName);
+		String url =databaseDriver +"://"+databaseHost+":"+databasePort+"/"+databaseName;
 		return url;
 	}
 
