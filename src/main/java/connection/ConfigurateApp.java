@@ -25,9 +25,9 @@ public class ConfigurateApp {
 
 		Properties ps = new Properties();
 
-		try (Reader fs = new FileReader("config.properties")) {
-			File f = new File("config.properties");
-//			FileInputStream fs1 = new FileInputStream(f);
+		try (FileInputStream fs = new FileInputStream(CONFIG)) {
+//			File f = new File("config.properties");
+////			FileInputStream fs1 = new FileInputStream(f);
 			ps.load(fs);
 
 			if (ps.getProperty("database.host").length() > 0) {
