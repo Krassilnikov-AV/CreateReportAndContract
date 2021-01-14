@@ -1,12 +1,13 @@
 package query;
 
 
-import connection.ConnectionApp;
+import connection.*;
 import readDoc.ReadExcelData;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.*;
 
 /**
@@ -14,7 +15,6 @@ import java.util.*;
  */
 public class SQLQueryDate {
 
-	// выбрать столбец для чтения данных (для проверки/тестировниая)
 	final static int code = 0;    // код (строка)
 	final static int divID = 1;   // ID подразделения (число)
 	final static int gpoupID = 2;   // ID группы  (число)
@@ -69,10 +69,10 @@ public class SQLQueryDate {
 
 				LinkedList<String> listProgram = (LinkedList<String>) read.getString(discipline);
 				LinkedList<String> listCodgroup = (LinkedList<String>) read.getString(codeGroup);
-				LinkedList<Date> listDateStart = (LinkedList<Date>) read.getDate(dateStart);
-				LinkedList<Date> listTimeStart = (LinkedList<Date>) read.getDate(timeStart);
-				LinkedList<Date> listDateFinish = (LinkedList<Date>) read.getDate(dateEnd);
-				LinkedList<Date> listTimeFinish = (LinkedList<Date>) read.getDate(timeEnd);
+				LinkedList<Date> listDateStart =  read.getDate(dateStart);
+				LinkedList<Date> listTimeStart = read.getDate(timeStart);
+				LinkedList<Date>  listDateFinish =  read.getDate(dateEnd);
+				LinkedList<Date> listTimeFinish = read.getDate(timeEnd);
 				LinkedList<String> listAuditorium = (LinkedList<String>) read.getString(clasRum);
 				LinkedList<String> listTypelesson = (LinkedList<String>) read.getString(typeLearn);
 				LinkedList<String> listTeacher = (LinkedList<String>) read.getString(teacher);
@@ -92,7 +92,7 @@ public class SQLQueryDate {
 					Date ts = listTimeStart.pop();
 					stm.setTime(4, new Time(ts.getTime()));
 
-					Date df = listDateFinish.pop();
+					Date df = listDateFinish.pop();     //возвращает в LinkedList
 					stm.setTimestamp(5, new Timestamp(df.getTime()));
 
 					Date tf = listTimeFinish.pop();
@@ -108,7 +108,7 @@ public class SQLQueryDate {
 					stm.setString(9, teach);
 
 					stm.addBatch();
-					long startInternal = System.currentTimeMillis();
+//					long startInternal = System.currentTimeMillis();
 //					System.out.println("время вставки эелемента: " +
 //						(System.currentTimeMillis() - startInternal) + " " + "ms");
 				}
@@ -123,21 +123,44 @@ public class SQLQueryDate {
 		}
 	}
 
+
 	/*
 	метод для удаления внесённых данных в таблицу
 	*/
-	public int deletedDataSQL() throws SQLException {
-		try (Connection connection = con.getPostConnection()) {
+//	Connection conection;
+
+	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
+		SQLQueryDate sql = new SQLQueryDate();
+		sql.deletedDataSQL();
+//		sql.insertExecuteBatchQuerySQL();
+	}
+
+	public int deletedDataSQL() throws SQLException, ClassNotFoundException {
+		ConfigureApp cfa = new ConfigureApp();
+//		try (Connection connection = con.getPostConnection()) {
+		try (Connection connection = cfa.configurableApp()) {
 			String deletedSQL = "DELETE FROM schedule";
-			try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
+			try {
+				PreparedStatement stm = connection.prepareStatement(deletedSQL);
 				return stm.executeUpdate();
+//				stm.close();
+			} finally {
+				System.out.println("Данные БД успешно удалены!");
+				System.out.println("-/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/-");
+				System.out.println("Закрыли соединение с БД после удаления данных...");
 			}
+
+		} catch (NoSuchMethodException e) {
+			System.out.println(":(...не получилось подсоединиться..:(:");
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			System.out.println("Данные БД успешно удалены!");
-			System.out.println("-/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/-");
-			System.out.println("Закрыли соединение с БД после удаления данных...");
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 		}
 		return 0;
 	}

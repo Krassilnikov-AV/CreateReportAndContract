@@ -46,6 +46,8 @@ public class Servlet extends HttpServlet {
 				sqlQuery.deletedDataSQL();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
 		}
 		req.getRequestDispatcher("/index.html").forward(req, resp);  // позволяет не выкидывать новую

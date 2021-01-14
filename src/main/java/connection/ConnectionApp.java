@@ -1,7 +1,5 @@
 package connection;
 
-import query.SQLQueryDate;
-
 import java.io.IOException;
 import java.sql.*;
 
@@ -11,24 +9,24 @@ import java.sql.*;
  */
 public class ConnectionApp {
 
-	private ConfigurateApp conf = new ConfigurateApp();
+	private ConfigureApp conf = new ConfigureApp();
 
-	public static void main(String[] args) throws SQLException, IOException {
-		ConnectionApp conApp = new ConnectionApp();
+//	public static void main(String[] args) throws SQLException, IOException {
+//		ConnectionApp conApp = new ConnectionApp();
+////
+//		SQLQueryDate SQLQueryDate = new SQLQueryDate();
+//		conApp.getNameURL();
 //
-		SQLQueryDate SQLQueryDate = new SQLQueryDate();
-		conApp.getNameURL();
+////		SQLQueryDate.deletedDataSQL();
+////		SQLQueryDate.insertExecuteBatchQuerySQL();
+////		SQLQueryDate.insertExecuteUpdateQuerySQL();
 //
-//		SQLQueryDate.deletedDataSQL();
-		SQLQueryDate.insertExecuteBatchQuerySQL();
-//		SQLQueryDate.insertExecuteUpdateQuerySQL();
-
-//		SQLQueryDate.insertStartDateSQL();
-//		SQLQueryDate.insertStartTimeSQL();
-
+////		SQLQueryDate.insertStartDateSQL();
+////		SQLQueryDate.insertStartTimeSQL();
+//
 //		exQuery.writeWithCompileQuery(100);
 //		exQuery.writeInABatchWithCompiledQuery(100);
-	}
+//	}
 
 
 	/*
@@ -41,12 +39,13 @@ public class ConnectionApp {
 		String databaseName = conf.getDatabaseName();
 
 //		String url =databaseDriver.concat("://").concat(databaseHost).concat(":").concat(databasePort).concat("/").concat(databaseName);
+//		String url =databaseDriver +"://"+databaseHost+"/"+databasePort+"/"+databaseName;
 		String url =databaseDriver +"://"+databaseHost+":"+databasePort+"/"+databaseName;
 		return url;
 	}
 
 	public Connection getPostConnection() throws SQLException, IOException {
-//		System.out.println("Устанавливаем соединение с БД...");
+		System.out.println("Устанавливаем соединение с БД...");
 
 		Connection connection = DriverManager.getConnection(getURL(),
 			conf.getDatabaseUser(),
@@ -56,7 +55,7 @@ public class ConnectionApp {
 
 	public  void getNameURL() throws IOException {
 
-//		System.out.println("Название базы данных: " + conf.getDatabaseName());
-//		System.out.println("URL базы данных: " + getURL());
+		System.out.println("Название базы данных: " + conf.getDatabaseName());
+		System.out.println("URL базы данных: " + getURL());
 	}
 }
