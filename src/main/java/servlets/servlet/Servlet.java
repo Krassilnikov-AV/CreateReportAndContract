@@ -1,4 +1,4 @@
-package servlet;
+package servlets.servlet;
 
 import connection.ConnectionApp;
 import query.SQLQueryDate;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
  * Класс Servlet
  */
 @MultipartConfig
-@WebServlet("/servlet")
+@WebServlet("/servlets")
 public class Servlet extends HttpServlet {
 //	private static final String SERVER_PATH = "D:\\REPOSITORIES-2";   // при отсутствии выбора пути сервера
 
@@ -22,6 +22,14 @@ public class Servlet extends HttpServlet {
 	String name = "";
 	ConnectionApp conApp = new ConnectionApp();
 	SQLQueryDate sqlQuery = new SQLQueryDate();
+
+//	private static final Logger logger = LoggerFactory.getLogger(Servlet.class);
+//
+//	@Override
+//	public void init() throws ServletException {
+//		logger.info("SERVLET is created");
+//
+//	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,16 +39,16 @@ public class Servlet extends HttpServlet {
 		name = part.getSubmittedFileName();          // получить в классе чтения, создать в свойствах->читать и
 		// получать в необходимом классе для чтения
 		download(part.getInputStream(), name);
-		doGet(request, response);
+//		doGet(request, response);
 		request.getRequestDispatcher("/index.html").forward(request, response);  // позволяет не выкидывать новую
 		// страницу
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		boolean delete = req.getParameter("delete") !=null;
+		boolean delete = req.getParameter("delete") != null;
 
-		if(delete) {
+		if (delete) {
 //			conApp.getNameURL();
 			try {
 				sqlQuery.deletedDataSQL();
@@ -50,8 +58,8 @@ public class Servlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		req.getRequestDispatcher("/index.html").forward(req, resp);  // позволяет не выкидывать новую
-		// страницу
+//		req.getRequestDispatcher("/index.html").forward(req, resp);  // позволяет не выкидывать новую
+//		// страницу
 	}
 
 

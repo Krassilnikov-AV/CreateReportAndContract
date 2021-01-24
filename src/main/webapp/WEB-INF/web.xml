@@ -4,14 +4,31 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-	<!--<servlet>-->
-		<!--<servlet-name>Servlet</servlet-name>-->
-		<!--<servlet-class>HelloServlet</servlet-class>-->
-	<!--</servlet>-->
+	<!--<servlets>-->
+		<!--<servlets-name>Servlet</servlets-name>-->
+		<!--<servlets-class>HelloServlet</servlets-class>-->
+	<!--</servlets>-->
 
-	<!--<servlet-mapping>-->
-		<!--<servlet-name>/servlet</servlet-name>-->
+	<!--<servlets-mapping>-->
+		<!--<servlets-name>/servlets</servlets-name>-->
 		<!--<url-pattern>/welcome</url-pattern>-->
-	<!--</servlet-mapping>-->
+	<!--</servlets-mapping>-->
+	<filter>
+		<filter-name>AuthFilter</filter-name>
+		<filter-class>servlets.filter.AuthFilter</filter-class>
+	</filter>
 
+	<filter-mapping>
+		<filter-name>AuthFilter</filter-name>
+		<url-pattern>/</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>servlets.servlet.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -100,7 +100,7 @@ public class ConfigureApp {
 	public Connection classGetPath() throws IOException, SQLException {
 
 		Properties props = new Properties();
-		try (InputStream in = Files.newInputStream(Paths.get("src\\\\main\\\\resources\\\\conf.properties"))) {
+		try (InputStream in = Files.newInputStream(Paths.get("conf.properties"))) {
 			props.load(in);
 		}
 		String url = props.getProperty("url");

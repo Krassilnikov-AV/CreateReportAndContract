@@ -56,6 +56,18 @@ public class SQLQueryDate {
 	ConnectionApp con = new ConnectionApp();
 	ReadExcelData read = new ReadExcelData();
 
+
+	/**
+	 * метод извлечения данных из БД (преполавателя, даты и времени начала занятий)
+	 * Данный метод позволит избежать внесения повторяющих значений в БД
+	 */
+	public void gettingLearnTime() throws IOException, SQLException {
+		try(Connection conn = con.getPostConnection()) {
+			String getLearnTime = "SELECT teacher, datestart, timestart FROM schedule";
+
+		}
+	}
+
 	/**
 	 * метод добавления данных  с применением executeBatch()
 	 * для более быстрой вставки в БД
@@ -69,17 +81,19 @@ public class SQLQueryDate {
 
 				LinkedList<String> listProgram = (LinkedList<String>) read.getString(discipline);
 				LinkedList<String> listCodgroup = (LinkedList<String>) read.getString(codeGroup);
-				LinkedList<Date> listDateStart =  read.getDate(dateStart);
+				LinkedList<Date> listDateStart = read.getDate(dateStart);
 				LinkedList<Date> listTimeStart = read.getDate(timeStart);
-				LinkedList<Date>  listDateFinish =  read.getDate(dateEnd);
+				LinkedList<Date> listDateFinish = read.getDate(dateEnd);
 				LinkedList<Date> listTimeFinish = read.getDate(timeEnd);
 				LinkedList<String> listAuditorium = (LinkedList<String>) read.getString(clasRum);
 				LinkedList<String> listTypelesson = (LinkedList<String>) read.getString(typeLearn);
 				LinkedList<String> listTeacher = (LinkedList<String>) read.getString(teacher);
 
 				int size = listDateStart.size();
+
 				long start = System.currentTimeMillis();
 				for (int i = 0; i < size; i++) {
+
 					String prog = listProgram.pop();
 					stm.setString(1, prog);
 
@@ -131,8 +145,8 @@ public class SQLQueryDate {
 
 	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
 		SQLQueryDate sql = new SQLQueryDate();
-		sql.deletedDataSQL();
-//		sql.insertExecuteBatchQuerySQL();
+//		sql.deletedDataSQL();
+		sql.insertExecuteBatchQuerySQL();
 	}
 
 	public int deletedDataSQL() throws SQLException, ClassNotFoundException {
