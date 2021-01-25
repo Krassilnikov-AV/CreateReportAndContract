@@ -5,7 +5,7 @@
 		maxActive="4"
 		maxIdle="2"
 		maxWait="5000"
-		name="jdbc/cityRegister"
+		name="jdbc/schedule"
 		username="postgres"
 		password="alex159"
 		type="javax.sql.DataSource"
