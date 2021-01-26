@@ -1,4 +1,4 @@
-package servlets.servlet;
+package servlets.servletUpload;
 
 import connection.ConnectionApp;
 import query.SQLQueryDate;
@@ -11,11 +11,11 @@ import java.nio.file.*;
 import java.sql.SQLException;
 
 /**
- * Класс Servlet
+ * Класс ServletUpload
  */
 @MultipartConfig
 @WebServlet("/servlets")
-public class Servlet extends HttpServlet {
+public class ServletUpload extends HttpServlet {
 //	private static final String SERVER_PATH = "D:\\REPOSITORIES-2";   // при отсутствии выбора пути сервера
 
 	String path = null;
@@ -23,7 +23,7 @@ public class Servlet extends HttpServlet {
 	ConnectionApp conApp = new ConnectionApp();
 	SQLQueryDate sqlQuery = new SQLQueryDate();
 
-//	private static final Logger logger = LoggerFactory.getLogger(Servlet.class);
+//	private static final Logger logger = LoggerFactory.getLogger(ServletUpload.class);
 //
 //	@Override
 //	public void init() throws ServletException {

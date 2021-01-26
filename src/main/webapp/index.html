@@ -6,26 +6,28 @@
 	<!--<script src="f_file_upload_from_pc.js"></script>-->
 </head>
 <body>
-<h1>Upload a File</h1>
+<h1>Загрузка файла</h1>
 <form  action="http://localhost:8080/servlet" method="post"
 	  enctype="multipart/form-data">
-
 	<p>
-		specify a patch: <input type="text" name="path" value=""/></BR></BR>
+		укажите путь сохранения: <input type="text" name="path" value=""/></BR></BR>
 	</p>
-
 	<p>
-		Select a file : <input type="file" name="file" size="50"/>
+		 <input type="file" name="file" size="50"/>
 	</p>
 	<input type="hidden" name="ws_code" value="shopCode" style="display:none">
-	<!--<input type="text" name="token" id="123414" value="123414" style="display:none">-->
-	<input type="submit" value="Upload It"/>
+	<input type="submit" value="Загрузить файл"/></br></br>
+
+	<input type="submit" value="ЗАГРУЗИТЬ ДАННЫЕ" name ="delete"/>
+
+	<body>
+	<p><a href="index.jsp"><h>Отчёт расписания занятий</h></a></p>
+	<p><a href="login.jsp"><h>Договор ГПХ внештатных сотрудников</h></a></p>
+	</body>
+
 </form>
 
 
-<form action="http://localhost:8080/servlet" method="get">
-	<input type="submit" value="DELETE" name ="delete"/>
-</form>
 
 	<!--<input type="submit" value="add data"/>-->
 
