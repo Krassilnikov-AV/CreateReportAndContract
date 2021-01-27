@@ -5,31 +5,35 @@
 	<title>Form Page</title>
 	<!--<script src="f_file_upload_from_pc.js"></script>-->
 </head>
-<body>
+<br>
 <h1>Загрузка файла</h1>
-<form  action="http://localhost:8080/servlet" method="post"
-	  enctype="multipart/form-data">
-	<p>
-		укажите путь сохранения: <input type="text" name="path" value=""/></BR></BR>
-	</p>
-	<p>
-		 <input type="file" name="file" size="50"/>
-	</p>
-	<input type="hidden" name="ws_code" value="shopCode" style="display:none">
-	<input type="submit" value="Загрузить файл"/></br></br>
+<br action="http://localhost:8080/servlet" method="post"
+	enctype="multipart/form-data">
+<p>
+	укажите путь сохранения: <input type="text" name="path" value=""/></BR></BR>
+</p>
+<p>
+	<input type="file" name="file" size="50"/>
+</p>
+<input type="hidden" name="ws_code" value="shopCode" style="display:none">
+<input type="submit" value="Загрузить файл"/></br></br>
 
-	<input type="submit" value="ЗАГРУЗИТЬ ДАННЫЕ" name ="delete"/>
+<input type="submit" value="ЗАГРУЗИТЬ ДАННЫЕ" name="delete"/></BR></br>
+<input type="submit" value="СМОТРЕТЬ ДАННЫЕ" name="view"/>
 
-	<body>
-	<p><a href="index.jsp"><h>Отчёт расписания занятий</h></a></p>
-	<p><a href="login.jsp"><h>Договор ГПХ внештатных сотрудников</h></a></p>
-	</body>
+<body>
+<p><a href="schedule.jsp">
+	<h>Отчёт расписания занятий</h>
+</a></p>
+<p><a href="gph.jsp">
+	<h>Договор ГПХ внештатных сотрудников</h>
+</a></p>
+</body>
 
 </form>
 
 
-
-	<!--<input type="submit" value="add data"/>-->
+<!--<input type="submit" value="add data"/>-->
 
 </body>
 </html>
