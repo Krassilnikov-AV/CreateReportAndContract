@@ -7,6 +7,11 @@ package createDocument;
 /**
  * Класс WriteWordRaspisanie
  */
-public class WriteWordRaspisanie {
+public class SсheduleClass implements CreateDocument {
 
+
+	@Override
+	public void ceateDoc() {
+
+	}
 }

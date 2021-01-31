@@ -5,10 +5,8 @@ import connection.*;
 import readDoc.ReadExcelData;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
-import java.sql.Date;
-import java.util.*;
+import java.util.LinkedList;
 
 /**
  * Класс SQLQueryDate
@@ -62,7 +60,7 @@ public class SQLQueryDate {
 	 * Данный метод позволит избежать внесения повторяющих значений в БД
 	 */
 	public void gettingLearnTime() throws IOException, SQLException {
-		try(Connection conn = con.getPostConnection()) {
+		try (Connection conn = con.getPostConnection()) {
 			String getLearnTime = "SELECT teacher, datestart, timestart FROM schedule";
 
 		}
@@ -72,6 +70,7 @@ public class SQLQueryDate {
 	 * метод добавления данных  с применением executeBatch()
 	 * для более быстрой вставки в БД
 	 */
+
 	public void insertExecuteBatchQuerySQL() throws IOException, SQLException {
 		try (Connection connection = con.getPostConnection()) {
 			String insertStartSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, " +
@@ -138,44 +137,64 @@ public class SQLQueryDate {
 	}
 
 
-	/*
-	метод для удаления внесённых данных в таблицу
-	*/
 //	Connection conection;
 
 	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
-		SQLQueryDate sql = new SQLQueryDate();
-//		sql.deletedDataSQL();
-		sql.insertExecuteBatchQuerySQL();
+//		SQLQueryDate sql = new SQLQueryDate();
+		sql.deletedDataSQLloc();
+//		sql.insertExecuteBatchQuerySQL();
 	}
 
-	public int deletedDataSQL() throws SQLException, ClassNotFoundException {
-		ConfigureApp cfa = new ConfigureApp();
-//		try (Connection connection = con.getPostConnection()) {
-		try (Connection connection = cfa.configurableApp()) {
+	/**
+	 * метод для удаления данных с таблицы schedule (локально)
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public int deletedDataSQLloc() throws SQLException {
+		ConnectionApp con = new ConnectionApp();
+		try (Connection connection = con.getPostConnection()) {
 			String deletedSQL = "DELETE FROM schedule";
-			try {
-				PreparedStatement stm = connection.prepareStatement(deletedSQL);
-				return stm.executeUpdate();
-//				stm.close();
-			} finally {
-				System.out.println("Данные БД успешно удалены!");
-				System.out.println("-/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/-");
-				System.out.println("Закрыли соединение с БД после удаления данных...");
+			try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
+				stm.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-
-		} catch (NoSuchMethodException e) {
-			System.out.println(":(...не получилось подсоединиться..:(:");
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
 		}
-		return 0;
+//		finally {
+//			System.out.println("Данные БД успешно удалены!");
+//				System.out.println("-/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/-");
+//			System.out.println("Закрыли соединение с БД после удаления данных...");
+//		}
+		return -1;
 	}
+
+	/*
+	- setConnectionBuilder - сеттер установления пул соединения
+	- getConnection() - геттер получение pool соединения
+	  метод для удаления внесённых данных в таблицу через сервлет
+	*/
+	private ConnectionBuilder connectionBuilder;
+
+	public void setConnectionBuilder(ConnectionBuilder connectionBuilder) {
+		this.connectionBuilder = connectionBuilder;
+	}
+
+	private Connection getConnection() throws SQLException {
+		return connectionBuilder.getConnection();
+	}
+
+	public void deletedDataSQL() throws SQLException {
+		try (Connection connection = getConnection()) {
+			String deletedSQL = "DELETE FROM schedule";
+			try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
+				stm.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

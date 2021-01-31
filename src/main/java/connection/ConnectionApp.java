@@ -40,8 +40,8 @@ public class ConnectionApp {
 
 //		String url =databaseDriver.concat("://").concat(databaseHost).concat(":").concat(databasePort).concat("/").concat(databaseName);
 //		String url =databaseDriver +"://"+databaseHost+"/"+databasePort+"/"+databaseName;
-		String url =databaseDriver +"://"+databaseHost+":"+databasePort+"/"+databaseName;
-		return url;
+		String url =databaseDriver+"://"+databaseHost+":"+databasePort+"/"+databaseName;
+		return url.trim();
 	}
 
 	public Connection getPostConnection() throws SQLException, IOException {

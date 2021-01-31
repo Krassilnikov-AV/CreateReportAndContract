@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-	<Resourse>
-		driverClassName="org.postgresql.Driver"
-		maxActive="4"
-		maxIdle="2"
-		maxWait="5000"
-		name="jdbc/schedule"
-		username="postgres"
-		password="alex159"
-		type="javax.sql.DataSource"
-		validation="SELECT 1"
-		</Resourse>
+	<!--Контекст приложения внутри которого описан ресурс
+driverClassName - для позсоединения к нужному драйверу
+
+validationQuery - это значит, что сервер может изредка посылать запросы типа SEECT 1
+и убедиться в том, что сервер БД "живой"
+
+maxActive - максимальное количество коннектов
+
+maxIdle - в ночное время достаточно 2-х коннектов, потом если что увеличится до 4-х
+maxWait - время ожидания между попытками соединения
+
+как пример url
+url="jdbc:mysql://host:3306/DATABASE?autoReconnect=true"
+-->
+	<Context>
+		<Resourse
+				driverClassName="org.postgresql.Driver"
+				maxActive="4"
+				maxIdle="2"
+				maxWait="5000"
+				name="jdbc/connectPoolDB"
+				username="postgres"
+				password="alex159"
+				type="javax.sql.DataSource"
+				url="jdbc:postgresql://127.0.0.1:5432/raspisanie"
+				validationQuery="SELECT 1"
+		/>
 </Context>

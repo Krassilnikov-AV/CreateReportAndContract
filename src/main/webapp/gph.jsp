@@ -28,6 +28,7 @@
   <p>паспорт: <input type="text" name="passport" size="57"></p>
   <p>Персональный номер ИНН: <input type="text" name="numberINN" size="57"></p>
   <p>Номер страхового свидетельства: <input type="text" name="certificateInsurance" size="57"></p>
+<td><p><input type="submit" value="Создать договор" name="create"></p></td>
 </td>
 </body>
 </html>
