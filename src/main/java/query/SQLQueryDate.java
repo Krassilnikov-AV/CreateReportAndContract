@@ -5,8 +5,9 @@ import connection.*;
 import readDoc.ReadExcelData;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.*;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Класс SQLQueryDate
@@ -136,12 +137,51 @@ public class SQLQueryDate {
 		}
 	}
 
+	/**
+	 * метод для получения данных с таблицы
+	 *
+	 * @param args
+	 * @throws SQLException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public void selectSQL() throws SQLException {
 
-//	Connection conection;
+		ConnectionApp con = new ConnectionApp();
+		Statement statement = null;
+		try (Connection connection = con.getPostConnection()) {
+			String SQL = "SELECT * FROM schedule";
+			statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(SQL);
+//			List<String> pro = new LinkedList<>();
+			String program;
+			while (resultSet.next()) {
+				program = resultSet.getString(1);
+//				pro.add(program);
+//				}
+//				for (int i = 0; i < pro.size(); i++) {
 
+				String codgroup = resultSet.getString(2);
+				Date dateStart = resultSet.getDate(3);
+				System.out.println("program: " + program + "codgroup: " + codgroup + " dateStart: " + dateStart);
+//				System.out.println("program: " + pro.toString());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+	}
+
+	/*
+	главный метод порверки выполнения запросов
+	 */
 	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
-//		SQLQueryDate sql = new SQLQueryDate();
-		sql.deletedDataSQLloc();
+		SQLQueryDate sql = new SQLQueryDate();
+		sql.selectSQL();
+//		sql.deletedDataSQLloc();
 //		sql.insertExecuteBatchQuerySQL();
 	}
 
