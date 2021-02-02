@@ -49,12 +49,11 @@ public class SQLQueryDate {
 	//	String insertSQL = "INSERT INTO schedule(program) VALUES(?)";
 
 //	String insertSQL = "insert into group(groupid) values (?)";
-//	String selectSQL = "SELECT datestart, timestart FROM schedule";
-//	String selectSQL = "SELECT programm FROM raspisanie";
+//	String search = "SELECT datestart, timestart FROM schedule";
+//	String search = "SELECT programm FROM raspisanie";
 
 	ConnectionApp con = new ConnectionApp();
 	ReadExcelData read = new ReadExcelData();
-
 
 	/**
 	 * метод извлечения данных из БД (преполавателя, даты и времени начала занятий)
@@ -145,26 +144,31 @@ public class SQLQueryDate {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public void selectSQL() throws SQLException {
+
+	String search = "Java";  // слово для поиска данных
+
+	public List<String> search() throws SQLException {
 
 		ConnectionApp con = new ConnectionApp();
 		Statement statement = null;
+		List<String> pro = new LinkedList<>();
 		try (Connection connection = con.getPostConnection()) {
 			String SQL = "SELECT * FROM schedule";
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(SQL);
-//			List<String> pro = new LinkedList<>();
 			String program;
 			while (resultSet.next()) {
 				program = resultSet.getString(1);
-//				pro.add(program);
-//				}
-//				for (int i = 0; i < pro.size(); i++) {
-
-				String codgroup = resultSet.getString(2);
-				Date dateStart = resultSet.getDate(3);
-				System.out.println("program: " + program + "codgroup: " + codgroup + " dateStart: " + dateStart);
-//				System.out.println("program: " + pro.toString());
+				// поиск слова в получаемом списке
+				Set<String> words = new HashSet<>(
+					Arrays.asList(program.split(" "))
+				);
+				// если данное слово содержится в столбце БД добавляем в список
+				if (words.contains(search))
+					pro.add(program);
+			}
+			for (int i = 0; i < pro.size(); i++) {
+				System.out.println("№ " + i + ": " + pro.get(i));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -173,14 +177,20 @@ public class SQLQueryDate {
 				statement.close();
 			}
 		}
+		return pro;
 	}
+
+
+//	private void searh() {
+//
+//	}
 
 	/*
 	главный метод порверки выполнения запросов
 	 */
 	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
 		SQLQueryDate sql = new SQLQueryDate();
-		sql.selectSQL();
+		sql.search();
 //		sql.deletedDataSQLloc();
 //		sql.insertExecuteBatchQuerySQL();
 	}
@@ -236,5 +246,4 @@ public class SQLQueryDate {
 			}
 		}
 	}
-
 }
