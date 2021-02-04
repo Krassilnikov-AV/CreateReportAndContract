@@ -137,26 +137,25 @@ public class SQLQueryDate {
 	}
 
 	/**
-	 * метод для получения данных с таблицы
+	 * метод для получения запрашиваемых данных по на правлению с таблицы
 	 *
-	 * @param args
 	 * @throws SQLException
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
 
-	String search = "Java";  // слово для поиска данных
-
-	public List<String> search() throws SQLException {
+//	String search = "Java";  // слово для поиска данных
+	public List<String> search(String search) throws SQLException {
 
 		ConnectionApp con = new ConnectionApp();
 		Statement statement = null;
 		List<String> pro = new LinkedList<>();
+//		List<String> tech = new LinkedList<>();
 		try (Connection connection = con.getPostConnection()) {
-			String SQL = "SELECT * FROM schedule";
+			String SQL = "SELECT program FROM schedule";
 			statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(SQL);
-			String program;
+			String program, teacher;
 			while (resultSet.next()) {
 				program = resultSet.getString(1);
 				// поиск слова в получаемом списке
@@ -166,10 +165,14 @@ public class SQLQueryDate {
 				// если данное слово содержится в столбце БД добавляем в список
 				if (words.contains(search))
 					pro.add(program);
+
+//				String SQLResult = "SELECT * FROM schedule WHERE program = 'search'";
+
 			}
 			for (int i = 0; i < pro.size(); i++) {
 				System.out.println("№ " + i + ": " + pro.get(i));
 			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -190,7 +193,7 @@ public class SQLQueryDate {
 	 */
 	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
 		SQLQueryDate sql = new SQLQueryDate();
-		sql.search();
+		sql.search("Java");
 //		sql.deletedDataSQLloc();
 //		sql.insertExecuteBatchQuerySQL();
 	}
