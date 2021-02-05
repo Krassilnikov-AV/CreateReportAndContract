@@ -145,34 +145,52 @@ public class SQLQueryDate {
 	 */
 
 //	String search = "Java";  // слово для поиска данных
-	public List<String> search(String search) throws SQLException {
+	public void search(String search) throws SQLException {
 
 		ConnectionApp con = new ConnectionApp();
 		Statement statement = null;
+//		List<String> proSQL = new LinkedList<>();
+		List<String> techSQL = new LinkedList<>();
 		List<String> pro = new LinkedList<>();
-//		List<String> tech = new LinkedList<>();
+		List<String> tech = new LinkedList<>();
 		try (Connection connection = con.getPostConnection()) {
-			String SQL = "SELECT program FROM schedule";
+			String SQL = "SELECT * FROM schedule";
 			statement = connection.createStatement();
+
 			ResultSet resultSet = statement.executeQuery(SQL);
-			String program, teacher;
+			String program;
+			String teacher;
+			int index = 0;
 			while (resultSet.next()) {
 				program = resultSet.getString(1);
+				teacher = resultSet.getString(9);
+				techSQL.add(teacher);
+//				proSQL.add(program);
 				// поиск слова в получаемом списке
 				Set<String> words = new HashSet<>(
 					Arrays.asList(program.split(" "))
 				);
 				// если данное слово содержится в столбце БД добавляем в список
-				if (words.contains(search))
+				if (words.contains(search)) {
+					int row=resultSet.getRow();
+//					index = proSQL.indexOf(program);
 					pro.add(program);
-
-//				String SQLResult = "SELECT * FROM schedule WHERE program = 'search'";
-
+//					String t=techSQL.get(index);
+					String e=techSQL.get(row);
+					tech.add(e);
+				}
 			}
 			for (int i = 0; i < pro.size(); i++) {
-				System.out.println("№ " + i + ": " + pro.get(i));
+				System.out.print("индекс: " + index + ": " + pro.get(i));
+				for (int j=0; i<tech.size(); j++) {
+					System.out.println(" учитель: " +tech.get(j)+";");
+				}
 			}
 
+//			for (int i = 0; i < techSQL.size(); i++) {
+//				System.out.print(" учитель: " + techSQL.get(i));
+//				System.out.println("  ");
+//			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -180,9 +198,8 @@ public class SQLQueryDate {
 				statement.close();
 			}
 		}
-		return pro;
+//		return proSQL;
 	}
-
 
 //	private void searh() {
 //
@@ -194,6 +211,7 @@ public class SQLQueryDate {
 	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
 		SQLQueryDate sql = new SQLQueryDate();
 		sql.search("Java");
+//		sql.prog();
 //		sql.deletedDataSQLloc();
 //		sql.insertExecuteBatchQuerySQL();
 	}
