@@ -150,21 +150,22 @@ public class SQLQueryDate {
 		ConnectionApp con = new ConnectionApp();
 		Statement statement = null;
 //		List<String> proSQL = new LinkedList<>();
-		List<String> techSQL = new LinkedList<>();
+//		List<String> techSQL = new LinkedList<>();
 		List<String> pro = new LinkedList<>();
 		List<String> tech = new LinkedList<>();
 		try (Connection connection = con.getPostConnection()) {
+
 			String SQL = "SELECT * FROM schedule";
-			statement = connection.createStatement();
+			statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
 			ResultSet resultSet = statement.executeQuery(SQL);
 			String program;
 			String teacher;
-			int index = 0;
+			int row;
 			while (resultSet.next()) {
 				program = resultSet.getString(1);
 				teacher = resultSet.getString(9);
-				techSQL.add(teacher);
+//				techSQL.add(teacher);
 //				proSQL.add(program);
 				// поиск слова в получаемом списке
 				Set<String> words = new HashSet<>(
@@ -172,25 +173,19 @@ public class SQLQueryDate {
 				);
 				// если данное слово содержится в столбце БД добавляем в список
 				if (words.contains(search)) {
-					int row=resultSet.getRow();
-//					index = proSQL.indexOf(program);
+					row = resultSet.getRow();
 					pro.add(program);
-//					String t=techSQL.get(index);
-					String e=techSQL.get(row);
-					tech.add(e);
-				}
-			}
-			for (int i = 0; i < pro.size(); i++) {
-				System.out.print("индекс: " + index + ": " + pro.get(i));
-				for (int j=0; i<tech.size(); j++) {
-					System.out.println(" учитель: " +tech.get(j)+";");
+
+					System.out.print("индекс: " + row + ": " + ((LinkedList<String>) pro).element());
+
+					resultSet.absolute(row);
+					tech.add(row, teacher);
+					System.out.println("индекс: " + row + ": " +" учитель: " + ((LinkedList<String>) tech).element());
+//					tech.add(String.valueOf(num));
+//					RowId num = resultSet.getRowId(9);
 				}
 			}
 
-//			for (int i = 0; i < techSQL.size(); i++) {
-//				System.out.print(" учитель: " + techSQL.get(i));
-//				System.out.println("  ");
-//			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
