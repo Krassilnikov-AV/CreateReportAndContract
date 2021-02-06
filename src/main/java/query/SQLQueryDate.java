@@ -149,8 +149,6 @@ public class SQLQueryDate {
 
 		ConnectionApp con = new ConnectionApp();
 		Statement statement = null;
-//		List<String> proSQL = new LinkedList<>();
-//		List<String> techSQL = new LinkedList<>();
 		List<String> pro = new LinkedList<>();
 		List<String> tech = new LinkedList<>();
 		try (Connection connection = con.getPostConnection()) {
@@ -165,8 +163,7 @@ public class SQLQueryDate {
 			while (resultSet.next()) {
 				program = resultSet.getString(1);
 				teacher = resultSet.getString(9);
-//				techSQL.add(teacher);
-//				proSQL.add(program);
+//	!!! доработать поиск, чтоб учитывал слово в скобках
 				// поиск слова в получаемом списке
 				Set<String> words = new HashSet<>(
 					Arrays.asList(program.split(" "))
@@ -175,12 +172,11 @@ public class SQLQueryDate {
 				if (words.contains(search)) {
 					row = resultSet.getRow();
 					pro.add(program);
-
 					System.out.print("индекс: " + row + ": " + ((LinkedList<String>) pro).element());
-
 					resultSet.absolute(row);
-					tech.add(row, teacher);
-					System.out.println("индекс: " + row + ": " +" учитель: " + ((LinkedList<String>) tech).element());
+					((LinkedList<String>) tech).addLast(teacher);
+//					tech.add(row, teacher);
+					System.out.println("индекс: " + row + ": " + " учитель: " + ((LinkedList<String>) tech).pop());
 //					tech.add(String.valueOf(num));
 //					RowId num = resultSet.getRowId(9);
 				}
@@ -223,17 +219,13 @@ public class SQLQueryDate {
 			String deletedSQL = "DELETE FROM schedule";
 			try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
 				stm.executeUpdate();
+				System.out.println("Данные БД успешно удалены!");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-//		finally {
-//			System.out.println("Данные БД успешно удалены!");
-//				System.out.println("-/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/--/*/-");
-//			System.out.println("Закрыли соединение с БД после удаления данных...");
-//		}
 		return -1;
 	}
 
