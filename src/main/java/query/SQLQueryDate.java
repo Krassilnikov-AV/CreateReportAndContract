@@ -148,43 +148,42 @@ public class SQLQueryDate {
 	public void search(String search) throws SQLException {
 
 		ConnectionApp con = new ConnectionApp();
-		Statement statement = null;
 		List<String> pro = new LinkedList<>();
 		List<String> tech = new LinkedList<>();
+
 		try (Connection connection = con.getPostConnection()) {
-
 			String SQL = "SELECT * FROM schedule";
-			statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			try (Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY)) {
 
-			ResultSet resultSet = statement.executeQuery(SQL);
-			String program;
-			String teacher;
-			int row;
-			while (resultSet.next()) {
-				program = resultSet.getString(1);
-				teacher = resultSet.getString(9);
+				ResultSet resultSet = statement.executeQuery(SQL);
+				String program;
+				String teacher;
+				int row;
+				while (resultSet.next()) {
+					program = resultSet.getString(1);
+					teacher = resultSet.getString(9);
 //	!!! доработать поиск, чтоб учитывал слово в скобках
-				// поиск слова в получаемом списке
-				Set<String> words = new HashSet<>(
-					Arrays.asList(program.split(" "))
-				);
-				// если данное слово содержится в столбце БД добавляем в список
-				if (words.contains(search)) {
-					row = resultSet.getRow();
-					pro.add(program);
-					System.out.print("индекс: " + row + ": " + ((LinkedList<String>) pro).element());
-					resultSet.absolute(row);
-					((LinkedList<String>) tech).addLast(teacher);
-					System.out.println("индекс: " + row + ": " + " учитель: " + ((LinkedList<String>) tech).pop());
+					// поиск слова в получаемом списке
+					Set<String> words = new HashSet<>(
+						Arrays.asList(program.split(" "))
+					);
+// если данное слово содержится в столбце БД добавляем в список
+					if (words.contains(search)) {
+						row = resultSet.getRow();
+						pro.add(program);
+						System.out.print("индекс: " + row + ": " + ((LinkedList<String>) pro).element());
+						resultSet.absolute(row);
+						((LinkedList<String>) tech).addLast(teacher);
+						System.out.println("индекс: " + row + ": " + " учитель: " + ((LinkedList<String>) tech).pop());
+					}
 				}
+				System.out.println("Запрошенные данные успешно выбраны!");
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			if (statement != null) {
-				statement.close();
-			}
 		}
 	}
 
