@@ -175,10 +175,7 @@ public class SQLQueryDate {
 					System.out.print("индекс: " + row + ": " + ((LinkedList<String>) pro).element());
 					resultSet.absolute(row);
 					((LinkedList<String>) tech).addLast(teacher);
-//					tech.add(row, teacher);
 					System.out.println("индекс: " + row + ": " + " учитель: " + ((LinkedList<String>) tech).pop());
-//					tech.add(String.valueOf(num));
-//					RowId num = resultSet.getRowId(9);
 				}
 			}
 
@@ -189,7 +186,6 @@ public class SQLQueryDate {
 				statement.close();
 			}
 		}
-//		return proSQL;
 	}
 
 //	private void searh() {
