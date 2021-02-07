@@ -23,7 +23,8 @@ public class CreateScheduleReport implements CreateDocument {
 
 	@Override
 	public void createDoc() {
-		try {
+		try (OutputStream outputStream
+				 = new FileOutputStream("D:\\REPOSITORIES-2\\WordTest.docx")) {
 			// создаем модель docx документа,
 			// к которой будем прикручивать наполнение (колонтитулы, текст)
 			XWPFDocument docxModel = new XWPFDocument();
@@ -57,34 +58,52 @@ public class CreateScheduleReport implements CreateDocument {
 			paragraphConfig.setColor("06357a");
 			paragraphConfig.setText("дОБРО ПОЖАЛОВАТЬ!");
 
-			List<String> progArr = new LinkedList<>();
-//			progArr.add("John");
-//			progArr.add("Maikle");
-//			progArr.add("Sanya");
-//			progArr.add("Nike");
-//			SQLQueryDate sqlQueryDate = new SQLQueryDate();
-//			LinkedList<String> list = sqlQueryDate.search("Java").toArray();
-//			for (Object o : list) {
-//				progArr.add((String) o);
-//			}
+			List<String> progArr;
+
 
 			SQLQueryDate sqlQueryDate = new SQLQueryDate();
 			progArr = sqlQueryDate.search("Java");
 //			progArr.addAll(progArr);
 
-			int size = progArr.size();
+			int sizeList = progArr.size();
+/**
+ * XWPFTable
+ * Это класс в пакете org.apache.poi.xwpf.usermodel и используется для добавления табличных данных в текстовый документ.
+ * * Методы класса
+ * Sr.No.	Метод и описание
+ * addNewCol () - Добавляет новый столбец для каждой строки в этой таблице.
+ *
+ * addRow (строка XWPFTableRow, int pos) - Добавляет новую строку в таблицу в позиции поз.
+ *
+ * createRow () -  Создает новый объект XWPFTableRow с количеством ячеек,
+ *                равным количеству столбцов, определенных в данный момент.
+ *
+ * setWidth (int width) -  Устанавливает ширину столбца.
+ *
+ * addNewCol () - Добавляет новый столбец для каждой строки в этой таблице.
+ *
+ * addRow (строка XWPFTableRow, int pos) - Добавляет новую строку в таблицу в позиции поз.
+ *
+ * createRow () - Создает новый объект XWPFTableRow с количеством ячеек,
+ *  равным количеству столбцов, определенных в данный момент.
+ *
+ * setWidth (int width) - Устанавливает ширину столбца.
+ *
+ * Остальные методы этого класса см. В полном документе API по адресу: Документация по POI API.
+ * (https://poi.apache.org/apidocs/index.html?org/apache/poi/openxml4j/opc/internal/package-summary.html.)
+ *
+ */
+			XWPFTable table= docxModel.createTable(sizeList, 2);
 
-			XWPFTable table = docxModel.createTable();
-			for (int i = 0; i < size; i++) {
-				table.createRow().getCell(0).setText(progArr.get(i));
-//				table.createRow().getCell(1).setText("1");
+			for(String str: progArr) {
+
+				table.createRow().getCell(0).setText(str);
+				table.createRow().getCell(1).setText(str);
 			}
 
-			// сохраняем модель docx документа в файл
-			OutputStream outputStream
-				= new FileOutputStream("D:\\REPOSITORIES-2\\WordTest.docx");
+			// сохраняем шаблон docx документа в файл
+
 			docxModel.write(outputStream);
-			outputStream.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
