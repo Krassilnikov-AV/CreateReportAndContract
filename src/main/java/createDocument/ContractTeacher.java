@@ -10,7 +10,7 @@ package createDocument;
 public class ContractTeacher implements CreateDocument {
 
 	@Override
-	public void ceateDoc() {
+	public void createDoc() {
 
 	}
 }

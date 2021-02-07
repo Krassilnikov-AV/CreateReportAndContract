@@ -5,5 +5,6 @@ package createDocument;
  */
 public interface CreateDocument {
 
-	public void ceateDoc();
+	public void createDoc();
+
 }

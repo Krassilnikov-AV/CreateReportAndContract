@@ -19,7 +19,7 @@ public class ServletContract extends HttpServlet {
 	ContractTeacher ct = new ContractTeacher();
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ct.ceateDoc();
+//		ct.ceateDoc();
 	}
 
 	@Override
