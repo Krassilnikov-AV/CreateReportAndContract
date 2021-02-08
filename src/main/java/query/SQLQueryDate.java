@@ -49,8 +49,8 @@ public class SQLQueryDate {
 	//	String insertSQL = "INSERT INTO schedule(program) VALUES(?)";
 
 //	String insertSQL = "insert into group(groupid) values (?)";
-//	String search = "SELECT datestart, timestart FROM schedule";
-//	String search = "SELECT programm FROM raspisanie";
+//	String searchToProgram = "SELECT datestart, timestart FROM schedule";
+//	String searchToProgram = "SELECT programm FROM raspisanie";
 
 	ConnectionApp con = new ConnectionApp();
 	ReadExcelData read = new ReadExcelData();
@@ -144,11 +144,101 @@ public class SQLQueryDate {
 	 * @throws ClassNotFoundException
 	 */
 
-//	String search = "Java";  // слово для поиска данных
-	public LinkedList<String> search(String search) throws SQLException {
+//	String searchToProgram = "Java";  // слово для поиска данных
+	public LinkedList<String> searchToProgram(String search) throws SQLException {
 
 		ConnectionApp con = new ConnectionApp();
+		List<String> pro = new LinkedList<>();
+//		List<String> tech = new LinkedList<>();
 
+		try (Connection connection = con.getPostConnection()) {
+			String SQL = "SELECT * FROM schedule";
+			try (Statement statement =
+					 connection.createStatement(
+						 ResultSet.TYPE_SCROLL_INSENSITIVE,
+						 ResultSet.CONCUR_READ_ONLY)) {
+
+				ResultSet resultSet = statement.executeQuery(SQL);
+				String program;
+//				String teacher;
+//				int row;
+				while (resultSet.next()) {
+					program = resultSet.getString(1);
+//	!!! доработать поиск, чтоб учитывал слово в скобках
+					// поиск слова в получаемом списке
+					Set<String> words = new HashSet<>(
+						Arrays.asList(program.split(" "))
+					);
+// если данное слово содержится в столбце БД добавляем в список
+					if (words.contains(search)) {
+//						row = resultSet.getRow();
+						pro.add(program);
+//						System.out.print("индекс: " + row + ": " +
+//							((LinkedList<String>) pro).pop());
+//						resultSet.absolute(row);
+//						((LinkedList<String>) tech).addLast(teacher);
+//						System.out.println("индекс: " +
+//							row + ": " + " учитель: " +
+//							((LinkedList<String>) tech).pop());
+					}
+				}
+				System.out.println("Запрошенные данные программы успешно выбраны!");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return (LinkedList<String>) pro;
+	}
+
+
+	public LinkedList<String> searchToCodegroup(String search) throws SQLException {
+		ConnectionApp con = new ConnectionApp();
+//		List<String> pro = new LinkedList<>();
+		List<String> code = new LinkedList<>();
+
+		try (Connection connection = con.getPostConnection()) {
+			String SQL = "SELECT * FROM schedule";
+			try (Statement statement =
+					 connection.createStatement(
+						 ResultSet.TYPE_SCROLL_INSENSITIVE,
+						 ResultSet.CONCUR_READ_ONLY)) {
+
+				ResultSet resultSet = statement.executeQuery(SQL);
+				String program;
+				String codegroup;
+				int row;
+				while (resultSet.next()) {
+					program = resultSet.getString(1);
+					codegroup = resultSet.getString(2);
+//	!!! доработать поиск, чтоб учитывал слово в скобках
+					// поиск слова в получаемом списке
+					Set<String> words = new HashSet<>(
+						Arrays.asList(program.split(" "))
+					);
+// если данное слово содержится в столбце БД добавляем учителя в список
+					if (words.contains(search)) {
+						row = resultSet.getRow();
+						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
+						((LinkedList<String>) code).addLast(codegroup);  // добвляет указанный элемент в конец этого списка
+//						System.out.println("индекс: " +
+//							row + ": " + " код программы: " +
+//							((LinkedList<String>) code).pop());
+					}
+				}
+				System.out.println("Запрошенные данные кода программы успешно выбраны!");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return (LinkedList<String>) code;
+	}
+
+	public LinkedList<String> searchToTeacher(String search) throws SQLException {
+		ConnectionApp con = new ConnectionApp();
 		List<String> pro = new LinkedList<>();
 		List<String> tech = new LinkedList<>();
 
@@ -171,27 +261,41 @@ public class SQLQueryDate {
 					Set<String> words = new HashSet<>(
 						Arrays.asList(program.split(" "))
 					);
-// если данное слово содержится в столбце БД добавляем в список
+// если данное слово содержится в столбце БД добавляем учителя в список
 					if (words.contains(search)) {
-//						row = resultSet.getRow();
-						pro.add(program);
-//						System.out.print("индекс: " + row + ": " +
-//							((LinkedList<String>) pro).pop());
-//						resultSet.absolute(row);
-//						((LinkedList<String>) tech).addLast(teacher);
+						row = resultSet.getRow();
+						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
+						((LinkedList<String>) tech).addLast(teacher);  // добвляет указанный элемент в конец этого списка
 //						System.out.println("индекс: " +
 //							row + ": " + " учитель: " +
 //							((LinkedList<String>) tech).pop());
 					}
 				}
-				System.out.println("Запрошенные данные успешно выбраны!");
+				System.out.println("Запрошенные данные учителя успешно выбраны!");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return (LinkedList<String>) pro;
+		return (LinkedList<String>) tech;
+	}
+
+	/*
+	главный метод порверки выполнения запросов
+	 */
+	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
+		long start = System.currentTimeMillis();
+		SQLQueryDate sql = new SQLQueryDate();
+//		sql.searchToProgram("Java");
+//		sql.searchToTeacher("Java");
+		sql.searchToCodegroup("Java");
+//		sql.view();
+//		sql.prog();
+//		sql.deletedDataSQLloc();
+//		sql.insertExecuteBatchQuerySQL();
+		long finish = System.currentTimeMillis();
+		System.out.println("Время выпонения: " + (finish - start) + " ms");
 	}
 
 	/**
@@ -237,22 +341,6 @@ public class SQLQueryDate {
 		} catch (SQLException | IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-
-	/*
-	главный метод порверки выполнения запросов
-	 */
-	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
-		long start = System.currentTimeMillis();
-		SQLQueryDate sql = new SQLQueryDate();
-//		sql.search("Java");
-		sql.view();
-//		sql.prog();
-//		sql.deletedDataSQLloc();
-//		sql.insertExecuteBatchQuerySQL();
-		long finish = System.currentTimeMillis();
-		System.out.println("Время выпонения: " + (finish - start) + " ms");
 	}
 
 	/**

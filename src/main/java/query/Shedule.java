@@ -15,7 +15,7 @@ public class Shedule {
 
 	private void methodChek() throws SQLException {
 		SQLQueryDate sqlQueryDate = new SQLQueryDate();
-		LinkedList<String> contents = sqlQueryDate.search("Java");
+		LinkedList<String> contents = sqlQueryDate.searchToProgram("Java");
 
 		int size = contents.size();
 		for (int i=0; i<size; i++) {

@@ -3,6 +3,32 @@
  */
 
 package createDocument;
+/**
+ * XWPFTable
+ * Это класс в пакете org.apache.poi.xwpf.usermodel и используется для добавления табличных данных в текстовый документ.
+ * * Методы класса
+ * Sr.No.	Метод и описание
+ * addNewCol () - Добавляет новый столбец для каждой строки в этой таблице.
+ * <p>
+ * addRow (строка XWPFTableRow, int pos) - Добавляет новую строку в таблицу в позиции поз.
+ * <p>
+ * createRow () -  Создает новый объект XWPFTableRow с количеством ячеек,
+ * равным количеству столбцов, определенных в данный момент.
+ * <p>
+ * setWidth (int width) -  Устанавливает ширину столбца.
+ * <p>
+ * addNewCol () - Добавляет новый столбец для каждой строки в этой таблице.
+ * <p>
+ * addRow (строка XWPFTableRow, int pos) - Добавляет новую строку в таблицу в позиции поз.
+ * <p>
+ * createRow () - Создает новый объект XWPFTableRow с количеством ячеек,
+ * равным количеству столбцов, определенных в данный момент.
+ * <p>
+ * setWidth (int width) - Устанавливает ширину столбца.
+ * <p>
+ * Остальные методы этого класса см. В полном документе API по адресу: Документация по POI API.
+ * (https://poi.apache.org/apidocs/index.html?org/apache/poi/openxml4j/opc/internal/package-summary.html.)
+ */
 
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.*;
@@ -58,53 +84,29 @@ public class CreateScheduleReport implements CreateDocument {
 			paragraphConfig.setColor("06357a");
 			paragraphConfig.setText("дОБРО ПОЖАЛОВАТЬ!");
 
-			List<String> progArr;
+			LinkedList<String> listProg;
+			LinkedList<String> listCodeGroup;
+			LinkedList<String> listTeach;
 
 			SQLQueryDate sqlQueryDate = new SQLQueryDate();
-			progArr = sqlQueryDate.search("Java");
-//			progArr.addAll(progArr);
+			listProg = sqlQueryDate.searchToProgram("Java");
+			listTeach = sqlQueryDate.searchToTeacher("Java");
+			listCodeGroup = sqlQueryDate.searchToCodegroup("Java");
 
-			int sizeList = progArr.size();
-/**
- * XWPFTable
- * Это класс в пакете org.apache.poi.xwpf.usermodel и используется для добавления табличных данных в текстовый документ.
- * * Методы класса
- * Sr.No.	Метод и описание
- * addNewCol () - Добавляет новый столбец для каждой строки в этой таблице.
- *
- * addRow (строка XWPFTableRow, int pos) - Добавляет новую строку в таблицу в позиции поз.
- *
- * createRow () -  Создает новый объект XWPFTableRow с количеством ячеек,
- *                равным количеству столбцов, определенных в данный момент.
- *
- * setWidth (int width) -  Устанавливает ширину столбца.
- *
- * addNewCol () - Добавляет новый столбец для каждой строки в этой таблице.
- *
- * addRow (строка XWPFTableRow, int pos) - Добавляет новую строку в таблицу в позиции поз.
- *
- * createRow () - Создает новый объект XWPFTableRow с количеством ячеек,
- *  равным количеству столбцов, определенных в данный момент.
- *
- * setWidth (int width) - Устанавливает ширину столбца.
- *
- * Остальные методы этого класса см. В полном документе API по адресу: Документация по POI API.
- * (https://poi.apache.org/apidocs/index.html?org/apache/poi/openxml4j/opc/internal/package-summary.html.)
- *
- */
-			XWPFTable table = docxModel.createTable(sizeList, 2);
+			int sizeListProg = listProg.size();  // определяет размер списка вставляемых значений (количество строк)
 
-//			if (progArr.isEmpty())
-
-//			for (String str : progArr)
-			for (int i = 0; i < sizeList; i++) {
-				table.getRow(i).getCell(0).setText(progArr.get(i));
+			XWPFTable table = docxModel.createTable(sizeListProg, 3);
+			for (int i = 0; i < sizeListProg; i++) {
+				table.getRow(i).getCell(0).setText(listProg.get(i));
 				if(table.getRow(i).getCell(1).getText().isEmpty()) {
-					table.getRow(i).getCell(1).setText(progArr.get(i));
+					table.getRow(i).getCell(1).setText(listCodeGroup.get(i));
+				}
+				if (table.getRow(i).getCell(2).getText().isEmpty()) {
+						table.getRow(i).getCell(2).setText(listTeach.get(i));
 				}
 			}
 //			table.addNewCol();
-//			for (String str : progArr) {
+//			for (String str : listProg) {
 //				table.createRow().getCell(1).setText(str);
 //			}
 			// сохраняем шаблон docx документа в файл
