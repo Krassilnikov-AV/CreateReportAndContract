@@ -60,7 +60,6 @@ public class CreateScheduleReport implements CreateDocument {
 
 			List<String> progArr;
 
-
 			SQLQueryDate sqlQueryDate = new SQLQueryDate();
 			progArr = sqlQueryDate.search("Java");
 //			progArr.addAll(progArr);
@@ -93,14 +92,21 @@ public class CreateScheduleReport implements CreateDocument {
  * (https://poi.apache.org/apidocs/index.html?org/apache/poi/openxml4j/opc/internal/package-summary.html.)
  *
  */
-			XWPFTable table= docxModel.createTable(sizeList, 2);
+			XWPFTable table = docxModel.createTable(sizeList, 2);
 
-			for(String str: progArr) {
+//			if (progArr.isEmpty())
 
-				table.createRow().getCell(0).setText(str);
-				table.createRow().getCell(1).setText(str);
+//			for (String str : progArr)
+			for (int i = 0; i < sizeList; i++) {
+				table.getRow(i).getCell(0).setText(progArr.get(i));
+				if(table.getRow(i).getCell(1).getText().isEmpty()) {
+					table.getRow(i).getCell(1).setText(progArr.get(i));
+				}
 			}
-
+//			table.addNewCol();
+//			for (String str : progArr) {
+//				table.createRow().getCell(1).setText(str);
+//			}
 			// сохраняем шаблон docx документа в файл
 
 			docxModel.write(outputStream);
