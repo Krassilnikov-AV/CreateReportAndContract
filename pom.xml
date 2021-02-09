@@ -73,6 +73,12 @@
 		<artifactId>poi-ooxml-schemas</artifactId>
 		<version>3.11</version>
 	</dependency>
+<!--org.apache.poi ooxml-schemas 1.4 альбомная ориентация-->
+	<!--<dependency>-->
+		<!--<groupId>org.apache.poi</groupId>-->
+		<!--<artifactId>poi-ooxml-schemas</artifactId>-->
+		<!--<version>1.4</version>-->
+	<!--</dependency>-->
 
 	<dependency>
 		<groupId>org.apache.xmlbeans</groupId>
@@ -84,6 +90,11 @@
 		<groupId>org.postgresql</groupId>
 		<artifactId>postgresql</artifactId>
 		<version>42.2.5</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>ooxml-schemas</artifactId>
+		<version>1.4</version>
 	</dependency>
 
 	<!--

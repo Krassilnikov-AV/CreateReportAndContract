@@ -36,7 +36,8 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 import query.SQLQueryDate;
 
 import java.io.*;
-import java.util.*;
+import java.math.BigInteger;
+import java.util.LinkedList;
 
 /**
  * Класс WriteWordRaspisanie
@@ -53,16 +54,31 @@ public class CreateScheduleReport implements CreateDocument {
 				 = new FileOutputStream("D:\\REPOSITORIES-2\\WordTest.docx")) {
 			// создаем модель docx документа,
 			// к которой будем прикручивать наполнение (колонтитулы, текст)
-			XWPFDocument docxModel = new XWPFDocument();
-			CTSectPr ctSectPr = docxModel.getDocument().getBody().addNewSectPr();
-			// получаем экземпляр XWPFHeaderFooterPolicy для работы с колонтитулами
-			XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(docxModel, ctSectPr);
+			XWPFDocument document = new XWPFDocument();
+//			CTSectPr ctSectPr = document.getDocument().getBody().addNewSectPr();
+
+			CTDocument1 doc = document.getDocument();
+			CTBody body=doc.getBody();
+			if (!body.isSetSectPr()) {
+				body.addNewSectPr();
+			}
+			CTSectPr ctSectPr = body.getSectPr();
+
+			if(!ctSectPr.isSetPgSz()) {
+				ctSectPr.addNewPgSz();
+			}
+			CTPageSz pageSize = ctSectPr.getPgSz();
+			pageSize.setW(BigInteger.valueOf(15840));
+			pageSize.setH(BigInteger.valueOf(12240));
+			pageSize.setOrient(STPageOrientation.LANDSCAPE);
+// получаем экземпляр XWPFHeaderFooterPolicy для работы с колонтитулами
+			XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(document, ctSectPr);
 
 			// создаем верхний колонтитул Word файла
 			CTP ctpHeaderModel = createHeaderModel("УТВЕРЖДАЮ");
 			// устанавливаем сформированный верхний
 			// колонтитул в модель документа Word
-			XWPFParagraph headerParagraph = new XWPFParagraph(ctpHeaderModel, docxModel);
+			XWPFParagraph headerParagraph = new XWPFParagraph(ctpHeaderModel, document);
 			headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT,
 				new XWPFParagraph[]{headerParagraph});
 
@@ -70,12 +86,12 @@ public class CreateScheduleReport implements CreateDocument {
 			CTP ctpFooterModel = createFooterModel("Просто нижний колонтитул");
 			// устанавливаем сформированый нижний
 			// колонтитул в модель документа Word
-			XWPFParagraph footerParagraph = new XWPFParagraph(ctpFooterModel, docxModel);
+			XWPFParagraph footerParagraph = new XWPFParagraph(ctpFooterModel, document);
 			headerFooterPolicy.createFooter(XWPFHeaderFooterPolicy.DEFAULT, new XWPFParagraph[]{footerParagraph});
 
 			// создаем обычный параграф, который будет расположен слева,
 			// будет синим курсивом со шрифтом 14 размера
-			XWPFParagraph bodyParagraph = docxModel.createParagraph();
+			XWPFParagraph bodyParagraph = document.createParagraph();
 			bodyParagraph.setAlignment(ParagraphAlignment.LEFT);
 			XWPFRun paragraphConfig = bodyParagraph.createRun();
 			paragraphConfig.setItalic(true);
@@ -86,23 +102,29 @@ public class CreateScheduleReport implements CreateDocument {
 
 			LinkedList<String> listProg;
 			LinkedList<String> listCodeGroup;
+			LinkedList<String> listAuditorium;
 			LinkedList<String> listTeach;
 
+			String search = "Java"; // слово для поиска
 			SQLQueryDate sqlQueryDate = new SQLQueryDate();
-			listProg = sqlQueryDate.searchToProgram("Java");
-			listTeach = sqlQueryDate.searchToTeacher("Java");
-			listCodeGroup = sqlQueryDate.searchToCodegroup("Java");
+			listProg = sqlQueryDate.searchToProgram(search);
+			listTeach = sqlQueryDate.searchToTeacher(search);
+			listCodeGroup = sqlQueryDate.searchToCodegroup(search);
+			listAuditorium = sqlQueryDate.searchToAuditorium(search);
 
 			int sizeListProg = listProg.size();  // определяет размер списка вставляемых значений (количество строк)
 
-			XWPFTable table = docxModel.createTable(sizeListProg, 3);
+			XWPFTable table = document.createTable(sizeListProg, 4);
 			for (int i = 0; i < sizeListProg; i++) {
 				table.getRow(i).getCell(0).setText(listProg.get(i));
 				if(table.getRow(i).getCell(1).getText().isEmpty()) {
 					table.getRow(i).getCell(1).setText(listCodeGroup.get(i));
 				}
 				if (table.getRow(i).getCell(2).getText().isEmpty()) {
-						table.getRow(i).getCell(2).setText(listTeach.get(i));
+					table.getRow(i).getCell(2).setText(listAuditorium.get(i));
+				}
+				if (table.getRow(i).getCell(3).getText().isEmpty()) {
+						table.getRow(i).getCell(3).setText(listTeach.get(i));
 				}
 			}
 //			table.addNewCol();
@@ -111,7 +133,7 @@ public class CreateScheduleReport implements CreateDocument {
 //			}
 			// сохраняем шаблон docx документа в файл
 
-			docxModel.write(outputStream);
+			document.write(outputStream);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -136,7 +158,7 @@ public class CreateScheduleReport implements CreateDocument {
 		cttFooter.setStringValue(footerContent);
 		return ctpFooterModel;
 	}
-
+//CTPageSz
 	private static CTP createHeaderModel(String headerContent) {
 		// создаем хедер или верхний колонтитул
 		CTP ctpHeaderModel = CTP.Factory.newInstance();
@@ -146,5 +168,4 @@ public class CreateScheduleReport implements CreateDocument {
 		cttHeader.setStringValue(headerContent);
 		return ctpHeaderModel;
 	}
-
 }
