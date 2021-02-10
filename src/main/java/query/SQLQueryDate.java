@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.*;
 import java.text.*;
 import java.util.*;
+import java.util.regex.*;
 
 /**
  * Класс SQLQueryDate
@@ -282,6 +283,34 @@ public class SQLQueryDate {
 		return (LinkedList<String>) audit;
 	}
 
+	// пробный метод "регулярок"
+	private void regexExample() {
+		// элементарный пример поиска номера телефона
+//		String inputString = "This is simple that contains phone number +380505055050 That's great.";
+//		String pattern = "(\\d+)";
+//
+//		Pattern pat = Pattern.compile(pattern);
+//		Matcher matcher = pat.matcher(inputString);
+//
+//		if(matcher.find()){
+//			System.out.println("Phone number: " + matcher.group(0));
+//		}else {
+//			System.out.println("PHONE NUMBER NOT FOUND");
+//		}
+
+		String str = "today is tuesday";
+//		return ; // returns "false"
+//		System.out.println(str.matches(".*?\\b.\\br*?"));  // false
+
+		String text = "Егор Алла Александр";
+		Pattern pattern = Pattern.compile("А.+а");
+		Matcher matcher = pattern.matcher(text);
+		while (matcher.find()) {
+			System.out.println(text.substring(matcher.start(), matcher.end()));     // Алла Алекса
+		}
+	}
+
+// показательный метод для сравнения дат
 	private void dateEquels() throws ParseException {
 //		Date date = new Date();
 		String str="2013-08-23";
@@ -309,10 +338,10 @@ public class SQLQueryDate {
 		}
 	}
 
-	public List<java.util.Date> searchToDateStart(String search) throws SQLException, ParseException {
+	public List<String> searchToDateStart(String search) throws SQLException, ParseException {
 		ConnectionApp con = new ConnectionApp();
 		List<String> pro = new LinkedList<>();
-		List<java.util.Date> dateStart = new LinkedList<>();
+		List<String> dateStart = new LinkedList<>();
 
 
 		try (Connection connection = con.getPostConnection()) {
@@ -364,13 +393,13 @@ public class SQLQueryDate {
 						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
 						String pattern = "yyyy-MM-dd";
 						java.util.Date dates = new SimpleDateFormat(pattern).parse(dateSearh);
-						((LinkedList<java.util.Date>) dateStart).addLast(dates);  // добвляет указанный
+						((LinkedList<String>) dateStart).addLast(String.valueOf(dates));  // добвляет указанный
 						// элемент в
 						// конец этого
 						// списка
 						System.out.println("индекс: " +
 							row + ": " + " дата начала: " +
-							((LinkedList<java.util.Date>) dateStart).pop());
+							((LinkedList<String>) dateStart).pop());
 					}
 				}
 				System.out.println("Запрошенные данные по дате начала успешно выбраны!");
@@ -437,7 +466,8 @@ public class SQLQueryDate {
 //		sql.searchToTeacher("Java");
 //		sql.searchToCodegroup("Java");
 //		sql.dateEquels();
-		sql.searchToDateStart("Java");  // выбор по дате
+//		sql.searchToDateStart("Java");  // выбор по дате
+		sql.regexExample();
 //		sql.view();
 //		sql.prog();
 //		sql.deletedDataSQLloc();
