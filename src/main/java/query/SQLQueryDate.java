@@ -162,14 +162,16 @@ public class SQLQueryDate {
 
 				ResultSet resultSet = statement.executeQuery(SQL);
 				String program;
-//				String teacher;
-//				int row;
+//				String teacher = null;
+				int row;
+				Set<String> words = null;
 				while (resultSet.next()) {
 					program = resultSet.getString(1);
+//					teacher = resultSet.getString(9);
 //	!!! доработать поиск, чтоб учитывал слово в скобках
 					// поиск слова в получаемом списке
-					Set<String> words = new HashSet<>(
-						Arrays.asList(program.split(" "))
+					words = new HashSet<>(
+						Arrays.asList(program.split("\\s"))
 					);
 // если данное слово содержится в столбце БД добавляем в список
 					if (words.contains(search)) {
@@ -179,12 +181,17 @@ public class SQLQueryDate {
 //							((LinkedList<String>) pro).pop());
 //						resultSet.absolute(row);
 //						((LinkedList<String>) tech).addLast(teacher);
-//						System.out.println("индекс: " +
+//						System.out.println(" индекс: " +
 //							row + ": " + " учитель: " +
 //							((LinkedList<String>) tech).pop());
 					}
 				}
-				System.out.println("Запрошенные данные программы успешно выбраны!");
+
+				if (words.isEmpty()) {
+					System.out.println("Совпадений не найдено!");
+				} else {
+					System.out.println("Данные успешно выбраны!");
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -211,12 +218,13 @@ public class SQLQueryDate {
 				String program;
 				String codegroup;
 				int row;
+				Set<String> words = null;
 				while (resultSet.next()) {
 					program = resultSet.getString(1);
 					codegroup = resultSet.getString(2);
 //	!!! доработать поиск, чтоб учитывал слово в скобках
 					// поиск слова в получаемом списке
-					Set<String> words = new HashSet<>(
+					words = new HashSet<>(
 						Arrays.asList(program.split(" "))
 					);
 // если данное слово содержится в столбце БД добавляем учителя в список
@@ -229,7 +237,11 @@ public class SQLQueryDate {
 //							((LinkedList<String>) code).pop());
 					}
 				}
-				System.out.println("Запрошенные данные кода программы успешно выбраны!");
+				if (words.isEmpty()) {
+					System.out.println("Совпадений не найдено!");
+				} else {
+					System.out.println("Данные успешно выбраны!");
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -255,12 +267,13 @@ public class SQLQueryDate {
 				String program;
 				String aud;
 				int row;
+				Set<String> words = null;
 				while (resultSet.next()) {
 					program = resultSet.getString(1);
 					aud = resultSet.getString(7);
 //	!!! доработать поиск, чтоб учитывал слово в скобках
 					// поиск слова в получаемом списке
-					Set<String> words = new HashSet<>(
+					words = new HashSet<>(
 						Arrays.asList(program.split(" "))
 					);
 // если данное слово содержится в столбце БД добавляем учителя в список
@@ -273,7 +286,11 @@ public class SQLQueryDate {
 //							((LinkedList<String>) audit).pop());
 					}
 				}
-				System.out.println("Запрошенные данные по аудиториям успешно выбраны!");
+				if (!words.isEmpty()) {
+					System.out.println("Запрошенные данные по аудиториям успешно выбраны!");
+				} else {
+					System.out.println("Совпадений не найдено!");
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -281,6 +298,33 @@ public class SQLQueryDate {
 			e.printStackTrace();
 		}
 		return (LinkedList<String>) audit;
+	}
+
+
+	// показательный метод для сравнения дат
+	private void dateEquels() throws ParseException {
+//		Date date = new Date();
+		String str = "2013-08-23";
+		String str1 = "2014-08-23";
+		java.util.Date date = new SimpleDateFormat("yyyy-MM-dd").parse(str);
+		java.util.Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(str1);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Calendar cal1 = Calendar.getInstance();
+		cal1.setTime(date1);
+
+		if (cal.get(Calendar.YEAR) == cal1.get(Calendar.YEAR)) {
+			System.out.println("Years are equal");
+		} else {
+			System.out.println("Years not equal");
+		}
+
+		if (cal.get(Calendar.MONTH) == cal1.get(Calendar.MONTH)) {
+			System.out.println("Months are equal");
+		} else {
+			System.out.println("Months not equal");
+		}
 	}
 
 	// пробный метод "регулярок"
@@ -298,51 +342,36 @@ public class SQLQueryDate {
 //			System.out.println("PHONE NUMBER NOT FOUND");
 //		}
 
-		String str = "today is tuesday";
+//		String str = "today is tuesday";
 //		return ; // returns "false"
 //		System.out.println(str.matches(".*?\\b.\\br*?"));  // false
 
-		String text = "Егор Алла Александр";
-		Pattern pattern = Pattern.compile("А.+а");
-		Matcher matcher = pattern.matcher(text);
-		while (matcher.find()) {
-			System.out.println(text.substring(matcher.start(), matcher.end()));     // Алла Алекса
+//		String text = "Егор Алла Александр";
+//		Pattern pattern = Pattern.compile("А.+а");
+//		Matcher matcher = pattern.matcher(text);
+//		while (matcher.find()) {
+//			System.out.println(text.substring(matcher.start(), matcher.end()));     // Алла Алекса
+//		}
+//		String text = "Егор Алла Анна";
+		String text = "Егор (Алла) Анна";
+		Pattern pattern = Pattern.compile("\\s");
+		String[] strings = pattern.split(text, 2);
+		for (String s : strings) {
+			System.out.println(s);
 		}
-	}
+		System.out.println("---------");
+		String[] strings1 = pattern.split(text);
+		for (String s : strings1) {
 
-// показательный метод для сравнения дат
-	private void dateEquels() throws ParseException {
-//		Date date = new Date();
-		String str="2013-08-23";
-		String str1="2014-08-23";
-		java.util.Date date=  new SimpleDateFormat("yyyy-MM-dd").parse(str);
-		java.util.Date date1= new SimpleDateFormat("yyyy-MM-dd").parse(str1);
+			System.out.println(s);
 
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		Calendar cal1 = Calendar.getInstance();
-		cal1.setTime(date1);
-
-		if(cal.get(Calendar.YEAR) == cal1.get(Calendar.YEAR)){
-			System.out.println("Years are equal");
-		}
-		else{
-			System.out.println("Years not equal");
-		}
-
-		if(cal.get(Calendar.MONTH) == cal1.get(Calendar.MONTH)){
-			System.out.println("Months are equal");
-		}
-		else{
-			System.out.println("Months not equal");
 		}
 	}
 
 	public List<String> searchToDateStart(String search) throws SQLException, ParseException {
 		ConnectionApp con = new ConnectionApp();
-		List<String> pro = new LinkedList<>();
+//		List<String> pro = new LinkedList<>();
 		List<String> dateStart = new LinkedList<>();
-
 
 		try (Connection connection = con.getPostConnection()) {
 			String SQL = "SELECT * FROM schedule";
@@ -354,55 +383,51 @@ public class SQLQueryDate {
 				ResultSet resultSet = statement.executeQuery(SQL);
 				String program;
 				String dateSearh;
-				String date="2020-05-01";
-
+//				String date = "2020-05-01";
+				Set<String> words = null;
 				int row;
+
 				while (resultSet.next()) {
 					program = resultSet.getString(1);
 					dateSearh = String.valueOf(resultSet.getDate("datestart"));
 //	!!! доработать поиск, чтоб учитывал слово в скобках
-					// поиск слова в получаемом списке
-					Set<String> words = new HashSet<>(
-						Arrays.asList(program.split(" "))
+
+					words = new HashSet<>(
+						Arrays.asList(program.split("\\s"))
 					);
 //					сравнение полученной даты с БД с полученным параметром даты
-					java.util.Date dateResult=
-						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-					java.util.Date date1=
-						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(date);
+//					java.util.Date dateResult =
+//						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
+//					java.util.Date date1 =
+//						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(date);
 
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(dateResult);
-					Calendar cal1 = Calendar.getInstance();
-					cal1.setTime(date1);
-//					if(cal.get(Calendar.MONTH) == cal1.get(Calendar.MONTH)){
-//						System.out.println("Months are equal");
-//					}
-//					else{
-//						System.out.println("Months not equal");
-//					}
+//					Calendar cal = Calendar.getInstance();
+//					cal.setTime(dateResult);
+//					Calendar cal1 = Calendar.getInstance();
+//					cal1.setTime(date1);
 
-//					Calendar calendar1 = Calendar.getInstance();
-//					Calendar calendar2 = Calendar.getInstance();
-//					calendar1.setTime(dateSearh);
-//					calendar2.setTime((java.util.Date) dateStart);
-					boolean sameDay = cal.get(Calendar.MONTH) == cal1.get(Calendar.MONTH);
+//					boolean sameDay = cal.get(Calendar.MONTH) == cal1.get(Calendar.MONTH);
 // если данное слово содержится в столбце БД добавляем учителя в список
-					if (words.contains(search) && sameDay) {
+//					if (words.contains(search) && sameDay) {
+					if (words.contains(search)) {
 						row = resultSet.getRow();
 						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-						String pattern = "yyyy-MM-dd";
-						java.util.Date dates = new SimpleDateFormat(pattern).parse(dateSearh);
-						((LinkedList<String>) dateStart).addLast(String.valueOf(dates));  // добвляет указанный
-						// элемент в
-						// конец этого
-						// списка
-						System.out.println("индекс: " +
-							row + ": " + " дата начала: " +
-							((LinkedList<String>) dateStart).pop());
+						java.util.Date dates = new SimpleDateFormat("yyyy-MM-dd").parse(dateSearh);  // парсит
+						SimpleDateFormat simplDate = new SimpleDateFormat("dd/MM/yyyy");
+//						java.util.Date dateRefact = new java.util.Date();
+						String exp = simplDate.format(dates);
+							((LinkedList<String>) dateStart).addLast(exp);  // добвляет указанный
+						// элемент в конец этого списка
+//						System.out.println("индекс: " +
+//							row + ": " + " дата начала: " +
+//							((LinkedList<String>) dateStart).pop());
 					}
 				}
-				System.out.println("Запрошенные данные по дате начала успешно выбраны!");
+				if (!words.isEmpty()) {
+					System.out.println("Запрошенные данные по дате начала успешно выбраны!");
+				} else {
+					System.out.println("Совпадений не нашлось");
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -427,13 +452,14 @@ public class SQLQueryDate {
 				ResultSet resultSet = statement.executeQuery(SQL);
 				String program;
 				String teacher;
+				Set<String> words = null;
 				int row;
 				while (resultSet.next()) {
 					program = resultSet.getString(1);
 					teacher = resultSet.getString(9);
 //	!!! доработать поиск, чтоб учитывал слово в скобках
 					// поиск слова в получаемом списке
-					Set<String> words = new HashSet<>(
+					words = new HashSet<>(
 						Arrays.asList(program.split(" "))
 					);
 // если данное слово содержится в столбце БД добавляем учителя в список
@@ -446,7 +472,11 @@ public class SQLQueryDate {
 //							((LinkedList<String>) tech).pop());
 					}
 				}
-				System.out.println("Запрошенные данные по учителям успешно выбраны!");
+				if (words.isEmpty()) {
+					System.out.println("нет совпадений");
+				} else {
+					System.out.println("Запрошенные данные по учителям успешно выбраны!");
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -464,10 +494,10 @@ public class SQLQueryDate {
 		SQLQueryDate sql = new SQLQueryDate();
 //		sql.searchToProgram("Java");
 //		sql.searchToTeacher("Java");
-//		sql.searchToCodegroup("Java");
+//		sql.searchToCodegroup("С++");
 //		sql.dateEquels();
-//		sql.searchToDateStart("Java");  // выбор по дате
-		sql.regexExample();
+		sql.searchToDateStart("Java");  // выбор по дате
+//		sql.regexExample();
 //		sql.view();
 //		sql.prog();
 //		sql.deletedDataSQLloc();

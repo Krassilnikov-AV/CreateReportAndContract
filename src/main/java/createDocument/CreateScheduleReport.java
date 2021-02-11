@@ -52,8 +52,7 @@ public class CreateScheduleReport implements CreateDocument {
 	public void createDoc() {
 		try (OutputStream outputStream
 				 = new FileOutputStream("D:\\REPOSITORIES-2\\WordTest.docx")) {
-			// создаем модель docx документа,
-			// к которой будем прикручивать наполнение (колонтитулы, текст)
+			// создаем  документа docx, к которому будем прикручивать наполнение (колонтитулы, текст)
 			XWPFDocument document = new XWPFDocument();
 //			CTSectPr ctSectPr = document.getDocument().getBody().addNewSectPr();
 
@@ -68,8 +67,8 @@ public class CreateScheduleReport implements CreateDocument {
 				ctSectPr.addNewPgSz();
 			}
 			CTPageSz pageSize = ctSectPr.getPgSz();
-			pageSize.setW(BigInteger.valueOf(15840));
-			pageSize.setH(BigInteger.valueOf(12240));
+			pageSize.setW(BigInteger.valueOf(15840));     // размеры формата альбоиного
+			pageSize.setH(BigInteger.valueOf(12240));     //
 			pageSize.setOrient(STPageOrientation.LANDSCAPE);
 // получаем экземпляр XWPFHeaderFooterPolicy для работы с колонтитулами
 			XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(document, ctSectPr);
@@ -104,6 +103,7 @@ public class CreateScheduleReport implements CreateDocument {
 			LinkedList<String> listCodeGroup;
 			LinkedList<String> listAuditorium;
 			LinkedList<String> listTeach;
+			LinkedList<String> listDateStart;
 
 			String search = "Java"; // слово для поиска
 			SQLQueryDate sqlQueryDate = new SQLQueryDate();
@@ -111,20 +111,24 @@ public class CreateScheduleReport implements CreateDocument {
 			listTeach = sqlQueryDate.searchToTeacher(search);
 			listCodeGroup = sqlQueryDate.searchToCodegroup(search);
 			listAuditorium = sqlQueryDate.searchToAuditorium(search);
+			listDateStart = (LinkedList<String>) sqlQueryDate.searchToDateStart(search);
 
 			int sizeListProg = listProg.size();  // определяет размер списка вставляемых значений (количество строк)
 
-			XWPFTable table = document.createTable(sizeListProg, 4);
+			XWPFTable table = document.createTable(sizeListProg, 5);
 			for (int i = 0; i < sizeListProg; i++) {
 				table.getRow(i).getCell(0).setText(listProg.get(i));
 				if(table.getRow(i).getCell(1).getText().isEmpty()) {
 					table.getRow(i).getCell(1).setText(listCodeGroup.get(i));
 				}
 				if (table.getRow(i).getCell(2).getText().isEmpty()) {
-					table.getRow(i).getCell(2).setText(listAuditorium.get(i));
+					table.getRow(i).getCell(2).setText(listDateStart.get(i));
 				}
 				if (table.getRow(i).getCell(3).getText().isEmpty()) {
-						table.getRow(i).getCell(3).setText(listTeach.get(i));
+					table.getRow(i).getCell(3).setText(listAuditorium.get(i));
+				}
+				if (table.getRow(i).getCell(4).getText().isEmpty()) {
+						table.getRow(i).getCell(4).setText(listTeach.get(i));
 				}
 			}
 //			table.addNewCol();
