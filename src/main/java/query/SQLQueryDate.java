@@ -14,7 +14,7 @@ import java.util.regex.*;
 /**
  * Класс SQLQueryDate
  */
-public class SQLQueryDate {
+public class SQLQueryDate implements SQLQuery {
 
 	final static int code = 0;    // код (строка)
 	final static int divID = 1;   // ID подразделения (число)
@@ -72,7 +72,7 @@ public class SQLQueryDate {
 	 * метод добавления данных  с применением executeBatch()
 	 * для более быстрой вставки в БД
 	 */
-
+@Override
 	public void insertExecuteBatchQuerySQL() throws IOException, SQLException {
 		try (Connection connection = con.getPostConnection()) {
 			String insertStartSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, " +
@@ -147,6 +147,7 @@ public class SQLQueryDate {
 	 */
 
 //	String searchToProgram = "Java";  // слово для поиска данных
+	@Override
 	public LinkedList<String> searchToProgram(String search) throws SQLException {
 
 		ConnectionApp con = new ConnectionApp();
@@ -201,7 +202,7 @@ public class SQLQueryDate {
 		return (LinkedList<String>) pro;
 	}
 
-
+@Override
 	public LinkedList<String> searchToCodegroup(String search) throws SQLException {
 		ConnectionApp con = new ConnectionApp();
 //		List<String> pro = new LinkedList<>();
@@ -250,7 +251,7 @@ public class SQLQueryDate {
 		}
 		return (LinkedList<String>) code;
 	}
-
+@Override
 	public LinkedList<String> searchToAuditorium(String search) throws SQLException {
 		ConnectionApp con = new ConnectionApp();
 		List<String> pro = new LinkedList<>();
@@ -302,6 +303,7 @@ public class SQLQueryDate {
 
 
 	// показательный метод для сравнения дат
+
 	private void dateEquels() throws ParseException {
 //		Date date = new Date();
 		String str = "2013-08-23";
@@ -367,7 +369,7 @@ public class SQLQueryDate {
 
 		}
 	}
-
+@Override
 	public List<String> searchToDateStart(String search) throws SQLException, ParseException {
 		ConnectionApp con = new ConnectionApp();
 //		List<String> pro = new LinkedList<>();
@@ -436,7 +438,7 @@ public class SQLQueryDate {
 		}
 		return dateStart;
 	}
-
+@Override
 	public LinkedList<String> searchToTeacher(String search) throws SQLException {
 		ConnectionApp con = new ConnectionApp();
 		List<String> pro = new LinkedList<>();
@@ -496,7 +498,7 @@ public class SQLQueryDate {
 //		sql.searchToTeacher("Java");
 //		sql.searchToCodegroup("С++");
 //		sql.dateEquels();
-		sql.searchToDateStart("Java");  // выбор по дате
+//		sql.searchToDateStart("Java");  // выбор по дате
 //		sql.regexExample();
 //		sql.view();
 //		sql.prog();
@@ -509,7 +511,8 @@ public class SQLQueryDate {
 	/**
 	 * метод для просмотра имеющихся данных в БД
 	 */
-	private void view() {
+	@Override
+	public void view() {
 		ConnectionApp con = new ConnectionApp();
 
 		LinkedList<String> pro = new LinkedList<>();
@@ -557,6 +560,7 @@ public class SQLQueryDate {
 	 * @return
 	 * @throws SQLException
 	 */
+	@Override
 	public int deletedDataSQLloc() throws SQLException {
 		ConnectionApp con = new ConnectionApp();
 		try (Connection connection = con.getPostConnection()) {

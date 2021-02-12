@@ -57,13 +57,13 @@ public class CreateScheduleReport implements CreateDocument {
 //			CTSectPr ctSectPr = document.getDocument().getBody().addNewSectPr();
 
 			CTDocument1 doc = document.getDocument();
-			CTBody body=doc.getBody();
+			CTBody body = doc.getBody();
 			if (!body.isSetSectPr()) {
 				body.addNewSectPr();
 			}
 			CTSectPr ctSectPr = body.getSectPr();
 
-			if(!ctSectPr.isSetPgSz()) {
+			if (!ctSectPr.isSetPgSz()) {
 				ctSectPr.addNewPgSz();
 			}
 			CTPageSz pageSize = ctSectPr.getPgSz();
@@ -89,15 +89,27 @@ public class CreateScheduleReport implements CreateDocument {
 			headerFooterPolicy.createFooter(XWPFHeaderFooterPolicy.DEFAULT, new XWPFParagraph[]{footerParagraph});
 
 			// создаем обычный параграф, который будет расположен слева,
-			// будет синим курсивом со шрифтом 14 размера
+			// будет синим курсивом со шрифтом 11 размера
 			XWPFParagraph bodyParagraph = document.createParagraph();
-			bodyParagraph.setAlignment(ParagraphAlignment.LEFT);
+			bodyParagraph.setAlignment(ParagraphAlignment.CENTER);
 			XWPFRun paragraphConfig = bodyParagraph.createRun();
-			paragraphConfig.setItalic(true);
-			paragraphConfig.setFontSize(14);
+			paragraphConfig.setItalic(false); // выбрать шрифт (обычный/полужирный)
+			paragraphConfig.setFontSize(11);  // размер шрифта
 			// HEX цвет без решетки #
-			paragraphConfig.setColor("06357a");
-			paragraphConfig.setText("дОБРО ПОЖАЛОВАТЬ!");
+			paragraphConfig.setColor("000000");
+			paragraphConfig.setText("федеральное государственное автономное образовательное учреждение высшего " +
+				"образования <<Санкт-Петербургский политехнический университет Петра Великого (ФГАОУ ВО<<СПбПУ>>)");
+			paragraphConfig.addCarriageReturn();     // новый абзац
+			paragraphConfig.setText("Институт дополнительного образования");
+			paragraphConfig.addCarriageReturn();     // новый абзац
+			paragraphConfig.setText("Высшая инженерная школа");
+			paragraphConfig.addCarriageReturn();     // новый абзац
+			paragraphConfig.addCarriageReturn();     // новый абзац
+			XWPFRun paragraph = bodyParagraph.createRun();
+			paragraph.setColor("000000");
+			paragraph.setBold(true);
+			paragraph.setText("РАСПИСАИЕ ЗАНЯТИЙ");
+
 
 			LinkedList<String> listProg;
 			LinkedList<String> listCodeGroup;
@@ -118,7 +130,7 @@ public class CreateScheduleReport implements CreateDocument {
 			XWPFTable table = document.createTable(sizeListProg, 5);
 			for (int i = 0; i < sizeListProg; i++) {
 				table.getRow(i).getCell(0).setText(listProg.get(i));
-				if(table.getRow(i).getCell(1).getText().isEmpty()) {
+				if (table.getRow(i).getCell(1).getText().isEmpty()) {
 					table.getRow(i).getCell(1).setText(listCodeGroup.get(i));
 				}
 				if (table.getRow(i).getCell(2).getText().isEmpty()) {
@@ -128,7 +140,7 @@ public class CreateScheduleReport implements CreateDocument {
 					table.getRow(i).getCell(3).setText(listAuditorium.get(i));
 				}
 				if (table.getRow(i).getCell(4).getText().isEmpty()) {
-						table.getRow(i).getCell(4).setText(listTeach.get(i));
+					table.getRow(i).getCell(4).setText(listTeach.get(i));
 				}
 			}
 //			table.addNewCol();
@@ -162,7 +174,8 @@ public class CreateScheduleReport implements CreateDocument {
 		cttFooter.setStringValue(footerContent);
 		return ctpFooterModel;
 	}
-//CTPageSz
+
+	//CTPageSz
 	private static CTP createHeaderModel(String headerContent) {
 		// создаем хедер или верхний колонтитул
 		CTP ctpHeaderModel = CTP.Factory.newInstance();
