@@ -145,14 +145,14 @@ public class CreateScheduleReport implements CreateDocument {
 
 			listCodeGroup = sqlQueryData.searchToCodegroup(search, dateMonth);
 			listDateStart = (LinkedList<String>) sqlQueryData.searchToDateStart(search, dateMonth);
-//			listTimeStart = (LinkedList<String>) sqlQueryData.searchToTimeStart(search, dateMonth);
-//			listAuditorium = sqlQueryData.searchToAuditorium(search, dateMonth);
-//			listTeach = sqlQueryData.searchToTeacher(search, dateMonth);
+			listTimeStart = (LinkedList<String>) sqlQueryData.searchToTimeStart(search, dateMonth);
+			listAuditorium = sqlQueryData.searchToAuditorium(search, dateMonth);
+			listTeach = sqlQueryData.searchToTeacher(search, dateMonth);
 
 			int listDateStSize = listProgs.size();  // определяет размер списка вставляемых значений (количество
 			// строк)
 
-			XWPFTable table = document.createTable(listDateStSize, 3);
+			XWPFTable table = document.createTable(listDateStSize, 6);
 			for (int i = 0; i < listDateStSize; i++) {
 //				table.getRow(0).getCell(0).setText("Группа");
 //				table.getRow(0).getCell(1).setText("Образовательная программа");
@@ -175,13 +175,13 @@ public class CreateScheduleReport implements CreateDocument {
 				if (table.getRow(i).getCell(2).getText().isEmpty()) {
 					table.getRow(i).getCell(2).setText(listDateStart.get(i));
 				}
-//				else if (table.getRow(i).getCell(3).getText().isEmpty()) {
-//					table.getRow(i).getCell(3).setText(listTimeStart.get(i));
-//				} else if (table.getRow(i).getCell(4).getText().isEmpty()) {
-//					table.getRow(i).getCell(4).setText(listAuditorium.get(i));
-//				} else if (table.getRow(i).getCell(5).getText().isEmpty()) {
-//					table.getRow(i).getCell(5).setText(listTeach.get(i));
-//				}
+				if (table.getRow(i).getCell(3).getText().isEmpty()) {
+					table.getRow(i).getCell(3).setText(listTimeStart.get(i));}
+				 if (table.getRow(i).getCell(4).getText().isEmpty()) {
+					table.getRow(i).getCell(4).setText(listAuditorium.get(i));}
+				 if (table.getRow(i).getCell(5).getText().isEmpty()) {
+					table.getRow(i).getCell(5).setText(listTeach.get(i));
+				}
 			}
 //			table.addNewCol();
 //			for (String str : listProgs) {
