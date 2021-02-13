@@ -149,25 +149,25 @@ public class CreateScheduleReport implements CreateDocument {
 			listAuditorium = sqlQueryData.searchToAuditorium(search, dateMonth);
 			listTeach = sqlQueryData.searchToTeacher(search, dateMonth);
 
-			int listDateStSize = listProgs.size();  // определяет размер списка вставляемых значений (количество
-			// строк)
+			int listTableSize = listProgs.size();  // определяет количество строкразмер вставляемых значений из
+			// списка и заголовка таблицы
+			int listSelectData = listDateStart.size();  // кол-во строк вставляемых в таблицу с БД
 
-			XWPFTable table = document.createTable(listDateStSize, 6);
-			for (int i = 0; i < listDateStSize; i++) {
-//				table.getRow(0).getCell(0).setText("Группа");
-//				table.getRow(0).getCell(1).setText("Образовательная программа");
-//				table.getRow(0).getCell(2).setText("Дата начала");
-//				table.getRow(0).getCell(3).setText("Время начала");
-//				table.getRow(0).getCell(4).setText("Аудитория");
-//				table.getRow(0).getCell(5).setText("Преподаватель");
-//				table.getRow(1).getCell(0).setText("1");
-//				table.getRow(1).getCell(1).setText("2");
-//				table.getRow(1).getCell(2).setText("3");
-//				table.getRow(1).getCell(3).setText("4");
-//				table.getRow(1).getCell(4).setText("5");
-//				table.getRow(1).getCell(5).setText("6");
-//				int j = 0;
-//				if (table.getRow(i).getCell(0).getText().isEmpty())
+			XWPFTable table = document.createTable(listTableSize, 6);
+
+			table.getRow(0).getCell(0).setText("Группа");
+			table.getRow(0).getCell(1).setText("Образовательная программа");
+			table.getRow(0).getCell(2).setText("Дата начала");
+			table.getRow(0).getCell(3).setText("Время начала");
+			table.getRow(0).getCell(4).setText("Аудитория");
+			table.getRow(0).getCell(5).setText("Преподаватель");
+			table.getRow(1).getCell(0).setText("1");
+			table.getRow(1).getCell(1).setText("2");
+			table.getRow(1).getCell(2).setText("3");
+			table.getRow(1).getCell(3).setText("4");
+			table.getRow(1).getCell(4).setText("5");
+			table.getRow(1).getCell(5).setText("6");
+			for (int i = 2; i < listSelectData; i++) {
 				table.getRow(i).getCell(0).setText(listCodeGroup.get(i));
 				if (table.getRow(i).getCell(1).getText().isEmpty()) {
 					table.getRow(i).getCell(1).setText(listProgs.get(i));
@@ -176,10 +176,12 @@ public class CreateScheduleReport implements CreateDocument {
 					table.getRow(i).getCell(2).setText(listDateStart.get(i));
 				}
 				if (table.getRow(i).getCell(3).getText().isEmpty()) {
-					table.getRow(i).getCell(3).setText(listTimeStart.get(i));}
-				 if (table.getRow(i).getCell(4).getText().isEmpty()) {
-					table.getRow(i).getCell(4).setText(listAuditorium.get(i));}
-				 if (table.getRow(i).getCell(5).getText().isEmpty()) {
+					table.getRow(i).getCell(3).setText(listTimeStart.get(i));
+				}
+				if (table.getRow(i).getCell(4).getText().isEmpty()) {
+					table.getRow(i).getCell(4).setText(listAuditorium.get(i));
+				}
+				if (table.getRow(i).getCell(5).getText().isEmpty()) {
 					table.getRow(i).getCell(5).setText(listTeach.get(i));
 				}
 			}
