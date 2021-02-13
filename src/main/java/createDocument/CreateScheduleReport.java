@@ -39,7 +39,7 @@ import query.SQLQueryData;
 import java.io.*;
 import java.math.BigInteger;
 import java.sql.SQLException;
-import java.text.ParseException;
+import java.text.*;
 import java.util.*;
 
 /**
@@ -139,23 +139,36 @@ public class CreateScheduleReport implements CreateDocument {
 //				nameProg="Классная программа";
 //			}
 //			String res = null;
-
-			paragraphProg.setText("по программе профессиональной переподготовки ___________________");
-			paragraphProg.setText("__________________________________________________________________________________");
-
 			listCodeGroup = sqlQueryData.searchToCodegroup(search, dateMonth);
 			listDateStart = (LinkedList<String>) sqlQueryData.searchToDateStart(search, dateMonth);
 			listTimeStart = (LinkedList<String>) sqlQueryData.searchToTimeStart(search, dateMonth);
 			listAuditorium = sqlQueryData.searchToAuditorium(search, dateMonth);
 			listTeach = sqlQueryData.searchToTeacher(search, dateMonth);
 
+			paragraphProg.setText("по программе профессиональной переподготовки ___________________");
+/*
+* Доработать!*/
+//			String resMonth = listDateStart.getFirst();
+//			java.util.Date date = new SimpleDateFormat("yyyy.MM.dd").parse(resMonth);
+//			Calendar cal = Calendar.getInstance();
+//			cal.setTime(date);
+//			String dataMont = String.valueOf(cal.get(Calendar.MONTH));
+//			paragraphProg.setText(dataMont);
+//			paragraph.addCarriageReturn();     // новый абзац
+			paragraphProg.setText("__________________________________________________________________________________");
+
+
 			int listTableSize = listProgs.size();  // определяет количество строкразмер вставляемых значений из
 			// списка и заголовка таблицы
 			int listSelectData = listDateStart.size();  // кол-во строк вставляемых в таблицу с БД
 
 			XWPFTable table = document.createTable(listTableSize, 6);
-
+			table.setWidth(100);
+//			table.setCellMargins(0, 0,0,1 );
+//			table.setRowBandSize(10);
 			table.getRow(0).getCell(0).setText("Группа");
+
+
 			table.getRow(0).getCell(1).setText("Образовательная программа");
 			table.getRow(0).getCell(2).setText("Дата начала");
 			table.getRow(0).getCell(3).setText("Время начала");
