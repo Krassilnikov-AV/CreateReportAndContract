@@ -14,15 +14,15 @@ public class ConnectionApp {
 //	public static void main(String[] args) throws SQLException, IOException {
 //		ConnectionApp conApp = new ConnectionApp();
 ////
-//		SQLQueryDate SQLQueryDate = new SQLQueryDate();
+//		SQLQueryData SQLQueryData = new SQLQueryData();
 //		conApp.getNameURL();
 //
-////		SQLQueryDate.deletedDataSQL();
-////		SQLQueryDate.insertExecuteBatchQuerySQL();
-////		SQLQueryDate.insertExecuteUpdateQuerySQL();
+////		SQLQueryData.deletedDataSQL();
+////		SQLQueryData.insertExecuteBatchQuerySQL();
+////		SQLQueryData.insertExecuteUpdateQuerySQL();
 //
-////		SQLQueryDate.insertStartDateSQL();
-////		SQLQueryDate.insertStartTimeSQL();
+////		SQLQueryData.insertStartDateSQL();
+////		SQLQueryData.insertStartTimeSQL();
 //
 //		exQuery.writeWithCompileQuery(100);
 //		exQuery.writeInABatchWithCompiledQuery(100);

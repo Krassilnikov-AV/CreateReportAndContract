@@ -11,11 +11,16 @@ import java.util.*;
 public interface SQLQuery {
 
 	public void insertExecuteBatchQuerySQL() throws IOException, SQLException;
-	public LinkedList<String> searchToProgram(String search) throws SQLException;
-	public LinkedList<String> searchToCodegroup(String search) throws SQLException;
-	public LinkedList<String> searchToAuditorium(String search) throws SQLException;
-	public List<String> searchToDateStart(String search) throws SQLException, ParseException;
-	public LinkedList<String> searchToTeacher(String search) throws SQLException;
+	public LinkedList<String> searchToCodegroup(String search, String dateMonth) throws SQLException, ParseException;
+	public LinkedList<String> searchToProgram(String search, String dateMonth) throws SQLException, ParseException;
+	public List<String> searchToDateStart(String search, String dateMonth) throws SQLException, ParseException;
+	public List<String> searchToTimeStart(String search, String dateMonth) throws SQLException, ParseException;
+	public List<String> searchToDateEnd(String search, String dateMonth) throws SQLException, ParseException;
+	public List<String> searchToTimeEnd(String search, String dateMonth) throws SQLException, ParseException;
+
+	public LinkedList<String> searchToAuditorium(String search, String dateMonth) throws SQLException, ParseException;
+	public LinkedList<String> searchToTeacher(String search, String dateMonth) throws SQLException, ParseException;
+
 	public void view();
 	public int deletedDataSQLloc() throws SQLException;
 }

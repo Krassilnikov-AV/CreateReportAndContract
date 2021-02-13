@@ -30,14 +30,17 @@ package createDocument;
  * (https://poi.apache.org/apidocs/index.html?org/apache/poi/openxml4j/opc/internal/package-summary.html.)
  */
 
+import com.sun.istack.internal.NotNull;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
-import query.SQLQueryDate;
+import query.SQLQueryData;
 
 import java.io.*;
 import java.math.BigInteger;
-import java.util.LinkedList;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.*;
 
 /**
  * Класс WriteWordRaspisanie
@@ -47,9 +50,24 @@ public class CreateScheduleReport implements CreateDocument {
 	/**
 	 * @param args the command line arguments
 	 */
-
+	@NotNull
 	@Override
-	public void createDoc() {
+	public void createDoc() throws SQLException, ParseException {
+
+		LinkedList<String> listCodeGroup;
+		LinkedList<String> listProgs;
+
+		LinkedList<String> listDateStart;
+		LinkedList<String> listTimeStart;
+		LinkedList<String> listDateEnd;
+		LinkedList<String> listTimeEnd;
+		LinkedList<String> listAuditorium;
+		LinkedList<String> listTeach;
+
+		String search = "Java"; // слово для поиска
+		String dateMonth = "2020-06-01";
+		SQLQueryData sqlQueryData = new SQLQueryData();
+		listProgs = sqlQueryData.searchToProgram(search, dateMonth);
 		try (OutputStream outputStream
 				 = new FileOutputStream("D:\\REPOSITORIES-2\\WordTest.docx")) {
 			// создаем  документа docx, к которому будем прикручивать наполнение (колонтитулы, текст)
@@ -109,42 +127,64 @@ public class CreateScheduleReport implements CreateDocument {
 			paragraph.setColor("000000");
 			paragraph.setBold(true);
 			paragraph.setText("РАСПИСАИЕ ЗАНЯТИЙ");
+			paragraph.addCarriageReturn();     // новый абзац
+			XWPFRun paragraphProg = bodyParagraph.createRun();
+			paragraphProg.setColor("000000");
+//			String nameProg = null;
+//			List<String> result=listProgs.stream()
+//				.filter(listProg -> listProg.contains(search)).collect(Collectors.toList());
+//			List<String> result = listProgs;
+//			for (String res :
+//				 result) {
+//				nameProg="Классная программа";
+//			}
+//			String res = null;
 
+			paragraphProg.setText("по программе профессиональной переподготовки ___________________");
+			paragraphProg.setText("__________________________________________________________________________________");
 
-			LinkedList<String> listProg;
-			LinkedList<String> listCodeGroup;
-			LinkedList<String> listAuditorium;
-			LinkedList<String> listTeach;
-			LinkedList<String> listDateStart;
+			listCodeGroup = sqlQueryData.searchToCodegroup(search, dateMonth);
+			listDateStart = (LinkedList<String>) sqlQueryData.searchToDateStart(search, dateMonth);
+//			listTimeStart = (LinkedList<String>) sqlQueryData.searchToTimeStart(search, dateMonth);
+//			listAuditorium = sqlQueryData.searchToAuditorium(search, dateMonth);
+//			listTeach = sqlQueryData.searchToTeacher(search, dateMonth);
 
-			String search = "Java"; // слово для поиска
-			SQLQueryDate sqlQueryDate = new SQLQueryDate();
-			listProg = sqlQueryDate.searchToProgram(search);
-			listTeach = sqlQueryDate.searchToTeacher(search);
-			listCodeGroup = sqlQueryDate.searchToCodegroup(search);
-			listAuditorium = sqlQueryDate.searchToAuditorium(search);
-			listDateStart = (LinkedList<String>) sqlQueryDate.searchToDateStart(search);
+			int listDateStSize = listProgs.size();  // определяет размер списка вставляемых значений (количество
+			// строк)
 
-			int sizeListProg = listProg.size();  // определяет размер списка вставляемых значений (количество строк)
-
-			XWPFTable table = document.createTable(sizeListProg, 5);
-			for (int i = 0; i < sizeListProg; i++) {
-				table.getRow(i).getCell(0).setText(listProg.get(i));
+			XWPFTable table = document.createTable(listDateStSize, 3);
+			for (int i = 0; i < listDateStSize; i++) {
+//				table.getRow(0).getCell(0).setText("Группа");
+//				table.getRow(0).getCell(1).setText("Образовательная программа");
+//				table.getRow(0).getCell(2).setText("Дата начала");
+//				table.getRow(0).getCell(3).setText("Время начала");
+//				table.getRow(0).getCell(4).setText("Аудитория");
+//				table.getRow(0).getCell(5).setText("Преподаватель");
+//				table.getRow(1).getCell(0).setText("1");
+//				table.getRow(1).getCell(1).setText("2");
+//				table.getRow(1).getCell(2).setText("3");
+//				table.getRow(1).getCell(3).setText("4");
+//				table.getRow(1).getCell(4).setText("5");
+//				table.getRow(1).getCell(5).setText("6");
+//				int j = 0;
+//				if (table.getRow(i).getCell(0).getText().isEmpty())
+				table.getRow(i).getCell(0).setText(listCodeGroup.get(i));
 				if (table.getRow(i).getCell(1).getText().isEmpty()) {
-					table.getRow(i).getCell(1).setText(listCodeGroup.get(i));
+					table.getRow(i).getCell(1).setText(listProgs.get(i));
 				}
 				if (table.getRow(i).getCell(2).getText().isEmpty()) {
 					table.getRow(i).getCell(2).setText(listDateStart.get(i));
 				}
-				if (table.getRow(i).getCell(3).getText().isEmpty()) {
-					table.getRow(i).getCell(3).setText(listAuditorium.get(i));
-				}
-				if (table.getRow(i).getCell(4).getText().isEmpty()) {
-					table.getRow(i).getCell(4).setText(listTeach.get(i));
-				}
+//				else if (table.getRow(i).getCell(3).getText().isEmpty()) {
+//					table.getRow(i).getCell(3).setText(listTimeStart.get(i));
+//				} else if (table.getRow(i).getCell(4).getText().isEmpty()) {
+//					table.getRow(i).getCell(4).setText(listAuditorium.get(i));
+//				} else if (table.getRow(i).getCell(5).getText().isEmpty()) {
+//					table.getRow(i).getCell(5).setText(listTeach.get(i));
+//				}
 			}
 //			table.addNewCol();
-//			for (String str : listProg) {
+//			for (String str : listProgs) {
 //				table.createRow().getCell(1).setText(str);
 //			}
 			// сохраняем шаблон docx документа в файл
@@ -156,14 +196,14 @@ public class CreateScheduleReport implements CreateDocument {
 		System.out.println("Файл успешно создан!");
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException, ParseException {
 		long start = System.currentTimeMillis();
 		CreateScheduleReport csr = new CreateScheduleReport();
 		csr.createDoc();
 		long finish = System.currentTimeMillis();
 		System.out.println("Время выполнения: " + (finish - start) + "_ms");
 	}
-
+//
 
 	private static CTP createFooterModel(String footerContent) {
 		// создаем футер или нижний колонтитул

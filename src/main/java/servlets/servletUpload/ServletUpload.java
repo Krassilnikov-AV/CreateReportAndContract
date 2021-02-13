@@ -1,7 +1,7 @@
 package servlets.servletUpload;
 
 import connection.ConnectionApp;
-import query.SQLQueryDate;
+import query.SQLQueryData;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
@@ -20,7 +20,7 @@ public class ServletUpload extends HttpServlet {
 	String path = null;
 	String name = "";
 	ConnectionApp conApp = new ConnectionApp();
-	SQLQueryDate sqlQuery = new SQLQueryDate();
+	SQLQueryData sqlQuery = new SQLQueryData();
 
 //	private static final Logger logger = LoggerFactory.getLogger(ServletUpload.class);
 //

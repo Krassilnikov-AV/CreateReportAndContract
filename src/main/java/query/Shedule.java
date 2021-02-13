@@ -5,7 +5,6 @@
 package query;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
 
 /**
  * Класс Shedule
@@ -14,14 +13,14 @@ public class Shedule {
 	public String prog;
 
 	private void methodChek() throws SQLException {
-		SQLQueryDate sqlQueryDate = new SQLQueryDate();
-		LinkedList<String> contents = sqlQueryDate.searchToProgram("Java");
-
-		int size = contents.size();
-		for (int i=0; i<size; i++) {
-			String el=contents.get(i);
-			System.out.println(el);
-		}
+//		SQLQueryData sqlQueryData = new SQLQueryData();
+//		LinkedList<String> contents = sqlQueryData.searchToProgram("Java");
+//
+//		int size = contents.size();
+//		for (int i=0; i<size; i++) {
+//			String el=contents.get(i);
+//			System.out.println(el);
+//		}
 //		for (Object o : contents) {
 ////			contents.add((String) o);
 //			System.out.println(o);

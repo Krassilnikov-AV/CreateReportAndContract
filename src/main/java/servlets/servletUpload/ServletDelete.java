@@ -5,7 +5,7 @@
 package servlets.servletUpload;
 
 import connection.PoolConnectionBuilder;
-import query.SQLQueryDate;
+import query.SQLQueryData;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,12 +19,12 @@ import java.sql.SQLException;
 @WebServlet(name = "ServletDelete", urlPatterns = {"/servletDelete"})
 public class ServletDelete extends HttpServlet {
 //private static final Logger logger = LoggerFactory.getLogger(ServletDelete.class);
-	private SQLQueryDate sqlQueryDate;
+	private SQLQueryData sqlQueryData;
 
 	@Override
 	public void init()  {
-		sqlQueryDate = new SQLQueryDate();
-	 sqlQueryDate.setConnectionBuilder(new PoolConnectionBuilder());
+		sqlQueryData = new SQLQueryData();
+	 sqlQueryData.setConnectionBuilder(new PoolConnectionBuilder());
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class ServletDelete extends HttpServlet {
 
 		if (delete) {
 			try {
-				sqlQueryDate.deletedDataSQL();
+				sqlQueryData.deletedDataSQL();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
