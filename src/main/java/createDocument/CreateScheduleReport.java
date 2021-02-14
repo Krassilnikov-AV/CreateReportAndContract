@@ -91,20 +91,21 @@ public class CreateScheduleReport implements CreateDocument {
 // получаем экземпляр XWPFHeaderFooterPolicy для работы с колонтитулами
 			XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(document, ctSectPr);
 
-			// создаем верхний колонтитул Word файла
-			CTP ctpHeaderStatement = createHeaderModel("УТВЕРЖДАЮ");
 
-			XWPFParagraph headerParagraphStatement = new XWPFParagraph(ctpHeaderStatement, document);
-			headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT,
-				new XWPFParagraph[]{headerParagraphStatement});
 			// устанавливаем сформированный верхний колонтитул в модель документа Word
 			CTP ctpHeaderFIO = createHeaderModel("__________Ипатов");
 			XWPFParagraph headerParagraphFIO = new XWPFParagraph(ctpHeaderFIO, document);
+			headerParagraphFIO.setAlignment(ParagraphAlignment.RIGHT);
 			headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT,
 				new XWPFParagraph[]{headerParagraphFIO});
+// создаем верхний колонтитул Word файла
+			CTP ctpHeaderStatement = createHeaderModel("УТВЕРЖДАЮ");
 
-
-
+			ctpHeaderStatement.addNewR().addNewT().setStringValue("_________О.С.Ипатов");
+			XWPFParagraph headerParagraphStatement = new XWPFParagraph(ctpHeaderStatement, document);
+			headerParagraphStatement.setAlignment(ParagraphAlignment.RIGHT);
+			headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT,
+				new XWPFParagraph[]{headerParagraphStatement});
 
 			// создаем нижний колонтитул docx файла
 			CTP ctpFooterModel = createFooterModel("Просто нижний колонтитул");
@@ -231,7 +232,7 @@ public class CreateScheduleReport implements CreateDocument {
 	}
 //
 
-	private static CTP createFooterModel(String footerContent) {
+	private CTP createFooterModel(String footerContent) {
 		// создаем футер или нижний колонтитул
 		CTP ctpFooterModel = CTP.Factory.newInstance();
 		CTR ctrFooterModel = ctpFooterModel.addNewR();
@@ -244,11 +245,11 @@ public class CreateScheduleReport implements CreateDocument {
 	//CTPageSz
 	private static CTP createHeaderModel(String headerContent) {
 		// создаем хедер или верхний колонтитул
-		CTP ctpHeaderModel = CTP.Factory.newInstance();
-		CTR ctrHeaderModel = ctpHeaderModel.addNewR();
-		CTText cttHeader = ctrHeaderModel.addNewT();
+		CTP ctpHeaderModel = CTP.Factory.newInstance();      // определение параметров вставки текста в колонтитуле
 
-		cttHeader.setStringValue(headerContent);
+		CTR ctrHeaderModel = ctpHeaderModel.addNewR();      // создание строки
+		CTText cttHeader = ctrHeaderModel.addNewT();         // создание текстового поля
+		cttHeader.setStringValue(headerContent);            // получение строчных параметров
 		return ctpHeaderModel;
 	}
 }
