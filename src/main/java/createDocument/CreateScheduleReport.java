@@ -92,12 +92,19 @@ public class CreateScheduleReport implements CreateDocument {
 			XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(document, ctSectPr);
 
 			// создаем верхний колонтитул Word файла
-			CTP ctpHeaderModel = createHeaderModel("УТВЕРЖДАЮ");
-			// устанавливаем сформированный верхний
-			// колонтитул в модель документа Word
-			XWPFParagraph headerParagraph = new XWPFParagraph(ctpHeaderModel, document);
+			CTP ctpHeaderStatement = createHeaderModel("УТВЕРЖДАЮ");
+
+			XWPFParagraph headerParagraphStatement = new XWPFParagraph(ctpHeaderStatement, document);
 			headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT,
-				new XWPFParagraph[]{headerParagraph});
+				new XWPFParagraph[]{headerParagraphStatement});
+			// устанавливаем сформированный верхний колонтитул в модель документа Word
+			CTP ctpHeaderFIO = createHeaderModel("__________Ипатов");
+			XWPFParagraph headerParagraphFIO = new XWPFParagraph(ctpHeaderFIO, document);
+			headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT,
+				new XWPFParagraph[]{headerParagraphFIO});
+
+
+
 
 			// создаем нижний колонтитул docx файла
 			CTP ctpFooterModel = createFooterModel("Просто нижний колонтитул");

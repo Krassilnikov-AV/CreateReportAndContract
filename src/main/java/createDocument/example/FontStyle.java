@@ -2,7 +2,7 @@
  * Copyright (c) 2021 Tander, All Rights Reserved.
  */
 
-package createDocument.test;
+package createDocument.example;
 
 public class FontStyle {
 
