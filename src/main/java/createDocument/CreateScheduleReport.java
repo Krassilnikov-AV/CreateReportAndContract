@@ -146,16 +146,20 @@ public class CreateScheduleReport implements CreateDocument {
 			listTeach = sqlQueryData.searchToTeacher(search, dateMonth);
 
 			paragraphProg.setText("по программе профессиональной переподготовки ___________________");
-/*
-* Доработать!*/
-//			String resMonth = listDateStart.getFirst();
-//			java.util.Date date = new SimpleDateFormat("yyyy.MM.dd").parse(resMonth);
-//			Calendar cal = Calendar.getInstance();
-//			cal.setTime(date);
-//			String dataMont = String.valueOf(cal.get(Calendar.MONTH));
-//			paragraphProg.setText(dataMont);
-//			paragraph.addCarriageReturn();     // новый абзац
-			paragraphProg.setText("__________________________________________________________________________________");
+
+			/*
+			 * Доработать_название месяца, окончание на -ь вместо -я!*/
+			String resMonth = listDateStart.getFirst();
+			DateFormat date = new SimpleDateFormat("yyyy.MM.dd", Locale.US);
+			Date date1 = date.parse(resMonth);
+
+			String dateStr = new SimpleDateFormat("MMMM yyyy").format(date1);
+
+//			XWPFRun paragraphMonth = bodyParagraph.createRun();
+			paragraphProg.addCarriageReturn();     // новый абзац
+			paragraphProg.setText(dateStr);
+			paragraphProg.addCarriageReturn();     // новый абзац
+			paragraphProg.setText("____________________________________________________________________________");
 
 
 			int listTableSize = listProgs.size();  // определяет количество строкразмер вставляемых значений из
