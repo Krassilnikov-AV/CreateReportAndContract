@@ -35,7 +35,7 @@ public class ContractTeacher implements CreateDocument {
 			CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
 			CTPageMar pageMar = sectPr.addNewPgMar();
 			pageMar.setLeft(BigInteger.valueOf(1300L));
-			pageMar.setRight(BigInteger.valueOf(500L));
+			pageMar.setRight(BigInteger.valueOf(1000L));
 			pageMar.setTop(BigInteger.valueOf(1000L));
 			pageMar.setBottom(BigInteger.valueOf(950L));
 
@@ -52,6 +52,8 @@ public class ContractTeacher implements CreateDocument {
 			для понимания процесса работы вставка пока будет продемонстрирована локально в методом  main
 			 */
 			String strDate = "25.12.2020";
+
+
 			XWPFParagraph stadtdate = document.createParagraph();
 			stadtdate.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
 //			stadtdate.setIndentationLeft(4);
@@ -61,13 +63,25 @@ public class ContractTeacher implements CreateDocument {
 			stadtdateRun.setText("Санкт-Петербург");
 			stadtdateRun.addTab();
 			stadtdateRun.addTab();
-			stadtdateRun.addTab();
-			stadtdateRun.addTab();
-			stadtdateRun.addTab();
-			stadtdateRun.addTab();
-			stadtdateRun.addTab();
-			stadtdateRun.addTab();
+
 			stadtdateRun.setText(strDate);
+
+			XWPFParagraph firstParagr = document.createParagraph();
+			String FIO = "Хорошая фамилия";
+			String numContract = "юр-323/20-д от 29.12.2020";
+			firstParagr.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
+			firstParagr.setIndentationLeft(2);
+			XWPFRun firstRun = firstParagr.createRun();
+			firstRun.setFontFamily("Times New Roman");
+			firstRun.setFontSize(12);
+//			firstRun.setStrike();
+			// добавить абзац, отступ
+			firstRun.setText("Федеральное государственное автономное образовательное учреждение" +
+				" высшего образования «Санкт-Петербургский политехнический университет Петра Великого»" +
+				" (ФГАОУ ВО «СПбПУ), именуемое в дальнейшем «Заказчик», в лице " + FIO + ", действующей " +
+				"на основании Доверенности №" + numContract + "с одной стороны и гражданина Российской Федерации:");
+			firstRun.addCarriageReturn();     // новый абзац
+
 			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
 		} catch (Exception e) {

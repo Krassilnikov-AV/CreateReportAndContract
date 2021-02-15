@@ -91,14 +91,14 @@ public class CreateScheduleReport implements CreateDocument {
 // получаем экземпляр XWPFHeaderFooterPolicy для работы с колонтитулами
 			XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(document, ctSectPr);
 
-
 			// устанавливаем сформированный верхний колонтитул в модель документа Word
 			CTP ctpHeaderFIO = createHeaderModel("__________Ипатов");
 			XWPFParagraph headerParagraphFIO = new XWPFParagraph(ctpHeaderFIO, document);
 			headerParagraphFIO.setAlignment(ParagraphAlignment.RIGHT);
 			headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT,
 				new XWPFParagraph[]{headerParagraphFIO});
-// создаем верхний колонтитул Word файла
+
+			// создаем верхний колонтитул Word файла
 			CTP ctpHeaderStatement = createHeaderModel("УТВЕРЖДАЮ");
 
 			ctpHeaderStatement.addNewR().addNewT().setStringValue("_________О.С.Ипатов");
@@ -122,7 +122,8 @@ public class CreateScheduleReport implements CreateDocument {
 			paragraphConfig.setItalic(false); // выбрать шрифт (обычный/полужирный)
 			paragraphConfig.setFontSize(11);  // размер шрифта
 			// HEX цвет без решетки #
-			paragraphConfig.setColor("000000");
+			paragraphConfig.setColor("000000");  // цвет текста
+			paragraphConfig.setFontFamily("Times New Roman"); // задание текств
 			paragraphConfig.setText("федеральное государственное автономное образовательное учреждение высшего " +
 				"образования <<Санкт-Петербургский политехнический университет Петра Великого (ФГАОУ ВО<<СПбПУ>>)");
 			paragraphConfig.addCarriageReturn();     // новый абзац
@@ -241,13 +242,16 @@ public class CreateScheduleReport implements CreateDocument {
 	}
 
 	//CTPageSz
-	private static CTP createHeaderModel(String headerContent) {
+	private static CTP createHeaderModel(String headerStatment) {
 		// создаем хедер или верхний колонтитул
 		CTP ctpHeaderModel = CTP.Factory.newInstance();      // определение параметров вставки текста в колонтитуле
 
-		CTR ctrHeaderModel = ctpHeaderModel.addNewR();      // создание строки
-		CTText cttHeader = ctrHeaderModel.addNewT();         // создание текстового поля
-		cttHeader.setStringValue(headerContent);            // получение строчных параметров
+		CTR ctrStatment = ctpHeaderModel.addNewR();      // создание строки
+		CTText cttHeader = ctrStatment.addNewT();         // создание текстового поля
+		cttHeader.setStringValue(headerStatment);            // получение строчных параметров
+//		CTR ctrFIO = ctpHeaderModel.addNewR();
+//		CTText cttFIO = ctrFIO.addNewT();
+//		cttFIO.setStringValue(headFIO);
 		return ctpHeaderModel;
 	}
 }
