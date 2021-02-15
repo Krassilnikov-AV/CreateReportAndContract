@@ -54,7 +54,7 @@ public class ContractTeacher implements CreateDocument {
 			String strDate = "25.12.2020";
 			XWPFParagraph stadtdate = document.createParagraph();
 			stadtdate.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
-			stadtdate.setIndentationLeft(4);
+//			stadtdate.setIndentationLeft(4);
 			XWPFRun stadtdateRun = stadtdate.createRun();
 			stadtdateRun.setFontFamily("Times New Roman");
 			stadtdateRun.setFontSize(12);

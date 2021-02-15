@@ -174,13 +174,11 @@ public class CreateScheduleReport implements CreateDocument {
 			// списка и заголовка таблицы
 			int listSelectData = listDateStart.size();  // кол-во строк вставляемых в таблицу с БД
 
-			XWPFTable table = document.createTable(listTableSize, 6);
+			XWPFTable table = document.createTable(listTableSize+2, 6);
 			table.setWidth(100);
 //			table.setCellMargins(0, 0,0,1 );
 //			table.setRowBandSize(10);
 			table.getRow(0).getCell(0).setText("Группа");
-
-
 			table.getRow(0).getCell(1).setText("Образовательная программа");
 			table.getRow(0).getCell(2).setText("Дата начала");
 			table.getRow(0).getCell(3).setText("Время начала");
@@ -192,22 +190,22 @@ public class CreateScheduleReport implements CreateDocument {
 			table.getRow(1).getCell(3).setText("4");
 			table.getRow(1).getCell(4).setText("5");
 			table.getRow(1).getCell(5).setText("6");
-			for (int i = 2; i < listSelectData; i++) {
-				table.getRow(i).getCell(0).setText(listCodeGroup.get(i));
-				if (table.getRow(i).getCell(1).getText().isEmpty()) {
-					table.getRow(i).getCell(1).setText(listProgs.get(i));
+			for (int i = 0; i < listSelectData; i++) {
+				table.getRow(i+2).getCell(0).setText(listCodeGroup.get(i));
+				if (table.getRow(i+2).getCell(1).getText().isEmpty()) {
+					table.getRow(i+2).getCell(1).setText(listProgs.get(i));
 				}
-				if (table.getRow(i).getCell(2).getText().isEmpty()) {
-					table.getRow(i).getCell(2).setText(listDateStart.get(i));
+				if (table.getRow(i+2).getCell(2).getText().isEmpty()) {
+					table.getRow(i+2).getCell(2).setText(listDateStart.get(i));
 				}
-				if (table.getRow(i).getCell(3).getText().isEmpty()) {
-					table.getRow(i).getCell(3).setText(listTimeStart.get(i));
+				if (table.getRow(i+2).getCell(3).getText().isEmpty()) {
+					table.getRow(i+2).getCell(3).setText(listTimeStart.get(i));
 				}
-				if (table.getRow(i).getCell(4).getText().isEmpty()) {
-					table.getRow(i).getCell(4).setText(listAuditorium.get(i));
+				if (table.getRow(i+2).getCell(4).getText().isEmpty()) {
+					table.getRow(i+2).getCell(4).setText(listAuditorium.get(i));
 				}
-				if (table.getRow(i).getCell(5).getText().isEmpty()) {
-					table.getRow(i).getCell(5).setText(listTeach.get(i));
+				if (table.getRow(i+2).getCell(5).getText().isEmpty()) {
+					table.getRow(i+2).getCell(5).setText(listTeach.get(i));
 				}
 			}
 //			table.addNewCol();
