@@ -53,7 +53,6 @@ public class ContractTeacher implements CreateDocument {
 			 */
 			String strDate = "25.12.2020";
 
-
 			XWPFParagraph stadtdate = document.createParagraph();
 			stadtdate.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
 //			stadtdate.setIndentationLeft(4);
@@ -70,17 +69,33 @@ public class ContractTeacher implements CreateDocument {
 			String FIO = "Хорошая фамилия";
 			String numContract = "юр-323/20-д от 29.12.2020";
 			firstParagr.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
-			firstParagr.setIndentationLeft(2);
+			firstParagr.setIndentationFirstLine(20);
 			XWPFRun firstRun = firstParagr.createRun();
 			firstRun.setFontFamily("Times New Roman");
 			firstRun.setFontSize(12);
 //			firstRun.setStrike();
 			// добавить абзац, отступ
+			firstParagr.setIndentationLeft(20);
 			firstRun.setText("Федеральное государственное автономное образовательное учреждение" +
 				" высшего образования «Санкт-Петербургский политехнический университет Петра Великого»" +
 				" (ФГАОУ ВО «СПбПУ), именуемое в дальнейшем «Заказчик», в лице " + FIO + ", действующей " +
 				"на основании Доверенности №" + numContract + "с одной стороны и гражданина Российской Федерации:");
-			firstRun.addCarriageReturn();     // новый абзац
+
+			XWPFTable tableFIO = document.createTable(2, 1);
+// вставка в таблицу ФИО
+			String fio = "Отличная фамилия";
+			tableFIO.setWidth(100);
+//			tableFIO.setRowBandSize(2);
+			XWPFTableRow tableRowOne = tableFIO.getRow(0);
+			tableRowOne.getCell(0).setText(fio);
+			XWPFTableRow xwpfTableTwo = tableFIO.getRow(1);
+
+			xwpfTableTwo.getCell(0).setText("(Фамилия, Имя, Отчество)");
+			firstRun.addTab();
+			firstRun.setText(" именуемый в дальнейшем «Исполнитель», с другой стороны, " +
+				"далее совместно именуемые «Стороны» для целей образовательного процесса заключили" +
+				" настоящий Договор (далее - Договор) о нижеследующем:", 1);
+
 
 			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
@@ -88,7 +103,5 @@ public class ContractTeacher implements CreateDocument {
 			e.printStackTrace();
 			System.out.println("Файл к сожалению не создан");
 		}
-
-
 	}
 }
