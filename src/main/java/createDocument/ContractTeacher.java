@@ -65,17 +65,17 @@ public class ContractTeacher implements CreateDocument {
 
 			stadtdateRun.setText(strDate);
 
-			XWPFParagraph firstParagr = document.createParagraph();
+			XWPFParagraph firstParagraph = document.createParagraph();
 			String FIO = "Хорошая фамилия";
 			String numContract = "юр-323/20-д от 29.12.2020";
-			firstParagr.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
-			firstParagr.setIndentationFirstLine(20);
-			XWPFRun firstRun = firstParagr.createRun();
+			firstParagraph.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
+			firstParagraph.setIndentationFirstLine(20);
+			XWPFRun firstRun = firstParagraph.createRun();
 			firstRun.setFontFamily("Times New Roman");
 			firstRun.setFontSize(12);
 //			firstRun.setStrike();
 			// добавить абзац, отступ
-			firstParagr.setIndentationLeft(20);
+			firstParagraph.setIndentationLeft(20);
 			firstRun.setText("Федеральное государственное автономное образовательное учреждение" +
 				" высшего образования «Санкт-Петербургский политехнический университет Петра Великого»" +
 				" (ФГАОУ ВО «СПбПУ), именуемое в дальнейшем «Заказчик», в лице " + FIO + ", действующей " +
@@ -88,15 +88,34 @@ public class ContractTeacher implements CreateDocument {
 //			tableFIO.setRowBandSize(2);
 			XWPFTableRow tableRowOne = tableFIO.getRow(0);
 			tableRowOne.getCell(0).setText(fio);
-			XWPFTableRow xwpfTableTwo = tableFIO.getRow(1);
+			XWPFTableRow xwpfRowTwo = tableFIO.getRow(1);
 
-			xwpfTableTwo.getCell(0).setText("(Фамилия, Имя, Отчество)");
-			firstRun.addTab();
-			firstRun.setText(" именуемый в дальнейшем «Исполнитель», с другой стороны, " +
+			xwpfRowTwo.getCell(0).setText("(Фамилия, Имя, Отчество)");
+//			firstRun.setTextPosition(1);
+			XWPFParagraph firstPar2 = document.createParagraph();
+			firstPar2.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
+			firstPar2.setIndentationFirstLine(20);
+			XWPFRun firstRun2 = firstParagraph.createRun();
+			firstRun2.setFontFamily("Times New Roman");
+			firstRun2.setFontSize(12);
+//			firstRun.setStrike();
+			// добавить абзац, отступ
+//			firstParagraph.setIndentationLeft(20);
+
+			firstRun2.setText(" именуемый в дальнейшем «Исполнитель», с другой стороны, " +
 				"далее совместно именуемые «Стороны» для целей образовательного процесса заключили" +
-				" настоящий Договор (далее - Договор) о нижеследующем:", 1);
-
-
+				" настоящий Договор (далее - Договор) о нижеследующем:");
+void XWPFParagraph parNew() {
+				XWPFParagraph firstParagraph = document.createParagraph();
+				String FIO = "Хорошая фамилия";
+				String numContract = "юр-323/20-д от 29.12.2020";
+				firstParagraph.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
+				firstParagraph.setIndentationFirstLine(20);
+				XWPFRun firstRun = firstParagraph.createRun();
+				firstRun.setFontFamily("Times New Roman");
+				firstRun.setFontSize(12);
+				return firstParagraph;
+			}
 			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
 		} catch (Exception e) {
