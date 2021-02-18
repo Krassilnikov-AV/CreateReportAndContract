@@ -17,8 +17,6 @@ import java.text.ParseException;
  */
 public class ContractTeacher implements CreateDocument {
 
-	private Object doc;
-
 	public static void main(String[] args) throws SQLException, ParseException {
 		long start = System.currentTimeMillis();
 		ContractTeacher contr = new ContractTeacher();
