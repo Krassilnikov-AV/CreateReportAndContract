@@ -38,6 +38,7 @@ public class ContractTeacher implements CreateDocument {
 			pageMar.setRight(BigInteger.valueOf(1000L));
 			pageMar.setTop(BigInteger.valueOf(1000L));
 			pageMar.setBottom(BigInteger.valueOf(950L));
+
 			XWPFRun title = methodRunTitle(document);
 			title.setText("Договор возмездного оказания преподавательских услуг № ");
 
@@ -60,17 +61,14 @@ public class ContractTeacher implements CreateDocument {
 			stadtdateRun.addTab();
 			stadtdateRun.setText(strDate);
 
-			XWPFParagraph firstParagraph = document.createParagraph();
+			/*получение первого обзаца
+			 * вставляемые данные с браузерного поля:
+			 * 1. FIO - должность и Ф.И.О. заказчика
+			 * 2. numContract - доверенность по которой осуществляется подпись заказчика*/
+			XWPFRun runFirst = getIndentationRun(document);
 			String FIO = "Хорошая фамилия";
 			String numContract = "юр-323/20-д от 29.12.2020";
-			firstParagraph.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
-//			firstParagraph.setIndentationFirstLine(20);
-			XWPFRun firstRun = firstParagraph.createRun();
-			firstRun.setFontFamily("Times New Roman");
-			firstRun.setFontSize(12);
-			firstParagraph.setIndentationHanging(-1050);
-			firstParagraph.setIndentationLeft(20);
-			firstRun.setText("Федеральное государственное автономное образовательное учреждение" +
+			runFirst.setText("Федеральное государственное автономное образовательное учреждение" +
 				" высшего образования «Санкт-Петербургский политехнический университет Петра Великого»" +
 				" (ФГАОУ ВО «СПбПУ), именуемое в дальнейшем «Заказчик», в лице " + FIO + ", действующей " +
 				"на основании Доверенности №" + numContract + "с одной стороны и гражданина Российской Федерации:");
@@ -86,9 +84,8 @@ public class ContractTeacher implements CreateDocument {
 
 			xwpfRowTwo.getCell(0).setText("(Фамилия, Имя, Отчество)");
 
-
 			XWPFParagraph firstPar2 = document.createParagraph();
-			firstPar2.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
+			firstPar2.setAlignment(ParagraphAlignment.BOTH);     // выравнить по ширине
 			firstPar2.setIndentationFirstLine(20);
 			XWPFRun firstRun2 = firstPar2.createRun();
 			firstRun2.setFontFamily("Times New Roman");
@@ -96,27 +93,22 @@ public class ContractTeacher implements CreateDocument {
 			firstRun2.setText(" именуемый в дальнейшем «Исполнитель», с другой стороны, " +
 				"далее совместно именуемые «Стороны» для целей образовательного процесса заключили" +
 				" настоящий Договор (далее - Договор) о нижеследующем:");
-			firstRun2.addBreak();
+//			firstRun2.addBreak();
 
 			XWPFRun subjectAgreement = methodRunTitle(document);
 			subjectAgreement.setText("1. Предмет Договора");
 
-// поля programm и nameProgram вставляются пр помощи текстового поля с браузера
+// поля program и nameProgram вставляются пр помощи текстового поля с браузера
 			/*
 			 * 1. указат межстрочный интервал
 			 * 2. наименование программы прописным, полужирным
 			 *
 			 */
-			XWPFParagraph subject1 = document.createParagraph();
-			String programm = "дополнительной общеобразовательной общеразвивающей программе:";
-			subject1.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
-//			firstParagraph.setIndentationFirstLine(20);
-			XWPFRun subject1Run = subject1.createRun();
-			subject1Run.setFontFamily("Times New Roman");
-			subject1Run.setFontSize(12);
-			subject1.setIndentationHanging(-571);
-			subject1Run.setText("1.1. Исполнитель обязуется по заданию Заказчика оказать" +
-				" образовательные услуги по " + programm);
+			String program = "дополнительной общеобразовательной общеразвивающей программе:";
+			XWPFRun subject1 = getItems(document);
+			subject1.setText("1.1. Исполнитель обязуется по заданию Заказчика оказать" +
+				" образовательные услуги по " + program);
+
 /*
 сделать ширину до размера 16,5
 1. верхний текст: Times New Roman, 12, прописной, полужирный
@@ -136,18 +128,65 @@ public class ContractTeacher implements CreateDocument {
 			 * 1.
 			 */
 			XWPFParagraph subject2 = document.createParagraph();
-			String dataSt = null;
-			String dataEnd = null;
+			String dataSt = null;  // дата начала договора
+			String dataEnd = null; // дата окончания договора
+//			String
 			subject2.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
 			XWPFRun subject2Run = subject2.createRun();
 			subject2Run.setFontFamily("Times New Roman");
 			subject2Run.setFontSize(12);
 			subject2Run.addBreak();
 			subject2Run.setText("1.2. Исполнитель оказывает услуги с 00.00.2021" +
-				dataSt + "по" + dataEnd + " 00.00.2021. " +
+				dataSt + "по" + dataEnd + ". " +
 				"Общий объем оказываемых услуг составляет 00 академических часов. Оплата услуг " +
 				"Исполнителю производится в размере 00 (                 ) рублей в час. ");
 			subject2Run.addBreak();
+
+			XWPFRun TermPlace = methodRunTitle(document);
+			TermPlace.setText("2. Срок и место оказания услуг");
+
+			XWPFRun TermPlace1 = getItems(document);
+			String dSt = "01.09.2021";
+			String dEnd = "30.09.2021";
+			TermPlace1.setText("2.1. Период оказания услуг: с " + dSt + " по " + dEnd);
+
+			XWPFRun TermPlace2 = getItems(document);
+			String adresPlace = "ул. Обручевых, дом 1";
+			TermPlace2.setText("2.2. Место оказания услуг: г. Санкт- Петербург, " + adresPlace);
+
+			/*цена договора*/
+			XWPFRun ContractPrice = methodRunTitle(document);
+			ContractPrice.setText("3. Цена договора и порядок расчётов");
+
+			XWPFRun ContractPrice1 = getItems(document);
+			String priceNum = "10000";
+			String price = "Десять тысяч ";
+			ContractPrice1.setText("3.1. Общая цена Договора составляет " + priceNum + "(" + price + ")" +
+				"рублей 00 копеек, в том числе НДФЛ.");
+
+			XWPFRun rightObligation = methodRunTitle(document);
+			rightObligation.setText("4. Права и обязанности сторон");
+
+			XWPFRun responsibility = methodRunTitle(document);
+			responsibility.setText("5. Ответственность сторон");
+
+			XWPFRun forceMajeure = methodRunTitle(document);
+			forceMajeure.setText("6. Форс-мажор");
+
+			XWPFRun basisValidityPeriod = methodRunTitle(document);
+			basisValidityPeriod.setText("7. Срок действия, основания и порядок изменения и расторжения Договора");
+
+			XWPFRun disputeResolution = methodRunTitle(document);
+			disputeResolution.setText("8. Разрешение споров");
+
+			XWPFRun finalProvisions = methodRunTitle(document);
+			finalProvisions.setText("9. Заключительные положения");
+
+			XWPFRun addressBankdetails = methodRunTitle(document);
+			addressBankdetails.setText("10. Адреса и реквизиты сторон");
+
+
+			/*создание документа*/
 			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
 		} catch (Exception e) {
@@ -155,9 +194,10 @@ public class ContractTeacher implements CreateDocument {
 			System.out.println("Файл к сожалению не создан");
 		}
 	}
-/*
-* метод для получения оглавлений разделов договора
-* */
+
+	/*
+	 * метод для получения оглавлений разделов договора
+	 * */
 	private XWPFRun methodRunTitle(XWPFDocument doc) {
 		XWPFParagraph title = doc.createParagraph();
 		title.setAlignment(ParagraphAlignment.CENTER);
@@ -167,4 +207,29 @@ public class ContractTeacher implements CreateDocument {
 		paraTitRun.setFontSize(12);
 		return paraTitRun;
 	}
+	/*
+	 * метод для описания обзаца с красной строки
+	 */
+
+	private XWPFRun getIndentationRun(XWPFDocument doc) {
+		XWPFParagraph paragraph = doc.createParagraph();
+		paragraph.setAlignment(ParagraphAlignment.BOTH);     // выравнить по ширине
+		paragraph.setIndentationLeft(20);
+		paragraph.setIndentationHanging(-1050);         // отступ с левого края
+		XWPFRun paragraphRun = paragraph.createRun();       //
+		paragraphRun.setFontFamily("Times New Roman");     // шрифт название
+		paragraphRun.setFontSize(12);                        // номер шрифта
+		return paragraphRun;
+	}
+
+	private XWPFRun getItems(XWPFDocument doc) {
+		XWPFParagraph paragraph = doc.createParagraph();
+		paragraph.setAlignment(ParagraphAlignment.BOTH);
+		paragraph.setIndentationHanging(-571);
+		XWPFRun paragraphRun = paragraph.createRun();
+		paragraphRun.setFontFamily("Times New Roman");
+		paragraphRun.setFontSize(12);
+		return paragraphRun;
+	}
+
 }
