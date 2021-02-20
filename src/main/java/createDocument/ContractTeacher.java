@@ -185,7 +185,6 @@ public class ContractTeacher implements CreateDocument {
 			XWPFRun addressBankdetails = methodRunTitle(document);
 			addressBankdetails.setText("10. Адреса и реквизиты сторон");
 
-
 			/*создание документа*/
 			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
@@ -214,8 +213,10 @@ public class ContractTeacher implements CreateDocument {
 	private XWPFRun getIndentationRun(XWPFDocument doc) {
 		XWPFParagraph paragraph = doc.createParagraph();
 		paragraph.setAlignment(ParagraphAlignment.BOTH);     // выравнить по ширине
-		paragraph.setIndentationLeft(20);
+//		paragraph.setIndentationLeft(20);
+		paragraph.setSpacingBetween(1.0);
 		paragraph.setIndentationHanging(-1050);         // отступ с левого края
+		paragraph.setSpacingAfterLines(1);
 		XWPFRun paragraphRun = paragraph.createRun();       //
 		paragraphRun.setFontFamily("Times New Roman");     // шрифт название
 		paragraphRun.setFontSize(12);                        // номер шрифта
@@ -225,6 +226,7 @@ public class ContractTeacher implements CreateDocument {
 	private XWPFRun getItems(XWPFDocument doc) {
 		XWPFParagraph paragraph = doc.createParagraph();
 		paragraph.setAlignment(ParagraphAlignment.BOTH);
+		paragraph.setSpacingBetween(1.0);
 		paragraph.setIndentationHanging(-571);
 		XWPFRun paragraphRun = paragraph.createRun();
 		paragraphRun.setFontFamily("Times New Roman");

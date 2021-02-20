@@ -38,7 +38,7 @@ public class ReadExcelData {
 	final int academRecord = 20;   // академических записей (число)
 
 
-	String fileName = "Primer_raspisania.xlsx";
+	String fileName = "D:\\REPOSITORIES-2\\Primer_raspisania.xlsx";
 //	String fileName = "fileToRead";
 //	private LinkedList<String> columnStrData;
 
@@ -60,7 +60,7 @@ public class ReadExcelData {
 //		exr.getTime(columnIndex);
 	}
 
-	private java.sql.Date columndataDateSql;
+	public java.sql.Date columndataDateSql;
 	List<java.sql.Date> columnListDateSql;
 	private List<String> columndataStr;
 
@@ -84,31 +84,30 @@ public class ReadExcelData {
 				columnListDateSql = new LinkedList<>();
 				while (rowIterator.hasNext()) {
 					Row row = rowIterator.next();
+
 					Iterator<Cell> cellIterator = row.cellIterator();
 					while (cellIterator.hasNext()) {
 						Cell cell = cellIterator.next();
 
 						if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
 							if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
-								switch (cell.getCellType()) {
-									case Cell.CELL_TYPE_NUMERIC:
-										Date date = cell.getDateCellValue();
-										columndataDateSql = new java.sql.Date(date.getTime());
-										columnListDateSql.add(columndataDateSql);
-								}
-								break;
+
+								Date date = cell.getDateCellValue();
+								columndataDateSql = new java.sql.Date(date.getTime());
+								columnListDateSql.add(columndataDateSql);
 							}
 						}
 					}
 				}
 			}
+		}
 //			ios.close();
-			/*			просмотр прочитанного			 */
+		/*			просмотр прочитанного			 */
 //			Iterator it = columndataDate.iterator();
 //			while (it.hasNext()) {
 //				System.out.println(it.next());
 //			}
-		} catch (Exception e) {
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return (LinkedList<java.sql.Date>) columnListDateSql;
@@ -118,35 +117,29 @@ public class ReadExcelData {
 
 		try {
 			File f = new File(fileName);
-			FileInputStream ios = new FileInputStream(f);
-			XSSFWorkbook workbook = new XSSFWorkbook(ios);
-			XSSFSheet sheet = workbook.getSheetAt(0);
-			Iterator<Row> rowIterator = sheet.iterator();
-			columndataStr = new LinkedList<>();
+			try (FileInputStream ios = new FileInputStream(f)) {
+				XSSFWorkbook workbook = new XSSFWorkbook(ios);
+				XSSFSheet sheet = workbook.getSheetAt(0);
+				Iterator<Row> rowIterator = sheet.iterator();
+				columndataStr = new LinkedList<>();
 
-			while (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-				Iterator<Cell> cellIterator = row.cellIterator();
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-
-					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
-						if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
-							switch (cell.getCellType()) {
-								case Cell.CELL_TYPE_STRING: // получение строчных данных
-									columndataStr.add(cell.getStringCellValue());
-									break;
+				while (rowIterator.hasNext()) {
+					Row row = rowIterator.next();
+					Iterator<Cell> cellIterator = row.cellIterator();
+					while (cellIterator.hasNext()) {
+						Cell cell = cellIterator.next();
+						if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
+							if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
+								columndataStr.add(cell.getStringCellValue());
 							}
 						}
 					}
 				}
 			}
-			ios.close();
 			/*			просмотр прочитанного			 */
-//			Iterator it = columndataStr.iterator();
-//			while (it.hasNext()) {
-//				System.out.println(it.next());
-//			}
+			for (String s : columndataStr) {
+				System.out.println(s);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
