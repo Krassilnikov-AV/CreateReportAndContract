@@ -138,17 +138,14 @@ public class ContractTeacher implements CreateDocument {
 				" образовательные услуги по " + program);
 
 /*
-сделать ширину до размера 16,5
-1. верхний текст: Times New Roman, 12, прописной, полужирный
-2. нижний текст: Times New Roman, 9, прописной
-3. посмотреть межстрочный интервал
+получение таблицы для вставки наименования прпограммы
 */
 			String nameProgram = "«наименование»";
 			XWPFTable tableProgram = document.createTable(2, 1);
 			getWidth(tableProgram, 9150);
 
 			XWPFTableRow rowOneprog = tableProgram.getRow(0);
-				XWPFParagraph paragraphProgramm1 = rowOneprog.getCell(0).addParagraph();
+			XWPFParagraph paragraphProgramm1 = rowOneprog.getCell(0).addParagraph();
 
 			paragraphProgramm1.setAlignment(ParagraphAlignment.CENTER);
 			paragraphProgramm1.setSpacingAfter(0);
@@ -175,14 +172,6 @@ public class ContractTeacher implements CreateDocument {
 			setTableCellBorder(rowTwoprog.getCell(0), Border.BOTTOM, STBorder.NIL);
 			setTableCellBorder(rowTwoprog.getCell(0), Border.RIGHT, STBorder.NIL);
 			setTableCellBorder(rowTwoprog.getCell(0), Border.LEFT, STBorder.NIL);
-/**/
-
-
-//			XWPFTableRow tablePrRow1 = tableProgram.getRow(0);
-//			tablePrRow1.getCell(0).setText(nameProgram);
-//			XWPFTableRow tablePrRow2 = tableProgram.getRow(1);
-//			tablePrRow2.getCell(0).setText("(указать учебную тему/темы)");
-
 			/*
 			 * продолжение предмета договора п.2
 			 * 1.
@@ -190,7 +179,6 @@ public class ContractTeacher implements CreateDocument {
 			XWPFParagraph subject2 = document.createParagraph();
 			String dataSt = null;  // дата начала договора
 			String dataEnd = null; // дата окончания договора
-//			String
 			subject2.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
 			XWPFRun subject2Run = subject2.createRun();
 			subject2Run.setFontFamily("Times New Roman");
@@ -385,13 +373,10 @@ public class ContractTeacher implements CreateDocument {
 			finalProvisions94.setText("9.4. Договор составлен в 3 (трех) экземплярах, имеющих равную юридическую силу.");
 
 			/*
-
-
-
 			 */
 			XWPFRun addressBankdetails = methodRunTitle(document);
 			addressBankdetails.setText("10. Адреса и реквизиты сторон");
-
+			getTableBank(document);
 			/*создание документа*/
 			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
@@ -399,6 +384,15 @@ public class ContractTeacher implements CreateDocument {
 			e.printStackTrace();
 			System.out.println("Файл к сожалению не создан");
 		}
+	}
+	/*
+	 * метод получения таблицы п. 10
+	 * */
+	private void getTableBank(XWPFDocument document) {
+		XWPFTable tabBank=document.createTable(6, 2);
+		getWidth(tabBank, 9700);
+		XWPFTableRow tabRowBank = tabBank.createRow();
+		setTableCellBorder(tabRowBank.getCell(0), Border.BOTTOM, STBorder.NIL);
 	}
 
 	/*
@@ -414,6 +408,7 @@ public class ContractTeacher implements CreateDocument {
 		paraTitRun.setFontSize(12);
 		return paraTitRun;
 	}
+
 	/*
 	 * метод для описания обзаца с красной строки
 	 */
@@ -444,7 +439,7 @@ public class ContractTeacher implements CreateDocument {
 	}
 
 	/*
-	 * метод получения таблиц в документе
+	 * метод получения определённых границ в таблице документа
 	 * */
 	void setTableCellBorder(XWPFTableCell cell, Border border, STBorder.Enum type) {
 		CTTc tc = cell.getCTTc();
@@ -485,6 +480,9 @@ public class ContractTeacher implements CreateDocument {
 		if (addBreak) run.addBreak();
 	}
 
+	/*
+	 *метод для задания ширтны таблицы
+	 */
 	//	9150
 	private CTTblWidth getWidth(XWPFTable tab, int value) {
 		CTTblWidth width = tab.getCTTbl().addNewTblPr().addNewTblW();
