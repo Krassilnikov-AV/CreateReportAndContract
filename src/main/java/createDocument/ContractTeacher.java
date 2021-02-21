@@ -123,21 +123,34 @@ public class ContractTeacher implements CreateDocument {
 				paragraphRun.setFontSize(12);                        // номер шрифта
 				return paragraphRun;
 			}*/
-			XWPFParagraph tab=document.createParagraph();
-			tab.setAlignment(ParagraphAlignment.CENTER);
-			tab.setSpacingAfter(0);
-			XWPFRun tabrun=tab.createRun();
-			tabrun.setFontFamily("Times New Roman");
+			XWPFParagraph tab = document.createParagraph();
+
 
 			XWPFTable table = document.createTable(2, 1);
+//			table.setWidth(15000);
+			XWPFTableRow rowOne = table.getRow(0);
+			XWPFParagraph paragraph = rowOne.getCell(0).addParagraph();
+			paragraph.setAlignment(ParagraphAlignment.CENTER);
+			paragraph.setSpacingAfter(0);
+			setRun(paragraph.createRun(), "Times New Roman", 10, "2b5079", fio, false, false);
+			rowOne.getCell(0).removeParagraph(0);
 
-			XWPFTableRow row1 = table.getRow(0);
-			XWPFTableCell cell1 = row1.getCell(0);
-			cell1.setParagraph(tab);
-			cell1.setText(fio);
-			setTableCellBorder(cell1, Border.TOP, STBorder.NIL);
-			setTableCellBorder(cell1, Border.LEFT, STBorder.NIL);
-			setTableCellBorder(cell1, Border.RIGHT, STBorder.NIL);
+//			XWPFTableRow row1 = table.getRow(0);
+//			row1.setHeight(10);
+//			XWPFTableCell cell1 = row1.getCell(0);
+//
+//			cell1.setParagraph(tab);
+
+//			tab.setSpacingAfter(0);
+//			XWPFRun tabRun = tab.createRun();
+//			tabRun.setFontFamily("Times New Roman");
+//			tabRun.setFontSize(12);
+//			cell1.setText(fio);
+
+//
+			setTableCellBorder(rowOne.getCell(0), Border.TOP, STBorder.NIL);
+			setTableCellBorder(rowOne.getCell(0), Border.LEFT, STBorder.NIL);
+			setTableCellBorder(rowOne.getCell(0), Border.RIGHT, STBorder.NIL);
 
 
 			XWPFTableRow row2 = table.getRow(1);
@@ -157,7 +170,6 @@ public class ContractTeacher implements CreateDocument {
 			firstRun2.setText(" именуемый в дальнейшем «Исполнитель», с другой стороны, " +
 				"далее совместно именуемые «Стороны» для целей образовательного процесса заключили" +
 				" настоящий Договор (далее - Договор) о нижеследующем:");
-//			firstRun2.addBreak();
 
 			XWPFRun subjectAgreement = methodRunTitle(document);
 			subjectAgreement.setText("1. Предмет Договора");
@@ -473,5 +485,17 @@ public class ContractTeacher implements CreateDocument {
 			if (right == null) right = tcBorders.addNewRight();
 			right.setVal(type);
 		}
+	}
+
+	/*
+	 * метод для получения настроек текста в ячейке
+	 * */
+	private void setRun(XWPFRun run, String fontFamily, int fontSize, String colorRGB, String text, boolean bold, boolean addBreak) {
+		run.setFontFamily(fontFamily);
+		run.setFontSize(fontSize);
+		run.setColor(colorRGB);
+		run.setText(text);
+		run.setBold(bold);
+		if (addBreak) run.addBreak();
 	}
 }
