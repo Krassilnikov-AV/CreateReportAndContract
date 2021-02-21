@@ -16,6 +16,7 @@ import java.text.ParseException;
  * Класс ContractTeacher
  */
 public class ContractTeacher implements CreateDocument {
+	private enum Border {LEFT, TOP, BOTTOM, RIGHT}
 
 	public static void main(String[] args) throws SQLException, ParseException {
 		long start = System.currentTimeMillis();
@@ -73,20 +74,83 @@ public class ContractTeacher implements CreateDocument {
 				" (ФГАОУ ВО «СПбПУ), именуемое в дальнейшем «Заказчик», в лице " + FIO + ", действующей " +
 				"на основании Доверенности №" + numContract + "с одной стороны и гражданина Российской Федерации:");
 
-			XWPFTable tableFIO = document.createTable(2, 1);
+//			XWPFTable tableFIO = document.createTable(2, 1);
+//			tableFIO.setColBandSize();
 // вставка в таблицу ФИО
 // доработать таблицу, по аналогии следующие
 			String fio = "Отличная фамилия";
-			tableFIO.setWidth(100);
-			XWPFTableRow tableRowOne = tableFIO.getRow(0);
-			tableRowOne.getCell(0).setText(fio);
-			XWPFTableRow xwpfRowTwo = tableFIO.getRow(1);
+//			tableFIO.setWidth(1000);
+//			tableFIO.setStyleID("");
+//			tableFIO.setCellMargins(500, 1000, 500, 1000);
+//			tableFIO.setInsideHBorder(XWPFTable.XWPFBorderType.NIL, 1, 5, "");
+//			XWPFTableRow tableRowOne = tableFIO.getRow(0);
+//			tableRowOne.getCell(0).setText(fio);
+//			XWPFTableRow xwpfRowTwo = tableFIO.getRow(1);
 
-			xwpfRowTwo.getCell(0).setText("(Фамилия, Имя, Отчество)");
+//			xwpfRowTwo.getCell(0).setText("(Фамилия, Имя, Отчество)");
+			/*
+			---------------новый метод!!!!!!--------------
+
+			*/
+			/*
+			*
+	/*
+	 * метод для получения оглавлений разделов договора
+	 * *//*
+			private XWPFRun methodRunTitle(XWPFDocument doc) {
+				XWPFParagraph title = doc.createParagraph();
+				title.setAlignment(ParagraphAlignment.CENTER);
+				title.setSpacingAfter(0);          // интервал после последней строки
+				XWPFRun paraTitRun = title.createRun();
+				paraTitRun.setBold(true);
+				paraTitRun.setFontFamily("Times New Roman");
+				paraTitRun.setFontSize(12);
+				return paraTitRun;
+			}*/
+			/*
+			 * метод для описания обзаца с красной строки
+			 */
+/*
+			private XWPFRun getIndentationRun(XWPFDocument doc) {
+				XWPFParagraph paragraph = doc.createParagraph();
+				paragraph.setAlignment(ParagraphAlignment.BOTH);     // выравнить по ширине
+//		paragraph.setIndentationLeft(20);
+				paragraph.setSpacingBetween(1.0);         // межстрочный интервал в абзаце
+				paragraph.setIndentationHanging(-1050);         // отступ с левого края
+				paragraph.setSpacingAfter(0);
+				XWPFRun paragraphRun = paragraph.createRun();       //
+				paragraphRun.setFontFamily("Times New Roman");     // шрифт название
+				paragraphRun.setFontSize(12);                        // номер шрифта
+				return paragraphRun;
+			}*/
+			XWPFParagraph tab=document.createParagraph();
+			tab.setAlignment(ParagraphAlignment.CENTER);
+			tab.setSpacingAfter(0);
+			XWPFRun tabrun=tab.createRun();
+			tabrun.setFontFamily("Times New Roman");
+
+			XWPFTable table = document.createTable(2, 1);
+
+			XWPFTableRow row1 = table.getRow(0);
+			XWPFTableCell cell1 = row1.getCell(0);
+			cell1.setParagraph(tab);
+			cell1.setText(fio);
+			setTableCellBorder(cell1, Border.TOP, STBorder.NIL);
+			setTableCellBorder(cell1, Border.LEFT, STBorder.NIL);
+			setTableCellBorder(cell1, Border.RIGHT, STBorder.NIL);
+
+
+			XWPFTableRow row2 = table.getRow(1);
+			setTableCellBorder(row2.getCell(0), Border.BOTTOM, STBorder.NIL);
+			setTableCellBorder(row2.getCell(0), Border.RIGHT, STBorder.NIL);
+			setTableCellBorder(row2.getCell(0), Border.LEFT, STBorder.NIL);
+
+
+			row2.getCell(0).setText("Фамилия Имя Отчество");
 
 			XWPFParagraph firstPar2 = document.createParagraph();
 			firstPar2.setAlignment(ParagraphAlignment.BOTH);     // выравнить по ширине
-			firstPar2.setIndentationFirstLine(20);
+//			firstPar2.setIndentationFirstLine(20);
 			XWPFRun firstRun2 = firstPar2.createRun();
 			firstRun2.setFontFamily("Times New Roman");
 			firstRun2.setFontSize(12);
@@ -383,4 +447,31 @@ public class ContractTeacher implements CreateDocument {
 		return paragraphRun;
 	}
 
+	/*
+	 * метод получения таблиц в документе
+	 * */
+	void setTableCellBorder(XWPFTableCell cell, Border border, STBorder.Enum type) {
+		CTTc tc = cell.getCTTc();
+		CTTcPr tcPr = tc.getTcPr();
+		if (tcPr == null) tcPr = tc.addNewTcPr();
+		CTTcBorders tcBorders = tcPr.getTcBorders();
+		if (tcBorders == null) tcBorders = tcPr.addNewTcBorders();
+		if (border == Border.LEFT) {
+			CTBorder left = tcBorders.getLeft();
+			if (left == null) left = tcBorders.addNewLeft();
+			left.setVal(type);
+		} else if (border == Border.TOP) {
+			CTBorder top = tcBorders.getTop();
+			if (top == null) top = tcBorders.addNewTop();
+			top.setVal(type);
+		} else if (border == Border.BOTTOM) {
+			CTBorder bottom = tcBorders.getBottom();
+			if (bottom == null) bottom = tcBorders.addNewBottom();
+			bottom.setVal(type);
+		} else if (border == Border.RIGHT) {
+			CTBorder right = tcBorders.getRight();
+			if (right == null) right = tcBorders.addNewRight();
+			right.setVal(type);
+		}
+	}
 }
