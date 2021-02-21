@@ -83,9 +83,11 @@ public class ContractTeacher implements CreateDocument {
 			---------------новый метод!!!!!!--------------
 			*/
 
-			XWPFTable table = document.createTable(2, 1);
-			getWidth(table, 9150);                      //определение ширины таблицы
-			XWPFTableRow rowOne = table.getRow(0);
+			XWPFTable tableName = document.createTable(2, 1);
+			getWidth(tableName, 9150);                      //определение ширины таблицы
+			XWPFTableRow rowOne = tableName.getRow(0);
+
+// сделать метод для оптимизации получения данного типа таблиц
 			XWPFParagraph paragraph = rowOne.getCell(0).addParagraph();
 			paragraph.setAlignment(ParagraphAlignment.CENTER);
 			paragraph.setSpacingAfter(0);
@@ -100,7 +102,7 @@ public class ContractTeacher implements CreateDocument {
 			setTableCellBorder(rowOne.getCell(0), Border.LEFT, STBorder.NIL);
 			setTableCellBorder(rowOne.getCell(0), Border.RIGHT, STBorder.NIL);
 
-			XWPFTableRow rowTwo = table.getRow(1);
+			XWPFTableRow rowTwo = tableName.getRow(1);
 			XWPFParagraph paragraph2 = rowTwo.getCell(0).addParagraph();
 			paragraph2.setAlignment(ParagraphAlignment.CENTER);
 			paragraph2.setSpacingAfter(0);
@@ -141,14 +143,45 @@ public class ContractTeacher implements CreateDocument {
 2. нижний текст: Times New Roman, 9, прописной
 3. посмотреть межстрочный интервал
 */
-			XWPFTable tableProgram = document.createTable(2, 1);
 			String nameProgram = "«наименование»";
+			XWPFTable tableProgram = document.createTable(2, 1);
 			getWidth(tableProgram, 9150);
 
-			XWPFTableRow tablePrRow1 = tableProgram.getRow(0);
-			tablePrRow1.getCell(0).setText(nameProgram);
-			XWPFTableRow tablePrRow2 = tableProgram.getRow(1);
-			tablePrRow2.getCell(0).setText("(указать учебную тему/темы)");
+			XWPFTableRow rowOneprog = tableProgram.getRow(0);
+				XWPFParagraph paragraphProgramm1 = rowOneprog.getCell(0).addParagraph();
+
+			paragraphProgramm1.setAlignment(ParagraphAlignment.CENTER);
+			paragraphProgramm1.setSpacingAfter(0);
+
+			setRun(paragraphProgramm1.createRun(), "Times New Roman", 12,
+				"2b5079", nameProgram, false, true, false);
+			rowOneprog.getCell(0).removeParagraph(0);
+
+			setTableCellBorder(rowOneprog.getCell(0), Border.TOP, STBorder.NIL);
+			setTableCellBorder(rowOneprog.getCell(0), Border.LEFT, STBorder.NIL);
+			setTableCellBorder(rowOneprog.getCell(0), Border.RIGHT, STBorder.NIL);
+
+			XWPFTableRow rowTwoprog = tableProgram.getRow(1);
+
+			XWPFParagraph paragraphProgramm2 = rowTwoprog.getCell(0).addParagraph();
+
+			paragraphProgramm2.setAlignment(ParagraphAlignment.CENTER);
+			paragraphProgramm2.setSpacingAfter(0);
+
+			setRun(paragraphProgramm2.createRun(), "Times New Roman", 8,
+				"000000", "(указать учебную тему/темы)", false, true, false);
+			rowTwoprog.getCell(0).removeParagraph(0);
+
+			setTableCellBorder(rowTwoprog.getCell(0), Border.BOTTOM, STBorder.NIL);
+			setTableCellBorder(rowTwoprog.getCell(0), Border.RIGHT, STBorder.NIL);
+			setTableCellBorder(rowTwoprog.getCell(0), Border.LEFT, STBorder.NIL);
+/**/
+
+
+//			XWPFTableRow tablePrRow1 = tableProgram.getRow(0);
+//			tablePrRow1.getCell(0).setText(nameProgram);
+//			XWPFTableRow tablePrRow2 = tableProgram.getRow(1);
+//			tablePrRow2.getCell(0).setText("(указать учебную тему/темы)");
 
 			/*
 			 * продолжение предмета договора п.2
@@ -451,8 +484,9 @@ public class ContractTeacher implements CreateDocument {
 		run.setItalic(italic);
 		if (addBreak) run.addBreak();
 	}
-//	9150
-	private CTTblWidth getWidth(XWPFTable tab, int value){
+
+	//	9150
+	private CTTblWidth getWidth(XWPFTable tab, int value) {
 		CTTblWidth width = tab.getCTTbl().addNewTblPr().addNewTblW();
 		width.setType(STTblWidth.DXA);
 		width.setW(BigInteger.valueOf(value));
