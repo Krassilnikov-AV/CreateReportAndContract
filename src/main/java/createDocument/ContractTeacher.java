@@ -79,91 +79,41 @@ public class ContractTeacher implements CreateDocument {
 // вставка в таблицу ФИО
 // доработать таблицу, по аналогии следующие
 			String fio = "Отличная фамилия";
-//			tableFIO.setWidth(1000);
-//			tableFIO.setStyleID("");
-//			tableFIO.setCellMargins(500, 1000, 500, 1000);
-//			tableFIO.setInsideHBorder(XWPFTable.XWPFBorderType.NIL, 1, 5, "");
-//			XWPFTableRow tableRowOne = tableFIO.getRow(0);
-//			tableRowOne.getCell(0).setText(fio);
-//			XWPFTableRow xwpfRowTwo = tableFIO.getRow(1);
-
-//			xwpfRowTwo.getCell(0).setText("(Фамилия, Имя, Отчество)");
 			/*
 			---------------новый метод!!!!!!--------------
-
 			*/
-			/*
-			*
-	/*
-	 * метод для получения оглавлений разделов договора
-	 * *//*
-			private XWPFRun methodRunTitle(XWPFDocument doc) {
-				XWPFParagraph title = doc.createParagraph();
-				title.setAlignment(ParagraphAlignment.CENTER);
-				title.setSpacingAfter(0);          // интервал после последней строки
-				XWPFRun paraTitRun = title.createRun();
-				paraTitRun.setBold(true);
-				paraTitRun.setFontFamily("Times New Roman");
-				paraTitRun.setFontSize(12);
-				return paraTitRun;
-			}*/
-			/*
-			 * метод для описания обзаца с красной строки
-			 */
-/*
-			private XWPFRun getIndentationRun(XWPFDocument doc) {
-				XWPFParagraph paragraph = doc.createParagraph();
-				paragraph.setAlignment(ParagraphAlignment.BOTH);     // выравнить по ширине
-//		paragraph.setIndentationLeft(20);
-				paragraph.setSpacingBetween(1.0);         // межстрочный интервал в абзаце
-				paragraph.setIndentationHanging(-1050);         // отступ с левого края
-				paragraph.setSpacingAfter(0);
-				XWPFRun paragraphRun = paragraph.createRun();       //
-				paragraphRun.setFontFamily("Times New Roman");     // шрифт название
-				paragraphRun.setFontSize(12);                        // номер шрифта
-				return paragraphRun;
-			}*/
-			XWPFParagraph tab = document.createParagraph();
-
 
 			XWPFTable table = document.createTable(2, 1);
-//			table.setWidth(15000);
+			getWidth(table, 9150);                      //определение ширины таблицы
 			XWPFTableRow rowOne = table.getRow(0);
 			XWPFParagraph paragraph = rowOne.getCell(0).addParagraph();
 			paragraph.setAlignment(ParagraphAlignment.CENTER);
 			paragraph.setSpacingAfter(0);
-			setRun(paragraph.createRun(), "Times New Roman", 10, "2b5079", fio, false, false);
+			setRun(paragraph.createRun(), "Times New Roman", 12,
+				"2b5079", fio, false, true, false);
 			rowOne.getCell(0).removeParagraph(0);
-
-//			XWPFTableRow row1 = table.getRow(0);
-//			row1.setHeight(10);
-//			XWPFTableCell cell1 = row1.getCell(0);
-//
-//			cell1.setParagraph(tab);
-
-//			tab.setSpacingAfter(0);
-//			XWPFRun tabRun = tab.createRun();
-//			tabRun.setFontFamily("Times New Roman");
-//			tabRun.setFontSize(12);
-//			cell1.setText(fio);
-
-//
+/*
+вывод границы необходимой для видимости
+вывод границы видимости в данном случае вводится индивидуально
+*/
 			setTableCellBorder(rowOne.getCell(0), Border.TOP, STBorder.NIL);
 			setTableCellBorder(rowOne.getCell(0), Border.LEFT, STBorder.NIL);
 			setTableCellBorder(rowOne.getCell(0), Border.RIGHT, STBorder.NIL);
 
+			XWPFTableRow rowTwo = table.getRow(1);
+			XWPFParagraph paragraph2 = rowTwo.getCell(0).addParagraph();
+			paragraph2.setAlignment(ParagraphAlignment.CENTER);
+			paragraph2.setSpacingAfter(0);
+			setTableCellBorder(rowTwo.getCell(0), Border.BOTTOM, STBorder.NIL);
+			setTableCellBorder(rowTwo.getCell(0), Border.RIGHT, STBorder.NIL);
+			setTableCellBorder(rowTwo.getCell(0), Border.LEFT, STBorder.NIL);
 
-			XWPFTableRow row2 = table.getRow(1);
-			setTableCellBorder(row2.getCell(0), Border.BOTTOM, STBorder.NIL);
-			setTableCellBorder(row2.getCell(0), Border.RIGHT, STBorder.NIL);
-			setTableCellBorder(row2.getCell(0), Border.LEFT, STBorder.NIL);
-
-
-			row2.getCell(0).setText("Фамилия Имя Отчество");
+			setRun(paragraph2.createRun(), "Times New Roman", 8,
+				"000000", "Фамилия Имя Отчество", false, false, false);
+			rowTwo.getCell(0).removeParagraph(0);
 
 			XWPFParagraph firstPar2 = document.createParagraph();
 			firstPar2.setAlignment(ParagraphAlignment.BOTH);     // выравнить по ширине
-//			firstPar2.setIndentationFirstLine(20);
 			XWPFRun firstRun2 = firstPar2.createRun();
 			firstRun2.setFontFamily("Times New Roman");
 			firstRun2.setFontSize(12);
@@ -193,7 +143,8 @@ public class ContractTeacher implements CreateDocument {
 */
 			XWPFTable tableProgram = document.createTable(2, 1);
 			String nameProgram = "«наименование»";
-			tableProgram.setWidth(1000);
+			getWidth(tableProgram, 9150);
+
 			XWPFTableRow tablePrRow1 = tableProgram.getRow(0);
 			tablePrRow1.getCell(0).setText(nameProgram);
 			XWPFTableRow tablePrRow2 = tableProgram.getRow(1);
@@ -490,12 +441,22 @@ public class ContractTeacher implements CreateDocument {
 	/*
 	 * метод для получения настроек текста в ячейке
 	 * */
-	private void setRun(XWPFRun run, String fontFamily, int fontSize, String colorRGB, String text, boolean bold, boolean addBreak) {
+	private void setRun(XWPFRun run, String fontFamily, int fontSize, String colorRGB, String text, boolean bold,
+						boolean italic, boolean addBreak) {
 		run.setFontFamily(fontFamily);
 		run.setFontSize(fontSize);
 		run.setColor(colorRGB);
 		run.setText(text);
 		run.setBold(bold);
+		run.setItalic(italic);
 		if (addBreak) run.addBreak();
 	}
+//	9150
+	private CTTblWidth getWidth(XWPFTable tab, int value){
+		CTTblWidth width = tab.getCTTbl().addNewTblPr().addNewTblW();
+		width.setType(STTblWidth.DXA);
+		width.setW(BigInteger.valueOf(value));
+		return width;
+	}
+
 }
