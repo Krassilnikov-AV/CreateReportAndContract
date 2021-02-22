@@ -373,9 +373,12 @@ public class ContractTeacher implements CreateDocument {
 			 */
 			XWPFRun addressBankdetails = methodRunTitle(document);
 			addressBankdetails.setText("10. Адреса и реквизиты сторон");
-			getTableDetalsCustomerExecutor(document);
+			createTableDetalsCustomerExecutor(document);
 			XWPFParagraph xwpfParagraph = document.createParagraph();
 			xwpfParagraph.setPageBreak(true);    // разрыв страницы
+
+
+			creteActReceptionDelivery(document);
 			/*создание документа*/
 			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
@@ -385,10 +388,50 @@ public class ContractTeacher implements CreateDocument {
 		}
 	}
 
+	/*метод для получения акта №1*/
+	private void creteActReceptionDelivery(XWPFDocument document) {
+		XWPFRun oneStr = getLeftParagraphRun(document);
+		oneStr.setText("Федеральное государственное автономное образовательное учреждение высшего образования");
+		XWPFRun twoStr = getCenterParagraphRun(document);
+		twoStr.setText("«Санкт-Петербургский политехнический университет Петра Великого»");
+		XWPFRun threeStr = getCenterParagraphRun(document);
+		threeStr.setText("Высшая инженерная школа Институт дополнительного образования");
+		XWPFRun fourStr = getCenterParagraphRun(document);
+		fourStr.setFontSize(10);
+		fourStr.setText("___________________________________________________________________________________________");
+		XWPFRun fiveStr = getCenterParagraphRun(document);
+		fiveStr.setFontSize(8);
+		fiveStr.setText("                         (структурное подразделение)");
+		XWPFRun sixStr = getCenterParagraphRun(document);
+		sixStr.setFontSize(14);
+		sixStr.setBold(true);
+		sixStr.setText("АКТ № 1 от ");
+		String dateAct = "сентября 2021";
+		String dateDay = "";
+		sixStr.setText(" «" + dateDay + "»  " + dateAct + " г. ");
+		XWPFRun sevenStr=getLeftParagraphRun(document);
+		sevenStr.setText("сдачи-приёмки оказанных услуг к договору от «___»                2021 г. № _______");
+		XWPFRun eightStr=getLeftParagraphRun(document);
+		eightStr.setItalic(true);
+		eightStr.setBold(true);
+		eightStr.setText("                            Оплата из средств л/с");
+		String score = "124503003";
+		XWPFRun eightStOne=getLeftParagraphRun(document);
+		eightStOne.setText("124503003.");
+	}
+
 	/*
-	 * получение прозрачных границ таблицы
+		  *
+		   * */
+	private void deleteParagraph(XWPFDocument document, XWPFParagraph par) {
+		int pPos = document.getPosOfParagraph(par);
+		document.removeBodyElement(pPos);
+	}
+
+	/*
+	 * получение прозрачных границ таблицы с заполнением
 	 * */
-	private void getTableDetalsCustomerExecutor(XWPFDocument document) {
+	private void createTableDetalsCustomerExecutor(XWPFDocument document) {
 		XWPFTable tabBank = document.createTable(6, 2);
 // доработать: равномерные колонки по ширине
 		getWidth(tabBank, 9700);
@@ -598,7 +641,6 @@ public class ContractTeacher implements CreateDocument {
 	private XWPFRun getIndentationRun(XWPFDocument doc) {
 		XWPFParagraph paragraph = doc.createParagraph();
 		paragraph.setAlignment(ParagraphAlignment.BOTH);     // выравнить по ширине
-//		paragraph.setIndentationLeft(20);
 		paragraph.setSpacingBetween(1.0);         // межстрочный интервал в абзаце
 		paragraph.setIndentationHanging(-1050);         // отступ с левого края
 		paragraph.setSpacingAfter(0);
@@ -608,12 +650,41 @@ public class ContractTeacher implements CreateDocument {
 		return paragraphRun;
 	}
 
+	/*метод для определения абзаца с красной строки документа
+	 * выравнивания по ширине
+	 * межстрочного интарвала 1.0*/
 	private XWPFRun getItems(XWPFDocument doc) {
 		XWPFParagraph paragraph = doc.createParagraph();
 		paragraph.setAlignment(ParagraphAlignment.BOTH);
 		paragraph.setSpacingBetween(1.0);
 		paragraph.setSpacingAfter(0);
 		paragraph.setIndentationHanging(-571);
+		XWPFRun run = getMethodRun(paragraph);
+		return run;
+	}
+
+	/*метод определит абзац без красной строки
+	 * выравнивание по левому краю*/
+	private XWPFRun getLeftParagraphRun(XWPFDocument doc) {
+		XWPFParagraph paragraph = doc.createParagraph();
+		paragraph.setAlignment(ParagraphAlignment.LEFT);
+		paragraph.setSpacingBetween(1.0);
+		paragraph.setSpacingAfter(0);
+		XWPFRun leftRun = getMethodRun(paragraph);
+		return leftRun;
+	}
+
+	private XWPFRun getCenterParagraphRun(XWPFDocument doc) {
+		XWPFParagraph paragraph = doc.createParagraph();
+		paragraph.setAlignment(ParagraphAlignment.CENTER);
+		paragraph.setSpacingBetween(1.0);
+		paragraph.setSpacingAfter(0);
+		XWPFRun centerRun = getMethodRun(paragraph);
+		return centerRun;
+	}
+
+	/*метод получения Run*/
+	private XWPFRun getMethodRun(XWPFParagraph paragraph) {
 		XWPFRun paragraphRun = paragraph.createRun();
 		paragraphRun.setFontFamily("Times New Roman");
 		paragraphRun.setFontSize(12);
