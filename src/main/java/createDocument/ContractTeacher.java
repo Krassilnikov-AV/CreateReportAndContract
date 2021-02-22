@@ -147,9 +147,7 @@ public class ContractTeacher implements CreateDocument {
 			XWPFTableRow rowOneprog = tableProgram.getRow(0);
 			XWPFParagraph paragraphProgramm1 = rowOneprog.getCell(0).addParagraph();
 
-			paragraphProgramm1.setAlignment(ParagraphAlignment.CENTER);
-			paragraphProgramm1.setSpacingAfter(0);
-
+			getParagraphCenter(paragraphProgramm1);
 			setRun(paragraphProgramm1.createRun(), "Times New Roman", 12,
 				"2b5079", nameProgram, false, true, false);
 			rowOneprog.getCell(0).removeParagraph(0);
@@ -161,9 +159,7 @@ public class ContractTeacher implements CreateDocument {
 			XWPFTableRow rowTwoprog = tableProgram.getRow(1);
 
 			XWPFParagraph paragraphProgramm2 = rowTwoprog.getCell(0).addParagraph();
-
-			paragraphProgramm2.setAlignment(ParagraphAlignment.CENTER);
-			paragraphProgramm2.setSpacingAfter(0);
+			getParagraphCenter(paragraphProgramm2);
 
 			setRun(paragraphProgramm2.createRun(), "Times New Roman", 8,
 				"000000", "(указать учебную тему/темы)", false, true, false);
@@ -376,7 +372,9 @@ public class ContractTeacher implements CreateDocument {
 			 */
 			XWPFRun addressBankdetails = methodRunTitle(document);
 			addressBankdetails.setText("10. Адреса и реквизиты сторон");
-			getTableBank(document);
+			getTableDetalsCustomerExecutor(document);
+
+
 			/*создание документа*/
 			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
@@ -385,14 +383,166 @@ public class ContractTeacher implements CreateDocument {
 			System.out.println("Файл к сожалению не создан");
 		}
 	}
+
 	/*
-	 * метод получения таблицы п. 10
+	 * получение прозрачных границ таблицы
 	 * */
-	private void getTableBank(XWPFDocument document) {
-		XWPFTable tabBank=document.createTable(6, 2);
+	private void getTableDetalsCustomerExecutor(XWPFDocument document) {
+		XWPFTable tabBank = document.createTable(6, 2);
+// доработать: равномерные колонки по ширине
 		getWidth(tabBank, 9700);
-		XWPFTableRow tabRowBank = tabBank.createRow();
-		setTableCellBorder(tabRowBank.getCell(0), Border.BOTTOM, STBorder.NIL);
+		for (XWPFTableRow row : tabBank.getRows()) {
+			row.getCell(0);
+			setTableCellBorder(row.getCell(0), Border.TOP, STBorder.NIL);
+			setTableCellBorder(row.getCell(0), Border.BOTTOM, STBorder.NIL);
+			setTableCellBorder(row.getCell(0), Border.LEFT, STBorder.NIL);
+			setTableCellBorder(row.getCell(0), Border.RIGHT, STBorder.NIL);
+			setTableCellBorder(row.getCell(1), Border.TOP, STBorder.NIL);
+			setTableCellBorder(row.getCell(1), Border.BOTTOM, STBorder.NIL);
+			setTableCellBorder(row.getCell(1), Border.LEFT, STBorder.NIL);
+			setTableCellBorder(row.getCell(1), Border.RIGHT, STBorder.NIL);
+		}
+		XWPFTableRow rowTitulСustomer = tabBank.getRow(0);
+		XWPFParagraph paragraphTitulСustomer = rowTitulСustomer.getCell(0).addParagraph();
+		rowTitulСustomer.getCell(0).removeParagraph(0);
+		getParagraphCenter(paragraphTitulСustomer);
+		setRun(paragraphTitulСustomer.createRun(), "Times New Roman",
+			12, "000000", "ЗАКАЗЧИК", true, false, false);
+
+		XWPFTableRow rowTitulExecutor = tabBank.getRow(0);
+		XWPFParagraph paragraphTitulExecutor = rowTitulExecutor.getCell(1).addParagraph();
+		rowTitulExecutor.getCell(1).removeParagraph(0);
+		getParagraphCenter(paragraphTitulExecutor);
+		setRun(paragraphTitulExecutor.createRun(), "Times New Roman",
+			12, "000000", "ИСПОЛНИТЕЛЬ", true, false, false);
+
+		XWPFTableRow rowBankDetal = tabBank.getRow(1);
+		XWPFParagraph parBankDet = rowBankDetal.getCell(0).addParagraph();
+		rowBankDetal.getCell(0).removeParagraph(0);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "ФГАОУ ВО «СПбПУ»", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "Юридический адрес:", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "195251, Санкт-Петербург,", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "Политехническая ул., 29", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "ИНН 7804040077, КПП 780401001", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "ОКАТО 40273562000, ОКПО: 02068574", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "р/счет 40503810990554000001", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "БИК 044030790", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "ПАО «БАНК «САНКТ-ПЕТЕРБУРГ»", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "к/счет 30101810900000000790", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", " ", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", " ", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", " ", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "Почтовый адрес: ", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "195251, С.-Петербург, ", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "ул. Политехническая, д.29 ", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "Тел.: (812) 552-66-12 ", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "Факс: (812) 552-60-80 ", false, false, true);
+		setRun(parBankDet.createRun(), "Times New Roman",
+			12, "000000", "E-mail: office.ido@spbstu.ru ", false, false, false);
+
+		XWPFTableRow rowExecutorDetal = tabBank.getRow(1);
+		XWPFParagraph parExecutorDet = rowExecutorDetal.getCell(1).addParagraph();
+		rowExecutorDetal.getCell(1).removeParagraph(0);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "Ф.И.О.", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "Дата рождения", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "Место рождения:", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "Адрес регистрации:", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "Образование: высшее", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "Образование: высшее", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "Данные диплома вуза:", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", " ", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "серия  №  от", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", " ", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "Паспорт серия  №", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "Выдан кем/когда", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "ИНН", false, true, true);
+		setRun(parExecutorDet.createRun(), "Times New Roman",
+			12, "2b5079", "Номер страхового свидетельства", false, true, false);
+
+		XWPFTableRow rowExecutorBank = tabBank.getRow(2);
+		XWPFParagraph parExecutorBank = rowExecutorBank.getCell(1).addParagraph();
+		rowExecutorBank.getCell(1).removeParagraph(0);
+		setRun(parExecutorBank.createRun(), "Times New Roman",
+			12, "2b5079", "Наименование банка", false, true, true);
+		setRun(parExecutorBank.createRun(), "Times New Roman",
+			12, "2b5079", "БИК банка 044030790", false, true, true);
+		setRun(parExecutorBank.createRun(), "Times New Roman",
+			12, "2b5079", "№ счета 40817810090700087671", false, true, true);
+		setRun(parExecutorBank.createRun(), "Times New Roman",
+			12, "2b5079", "№ карты МИР 2200330564638743963", false, true, true);
+		setRun(parExecutorBank.createRun(), "Times New Roman",
+			12, "2b5079", "Тел.8921-942-0888", false, true, false);
+
+		XWPFTableRow rowСustomer = tabBank.getRow(3);
+		XWPFParagraph parСustomer = rowСustomer.getCell(0).addParagraph();
+		setRun(parСustomer.createRun(), "Times New Roman",
+			12, "000000", "Заказчик", true, false, true);
+		setRun(parСustomer.createRun(), "Times New Roman",
+			12, "2b5079", "И.о. Директора Института дополнительного", false, true, true);
+		setRun(parСustomer.createRun(), "Times New Roman",
+			12, "2b5079", "образования", false, true, true);
+		setRun(parСustomer.createRun(), "Times New Roman",
+			8, "2b5079", "", false, true, true);
+		setRun(parСustomer.createRun(), "Times New Roman",
+			12, "2b5079", "___________________/А.С. Курзанова/", true, false, false);
+
+		XWPFTableRow rowExecutor = tabBank.getRow(3);
+		XWPFParagraph parExecutor = rowExecutor.getCell(1).addParagraph();
+		setRun(parExecutor.createRun(), "Times New Roman",
+			12, "2b5079", "Исполнитель:", false, true, true);
+		setRun(parExecutor.createRun(), "Times New Roman",
+			12, "2b5079", "", false, true, true);
+		setRun(parExecutor.createRun(), "Times New Roman",
+			12, "2b5079", "", false, true, true);
+		setRun(parExecutor.createRun(), "Times New Roman",
+			12, "2b5079", "_________________/ФИО/", false, false, false);
+
+		XWPFTableRow rowExecutorMP = tabBank.getRow(4);
+		XWPFParagraph parExecutorMP = rowExecutorMP.getCell(0).addParagraph();
+		rowExecutorMP.getCell(0).removeParagraph(0);
+		setRun(parExecutorMP.createRun(), "Times New Roman",
+			12, "000000", "                МП", false, false, true);
+
+
+		/*
+		 */
+	}
+
+	private XWPFParagraph getParagraphCenter(XWPFParagraph paragraph) {
+		paragraph.setAlignment(ParagraphAlignment.CENTER);
+		paragraph.setSpacingAfter(0);
+		return paragraph;
 	}
 
 	/*
@@ -490,5 +640,12 @@ public class ContractTeacher implements CreateDocument {
 		width.setW(BigInteger.valueOf(value));
 		return width;
 	}
-
+	/*дораюотать для 2-х колонок*/
+//	private CTTblWidth getWidth2(XWPFTable tab, int value, int value2) {
+//		CTTblWidth width = tab.getCTTbl().addNewTblPr().addNewTblW();
+//		width.setType(STTblWidth.DXA);
+//		width.setW(BigInteger.valueOf(value));
+//		width.setW(BigInteger.valueOf(value2));
+//		return width;
+//	}
 }
