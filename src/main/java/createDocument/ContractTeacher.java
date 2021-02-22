@@ -369,12 +369,13 @@ public class ContractTeacher implements CreateDocument {
 			finalProvisions94.setText("9.4. Договор составлен в 3 (трех) экземплярах, имеющих равную юридическую силу.");
 
 			/*
+
 			 */
 			XWPFRun addressBankdetails = methodRunTitle(document);
 			addressBankdetails.setText("10. Адреса и реквизиты сторон");
 			getTableDetalsCustomerExecutor(document);
-
-
+			XWPFParagraph xwpfParagraph = document.createParagraph();
+			xwpfParagraph.setPageBreak(true);    // разрыв страницы
 			/*создание документа*/
 			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
@@ -528,16 +529,47 @@ public class ContractTeacher implements CreateDocument {
 		setRun(parExecutor.createRun(), "Times New Roman",
 			12, "2b5079", "_________________/ФИО/", false, false, false);
 
-		XWPFTableRow rowExecutorMP = tabBank.getRow(4);
-		XWPFParagraph parExecutorMP = rowExecutorMP.getCell(0).addParagraph();
-		rowExecutorMP.getCell(0).removeParagraph(0);
+		XWPFTableRow rowCustomerMP = tabBank.getRow(4);
+		XWPFParagraph parExecutorMP = rowCustomerMP.getCell(0).addParagraph();
+		rowCustomerMP.getCell(0).removeParagraph(0);
 		setRun(parExecutorMP.createRun(), "Times New Roman",
 			12, "000000", "                МП", false, false, true);
 
+		// First Row
+		CTHMerge hMerge = CTHMerge.Factory.newInstance();
+		hMerge.setVal(STMerge.RESTART);
+		tabBank.getRow(5).getCell(0).getCTTc().getTcPr().setHMerge(hMerge);
+		// Secound Row cell will be merged/"deleted"
+		CTHMerge hMerge1 = CTHMerge.Factory.newInstance();
+		hMerge.setVal(STMerge.CONTINUE);
+		tabBank.getRow(5).getCell(1).getCTTc().getTcPr().setHMerge(hMerge1);
 
-		/*
-		 */
+		XWPFTableRow rowAgreement = tabBank.getRow(5);
+		XWPFParagraph parAgreement = rowAgreement.getCell(0).addParagraph();
+		rowAgreement.getCell(0).removeParagraph(0);
+		setRun(parAgreement.createRun(), "Times New Roman",
+			12, "000000", "Согласовано", true, false, true);
+		setRun(parAgreement.createRun(), "Times New Roman",
+			12, "000000", "Директор ", false, true, false);
+		setRun(parAgreement.createRun(), "Times New Roman",
+			10, "000000", "ВИШ ИДО", false, false, true);
+		setRun(parAgreement.createRun(), "Times New Roman",
+			8, "000000", "                           (института)", false, false, true);
+		setRunH(parAgreement.createRun(), "Times New Roman",
+			12, "000000",
+			"                                                          Кудаков А.В.   ",
+			true, false, true, false);
+		setRun(parAgreement.createRun(), "Times New Roman",
+			12, "000000", "  /____________________/",
+			false, false, true);
+		setRun(parAgreement.createRun(), "Times New Roman",
+			8, "000000",
+			"                    			               (Фамилия, инициалы)               " +
+				"(Подпись)", false, false, false);
 	}
+	/*
+	 *
+	 */
 
 	private XWPFParagraph getParagraphCenter(XWPFParagraph paragraph) {
 		paragraph.setAlignment(ParagraphAlignment.CENTER);
@@ -621,6 +653,7 @@ public class ContractTeacher implements CreateDocument {
 	 * */
 	private void setRun(XWPFRun run, String fontFamily, int fontSize, String colorRGB, String text, boolean bold,
 						boolean italic, boolean addBreak) {
+
 		run.setFontFamily(fontFamily);
 		run.setFontSize(fontSize);
 		run.setColor(colorRGB);
@@ -628,6 +661,24 @@ public class ContractTeacher implements CreateDocument {
 		run.setBold(bold);
 		run.setItalic(italic);
 		if (addBreak) run.addBreak();
+	}
+
+	private void setRunH(XWPFRun run, String fontFamily, int fontSize, String colorRGB, String text, boolean bold,
+						 boolean italic, boolean un, boolean addBreak) {
+//		XWPFDocument doc = new XWPFDocument();
+//		XWPFParagraph paragraph = doc.createParagraph();
+//		paragraph.setAlignment(ParagraphAlignment.CENTER);
+//		XWPFRun run1 = paragraph.createRun();
+//		run=run1;
+		run.setFontFamily(fontFamily);
+		run.setFontSize(fontSize);
+		run.setColor(colorRGB);
+		run.setText(text);
+		run.setBold(bold);
+		run.setItalic(italic);
+		if (un) run.setUnderline(UnderlinePatterns.WORDS);
+		if (addBreak) run.addBreak();
+
 	}
 
 	/*
@@ -640,12 +691,4 @@ public class ContractTeacher implements CreateDocument {
 		width.setW(BigInteger.valueOf(value));
 		return width;
 	}
-	/*дораюотать для 2-х колонок*/
-//	private CTTblWidth getWidth2(XWPFTable tab, int value, int value2) {
-//		CTTblWidth width = tab.getCTTbl().addNewTblPr().addNewTblW();
-//		width.setType(STTblWidth.DXA);
-//		width.setW(BigInteger.valueOf(value));
-//		width.setW(BigInteger.valueOf(value2));
-//		return width;
-//	}
 }
