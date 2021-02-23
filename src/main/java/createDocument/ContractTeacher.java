@@ -434,40 +434,150 @@ public class ContractTeacher implements CreateDocument {
 
 		XWPFTable tableAct = document.createTable(3, 3);
 		getWidth(tableAct, 9700);
+		for (XWPFTableRow rowAct : tableAct.getRows()) {
+//			rowAct.getCell(0);
+			setTableCellBorder(rowAct.getCell(0), Border.TOP, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(0), Border.BOTTOM, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(0), Border.LEFT, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(0), Border.RIGHT, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(1), Border.TOP, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(1), Border.BOTTOM, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(1), Border.LEFT, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(1), Border.RIGHT, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(2), Border.TOP, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(2), Border.BOTTOM, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(2), Border.LEFT, STBorder.SINGLE);
+			setTableCellBorder(rowAct.getCell(2), Border.RIGHT, STBorder.SINGLE);
+		}
+
 		// выровнить по колонкам
 
-		XWPFTableRow row0=tableAct.getRow(0);
-		XWPFParagraph paragraph00=row0.getCell(0).addParagraph();
-		row0.getCell(0).removeParagraph(0);
-		getParagraphCenter(paragraph00);
-		setRun(paragraph00.createRun(),"Times New Roman",
+		XWPFTableRow row0 = tableAct.getRow(0);
+		XWPFParagraph paragraph00 = row0.getCell(0).addParagraph();
+//		row0.getCell(0).removeParagraph(0);
+		getParagraphCenter1(paragraph00);
+		setRun(paragraph00.createRun(), "Times New Roman",
 			10, "000000", "Дата", false, false, false);
-		XWPFParagraph paragraph01=row0.getCell(1).addParagraph();
-		row0.getCell(1).removeParagraph(0);
-		getParagraphCenter(paragraph01);
-		setRun(paragraph01.createRun(),"Times New Roman",
+		XWPFParagraph paragraph01 = row0.getCell(1).addParagraph();
+//		row0.getCell(1).removeParagraph(0);
+		getParagraphCenter1(paragraph01);
+		setRun(paragraph01.createRun(), "Times New Roman",
 			10, "000000", "Группа", false, false, false);
-		XWPFParagraph paragraph02=row0.getCell(2).addParagraph();
-		row0.getCell(2).removeParagraph(0);
-		getParagraphCenter(paragraph02);
-		setRun(paragraph02.createRun(),"Times New Roman",
+		XWPFParagraph paragraph02 = row0.getCell(2).addParagraph();
+//		row0.getCell(2).removeParagraph(0);
+		getParagraphCenter1(paragraph02);
+		setRun(paragraph02.createRun(), "Times New Roman",
 			10, "000000", "Количество часов", false, false, false);
+		XWPFTableRow row1 = tableAct.getRow(1);
+		// устранить нижний отступ !!!
+		XWPFParagraph paragraph12 = row1.getCell(2).addParagraph();
+		row1.getCell(2).removeParagraph(0);
+		getParagraphRight(paragraph12);
+		setRun(paragraph12.createRun(), "Times New Roman",
+			10, "000000", "  00 ак. часов", false, false, false);
+
 		/* слияние ячеек таблиц*/
-		// First Row
-//		CTHMerge hMerge = CTHMerge.Factory.newInstance();
-//		hMerge.setVal(STMerge.RESTART);
-//		tableAct.getRow(1).getCell(0).getCTTc().getTcPr().setHMerge(hMerge);
-//		// Secound Row cell will be merged/"deleted"
-//		CTHMerge hMerge1 = CTHMerge.Factory.newInstance();
-//		hMerge.setVal(STMerge.CONTINUE);
-//		tableAct.getRow(1).getCell(1).getCTTc().getTcPr().setHMerge(hMerge1);
+		getMergeCell(tableAct, 2, 0, 2, 1);
+		XWPFTableRow row20 = tableAct.getRow(2);
+		XWPFParagraph paragraph20 = row20.getCell(0).addParagraph();
+		getParagraphRight(paragraph20);
+		row20.getCell(0).removeParagraph(0);
+		setRun(paragraph20.createRun(), "Times New Roman",
+			12, "000000", "  ИТОГО: ", true, false, false);
+		// ----------------end table------------
+		XWPFRun run012 = getLeftParagraphRun(document);
+		run012.setFontSize(8);
+		run012.setText("   ");
+		XWPFRun run12 = getLeftIndentHParagraphRun(document);
+		run12.setText("Итого оказано услуг в количестве 00 (              ) академических часов.");
+		XWPFRun run13 = getLeftIndentHParagraphRun(document);
+		run13.setText("Вышеперечисленные услуги выполнены полностью и в срок в соответствии" +
+			" с условиями Договора. Заказчик претензий по объему, качеству и срокам оказанных услуг не имеет.");
+		XWPFRun run14 = getLeftIndentHParagraphRun(document);
+		run14.setText("Общая стоимость оказанных услуг составляет 000 (  тысяч) рублей 00 копеек, в том числе НДФЛ. ");
+		XWPFRun run15 = getLeftIndentHParagraphRun(document);
+		run15.setText("Настоящий Акт составлен в 3 (трех) экземплярах, имеющих равную юридическую силу.");
+		XWPFRun run16 = getLeftParagraphRun(document);
+		run16.setFontSize(8);
+		run16.setText("");
+		XWPFRun run17 = getLeftParagraphRun(document);
+		run17.setText("ИСПОЛНИТЕЛЬ\t_____________\t                    ФИО");
+		XWPFRun run18 = getLeftParagraphRun(document);
+		run18.setFontSize(8);
+		run18.setText("                (подпись) \t\t\t\t(ФИО полностью)");
+		XWPFParagraph par19 = document.createParagraph();
+//		par19.setSpacingBefore(10);
+		par19.setSpacingAfterLines(1);
+		par19.setSpacingAfter(0);
+		par19.setSpacingBetween(1.0);
+		XWPFRun run19 = par19.createRun();
+		run19.setFontSize(12);
+		run19.setFontFamily("Times New Roman");
+		run19.setText("Дата рождения             Паспорт: серия  №");
+		run19.addBreak();
+		run19.setText("выдан (когда и кем)");
+		XWPFRun run20 = par19.createRun();
+		run20.setFontSize(12);
+		run20.setFontFamily("Times New Roman");
+		run20.setText("  ");
+		run20.addBreak();
+		run20.setText("Проведенные занятия подтверждаю: ");
+		run20.addBreak();
+		run20.setText("Директор  ВИШ ИДО            ____________________________\t                 Кудаков А.В.");
+		run20.addBreak();
+		XWPFRun run21 = par19.createRun();
+		run21.setFontSize(8);
+		run21.setFontFamily("Times New Roman");
+		run21.setText("(руководитель подразделения)			(подпись)			(ФИО руководителя)");
+		run21.addBreak();
+		XWPFRun run22 = par19.createRun();
+		run22.setBold(true);
+		run22.setFontSize(12);
+		run22.setFontFamily("Times New Roman");
+		run22.setText("ЗАКАЗЧИК");
+		run22.addBreak();
+		XWPFRun run23 = par19.createRun();
+		run23.setBold(false);
+		run23.setFontSize(12);
+		run23.setFontFamily("Times New Roman");
+		run23.setText("И.о. директора Института дополнительного образования  _________________А.С.Курзанова");
+		run23.addBreak();
+		run23.addBreak();
+		XWPFRun run24 = par19.createRun();
+		run24.setFontSize(9);
+		run24.setFontFamily("Times New Roman");
+		run24.setText("                                                                                           " +
+			                          "(подпись)");
+		run24.addBreak();
+		run24.setText("                                                                                           " +
+			"                          М.П.");
+		XWPFRun run25 = par19.createRun();
+		run25.setFontSize(8);
+		run25.setFontFamily("Times New Roman");
+		run25.setText("Ответственный");
+		run25.addBreak();
+		run25.setText("по делопроизводству");
+		run25.addBreak();
+		run25.setText("_________________/Куркова А.С.");
+		run25.addBreak();
+		run25.setText("(подпись)\t\t(ФИО)");
+		run25.addBreak();
+		run25.setText("Телефон: 7030202 (доб.536)");
+		run25.addBreak(BreakType.PAGE);
+		/*
+		 *
 
-//		XWPFTableRow rowAgreement = tableAct.getRow(1);
-//		XWPFParagraph parAgreement = rowAgreement.getCell(0).addParagraph();
-//		rowAgreement.getCell(0).removeParagraph(0);
-//		setRun(parAgreement.createRun(), "Times New Roman",
-//			12, "000000", " ", true, false, false);
 
+
+
+/
+
+
+
+
+
+
+		 * */
 	}
 
 	private void deleteParagraph(XWPFDocument document, XWPFParagraph par) {
@@ -625,14 +735,8 @@ public class ContractTeacher implements CreateDocument {
 		setRun(parExecutorMP.createRun(), "Times New Roman",
 			12, "000000", "                МП", false, false, true);
 		/*слияние ячеек таблиц*/
-		// First Row
-		CTHMerge hMerge = CTHMerge.Factory.newInstance();
-		hMerge.setVal(STMerge.RESTART);
-		tabBank.getRow(5).getCell(0).getCTTc().getTcPr().setHMerge(hMerge);
-		// Secound Row cell will be merged/"deleted"
-		CTHMerge hMerge1 = CTHMerge.Factory.newInstance();
-		hMerge.setVal(STMerge.CONTINUE);
-		tabBank.getRow(5).getCell(1).getCTTc().getTcPr().setHMerge(hMerge1);
+
+		getMergeCell(tabBank, 5, 0, 5, 1);
 
 		XWPFTableRow rowAgreement = tabBank.getRow(5);
 		XWPFParagraph parAgreement = rowAgreement.getCell(0).addParagraph();
@@ -656,14 +760,41 @@ public class ContractTeacher implements CreateDocument {
 			8, "000000",
 			"                    			               (Фамилия, инициалы)               " +
 				"(Подпись)", false, false, false);
-
 	}
+
 	/*
 	 *
 	 */
+	private void getMergeCell(XWPFTable tab, int numRow1, int numCell1, int numRow2, int numCell2) {
+// First Row
+		CTHMerge hMerge = CTHMerge.Factory.newInstance();
+		hMerge.setVal(STMerge.RESTART);
+		tab.getRow(numRow1).getCell(numCell1).getCTTc().getTcPr().setHMerge(hMerge);
+		// Secound Row cell will be merged/"deleted"
+		CTHMerge hMerge1 = CTHMerge.Factory.newInstance();
+		hMerge.setVal(STMerge.CONTINUE);
+		tab.getRow(numRow2).getCell(numCell2).getCTTc().getTcPr().setHMerge(hMerge1);
+	}
 
 	private XWPFParagraph getParagraphCenter(XWPFParagraph paragraph) {
 		paragraph.setAlignment(ParagraphAlignment.CENTER);
+		paragraph.setSpacingAfter(0);
+		return paragraph;
+	}
+
+	private XWPFParagraph getParagraphCenter1(XWPFParagraph paragraph) {
+		paragraph.setAlignment(ParagraphAlignment.CENTER);
+		paragraph.setSpacingBefore(10);
+//		paragraph.setSpacingAfter(10);
+		return paragraph;
+	}
+	/*
+	 * метод для определения границы по правому краю,
+	 * без нижних и верхних отступов*/
+
+	private XWPFParagraph getParagraphRight(XWPFParagraph paragraph) {
+		paragraph.setAlignment(ParagraphAlignment.RIGHT);
+//		paragraph.setSpacingBefore(0);
 		paragraph.setSpacingAfter(0);
 		return paragraph;
 	}
@@ -713,12 +844,28 @@ public class ContractTeacher implements CreateDocument {
 
 	/*метод определит абзац без красной строки
 	 * выравнивание по левому краю*/
+	private XWPFRun getLeftIndentHParagraphRun(XWPFDocument doc) {
+		XWPFParagraph paragraph = doc.createParagraph();//
+		paragraph.setAlignment(ParagraphAlignment.LEFT);
+//		paragraph.setSpacingBefore(60);
+		paragraph.setSpacingBetween(1.0);
+//		paragraph.setSpacingAfter(10);   // добавлять 10ки
+		paragraph.setIndentationHanging(-571);
+		XWPFRun leftRun = getMethodRun(paragraph);
+		return leftRun;
+	}
+
+	/*метод определит абзац с красной строки
+	 * выравнивание по левому краю, отстпут 1.0*/
 	private XWPFRun getLeftParagraphRun(XWPFDocument doc) {
 		XWPFParagraph paragraph = doc.createParagraph();
 		paragraph.setAlignment(ParagraphAlignment.LEFT);
-		paragraph.setSpacingBetween(1.0);
-		paragraph.setSpacingAfter(0);
-		XWPFRun leftRun = getMethodRun(paragraph);
+//		paragraph.setSpacingBetween(0);
+//		paragraph.setSpacingAfter(0);
+//		paragraph.setSpacingBefore(0);
+		XWPFRun leftRun = paragraph.createRun();
+		leftRun.setFontFamily("Times New Roman");
+		leftRun.setFontSize(12);
 		return leftRun;
 	}
 
@@ -737,8 +884,10 @@ public class ContractTeacher implements CreateDocument {
 		XWPFParagraph paragraph = doc.createParagraph();
 		paragraph.setAlignment(ParagraphAlignment.CENTER);
 		paragraph.setSpacingBetween(1.0);
-		paragraph.setSpacingAfter(0);
-		XWPFRun centerRun = getMethodRun(paragraph);
+		paragraph.setSpacingAfter(10);
+		XWPFRun centerRun = paragraph.createRun();
+		centerRun.setFontFamily("Times New Roman");
+		centerRun.setFontSize(12);
 		return centerRun;
 	}
 
