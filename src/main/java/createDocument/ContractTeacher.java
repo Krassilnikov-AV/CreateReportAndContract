@@ -375,8 +375,8 @@ public class ContractTeacher implements CreateDocument {
 			addressBankdetails.setText("10. Адреса и реквизиты сторон");
 			createTableDetalsCustomerExecutor(document);
 			XWPFParagraph xwpfParagraph = document.createParagraph();
-			xwpfParagraph.setPageBreak(true);    // разрыв страницы
-
+			XWPFRun runEnd=xwpfParagraph.createRun();
+			runEnd.addBreak(BreakType.PAGE);
 
 			creteActReceptionDelivery(document);
 			/*создание документа*/
@@ -409,20 +409,32 @@ public class ContractTeacher implements CreateDocument {
 		String dateAct = "сентября 2021";
 		String dateDay = "";
 		sixStr.setText(" «" + dateDay + "»  " + dateAct + " г. ");
-		XWPFRun sevenStr=getLeftParagraphRun(document);
+		XWPFRun sevenStr = getLeftParagraphRun(document);
 		sevenStr.setText("сдачи-приёмки оказанных услуг к договору от «___»                2021 г. № _______");
-		XWPFRun eightStr=getLeftParagraphRun(document);
+		XWPFRun eightStr = getLeftParagraphRun(document);
 		eightStr.setItalic(true);
 		eightStr.setBold(true);
 		eightStr.setText("                            Оплата из средств л/с");
 		String score = "124503003";
-		XWPFRun eightStOne=getLeftParagraphRun(document);
-		eightStOne.setText("124503003.");
+		XWPFRun eightOneStr = eightStr;
+		eightOneStr.setText(score);
+		eightOneStr.addBreak();
+		XWPFRun runTen = getIndentationRun(document);
+		String official = "и.о. директора Института дополнительного образования Курзановой Александры Сергеевны";
+		String prikaz = "юр-323/20-д от 29.12.2020";
+		runTen.setText("Федеральное государственное автономное образовательное учреждение высшего образования " +
+			"«Санкт-Петербургский политехнический университет Петра Великого», именуемое в дальнейшем «Заказчик», в " +
+			"лице "+ official+" действующей на основании Доверенности    № "+prikaz+", с одной стороны, и гражданина (ка) " +
+			"Российской Федерации ФИО, именуемый (ая) в дальнейшем «Исполнитель», с другой стороны, составили настоящий Акт " +
+			"о нижеследующем:  ");
+		XWPFRun runEleven = geWidthParagraphRun(document);
+		String dop= "дополнительной общеобразовательной общеразвивающей программе: «наименование»";
+		runEleven.setText("Во исполнение Договора от «___»            2021 № _____________ Исполнитель оказал," +
+			" а Заказчик принял оказанные образовательные услуги по "+dop);
+
+
 	}
 
-	/*
-		  *
-		   * */
 	private void deleteParagraph(XWPFDocument document, XWPFParagraph par) {
 		int pPos = document.getPosOfParagraph(par);
 		document.removeBodyElement(pPos);
@@ -609,6 +621,7 @@ public class ContractTeacher implements CreateDocument {
 			8, "000000",
 			"                    			               (Фамилия, инициалы)               " +
 				"(Подпись)", false, false, false);
+
 	}
 	/*
 	 *
@@ -635,7 +648,7 @@ public class ContractTeacher implements CreateDocument {
 	}
 
 	/*
-	 * метод для описания обзаца с красной строки
+	 * метод для описания обзаца с красной строки на 1,5
 	 */
 
 	private XWPFRun getIndentationRun(XWPFDocument doc) {
@@ -672,6 +685,17 @@ public class ContractTeacher implements CreateDocument {
 		paragraph.setSpacingAfter(0);
 		XWPFRun leftRun = getMethodRun(paragraph);
 		return leftRun;
+	}
+
+	/*метод определит абзац без красной строки
+	 * выравнивание по ширине*/
+	private XWPFRun geWidthParagraphRun(XWPFDocument doc) {
+		XWPFParagraph paragraph = doc.createParagraph();
+		paragraph.setAlignment(ParagraphAlignment.BOTH);
+		paragraph.setSpacingBetween(1.0);
+		paragraph.setSpacingAfter(0);
+		XWPFRun widthRun = getMethodRun(paragraph);
+		return widthRun;
 	}
 
 	private XWPFRun getCenterParagraphRun(XWPFDocument doc) {
@@ -722,9 +746,10 @@ public class ContractTeacher implements CreateDocument {
 	/*
 	 * метод для получения настроек текста в ячейке
 	 * */
-	private void setRun(XWPFRun run, String fontFamily, int fontSize, String colorRGB, String text, boolean bold,
+	private void setRun(XWPFRun run,
+						String fontFamily,
+						int fontSize, String colorRGB, String text, boolean bold,
 						boolean italic, boolean addBreak) {
-
 		run.setFontFamily(fontFamily);
 		run.setFontSize(fontSize);
 		run.setColor(colorRGB);
@@ -749,7 +774,6 @@ public class ContractTeacher implements CreateDocument {
 		run.setItalic(italic);
 		if (un) run.setUnderline(UnderlinePatterns.WORDS);
 		if (addBreak) run.addBreak();
-
 	}
 
 	/*
