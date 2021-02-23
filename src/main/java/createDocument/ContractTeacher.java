@@ -375,7 +375,7 @@ public class ContractTeacher implements CreateDocument {
 			addressBankdetails.setText("10. Адреса и реквизиты сторон");
 			createTableDetalsCustomerExecutor(document);
 			XWPFParagraph xwpfParagraph = document.createParagraph();
-			XWPFRun runEnd=xwpfParagraph.createRun();
+			XWPFRun runEnd = xwpfParagraph.createRun();
 			runEnd.addBreak(BreakType.PAGE);
 
 			creteActReceptionDelivery(document);
@@ -424,14 +424,49 @@ public class ContractTeacher implements CreateDocument {
 		String prikaz = "юр-323/20-д от 29.12.2020";
 		runTen.setText("Федеральное государственное автономное образовательное учреждение высшего образования " +
 			"«Санкт-Петербургский политехнический университет Петра Великого», именуемое в дальнейшем «Заказчик», в " +
-			"лице "+ official+" действующей на основании Доверенности    № "+prikaz+", с одной стороны, и гражданина (ка) " +
+			"лице " + official + " действующей на основании Доверенности    № " + prikaz + ", с одной стороны, и гражданина (ка) " +
 			"Российской Федерации ФИО, именуемый (ая) в дальнейшем «Исполнитель», с другой стороны, составили настоящий Акт " +
 			"о нижеследующем:  ");
 		XWPFRun runEleven = geWidthParagraphRun(document);
-		String dop= "дополнительной общеобразовательной общеразвивающей программе: «наименование»";
+		String dop = "дополнительной общеобразовательной общеразвивающей программе: «наименование»";
 		runEleven.setText("Во исполнение Договора от «___»            2021 № _____________ Исполнитель оказал," +
-			" а Заказчик принял оказанные образовательные услуги по "+dop);
+			" а Заказчик принял оказанные образовательные услуги по " + dop);
 
+		XWPFTable tableAct = document.createTable(3, 3);
+		getWidth(tableAct, 9700);
+		// выровнить по колонкам
+
+		XWPFTableRow row0=tableAct.getRow(0);
+		XWPFParagraph paragraph00=row0.getCell(0).addParagraph();
+		row0.getCell(0).removeParagraph(0);
+		getParagraphCenter(paragraph00);
+		setRun(paragraph00.createRun(),"Times New Roman",
+			10, "000000", "Дата", false, false, false);
+		XWPFParagraph paragraph01=row0.getCell(1).addParagraph();
+		row0.getCell(1).removeParagraph(0);
+		getParagraphCenter(paragraph01);
+		setRun(paragraph01.createRun(),"Times New Roman",
+			10, "000000", "Группа", false, false, false);
+		XWPFParagraph paragraph02=row0.getCell(2).addParagraph();
+		row0.getCell(2).removeParagraph(0);
+		getParagraphCenter(paragraph02);
+		setRun(paragraph02.createRun(),"Times New Roman",
+			10, "000000", "Количество часов", false, false, false);
+		/* слияние ячеек таблиц*/
+		// First Row
+//		CTHMerge hMerge = CTHMerge.Factory.newInstance();
+//		hMerge.setVal(STMerge.RESTART);
+//		tableAct.getRow(1).getCell(0).getCTTc().getTcPr().setHMerge(hMerge);
+//		// Secound Row cell will be merged/"deleted"
+//		CTHMerge hMerge1 = CTHMerge.Factory.newInstance();
+//		hMerge.setVal(STMerge.CONTINUE);
+//		tableAct.getRow(1).getCell(1).getCTTc().getTcPr().setHMerge(hMerge1);
+
+//		XWPFTableRow rowAgreement = tableAct.getRow(1);
+//		XWPFParagraph parAgreement = rowAgreement.getCell(0).addParagraph();
+//		rowAgreement.getCell(0).removeParagraph(0);
+//		setRun(parAgreement.createRun(), "Times New Roman",
+//			12, "000000", " ", true, false, false);
 
 	}
 
@@ -589,7 +624,7 @@ public class ContractTeacher implements CreateDocument {
 		rowCustomerMP.getCell(0).removeParagraph(0);
 		setRun(parExecutorMP.createRun(), "Times New Roman",
 			12, "000000", "                МП", false, false, true);
-
+		/*слияние ячеек таблиц*/
 		// First Row
 		CTHMerge hMerge = CTHMerge.Factory.newInstance();
 		hMerge.setVal(STMerge.RESTART);
