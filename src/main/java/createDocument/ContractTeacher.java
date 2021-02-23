@@ -567,16 +567,6 @@ public class ContractTeacher implements CreateDocument {
 		/*
 		 *
 
-
-
-
-/
-
-
-
-
-
-
 		 * */
 	}
 
