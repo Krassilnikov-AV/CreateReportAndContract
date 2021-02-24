@@ -13,23 +13,13 @@ import java.nio.file.*;
  * Класс ServletUpload
  */
 @MultipartConfig
-@WebServlet("/servlet")
+@WebServlet("/servletErrorHandler")
 public class ServletUpload extends HttpServlet {
-//	private static final String SERVER_PATH = "D:\\REPOSITORIES-2";   // при отсутствии выбора пути сервера
 
 	String path = null;
 	String name = "";
 	ConnectionApp conApp = new ConnectionApp();
 	SQLQueryData sqlQuery = new SQLQueryData();
-
-//	private static final Logger logger = LoggerFactory.getLogger(ServletUpload.class);
-//
-//	@Override
-//	public void init() throws ServletException {
-//		logger.info("SERVLET is created");
-//
-//	}
-
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
