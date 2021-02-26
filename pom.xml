@@ -10,22 +10,30 @@
 	<packaging>war</packaging>
 	<build>
 		<plugins>
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-compiler-plugin</artifactId>-->
+				<!--<configuration>-->
+					<!--<source>8</source>-->
+					<!--<target>8</target>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<!--<configuration>-->
+					<!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
+				<!--</configuration>-->
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>8</source>
-					<target>8</target>
+					<source>7</source>
+					<target>7</target>
 				</configuration>
 			</plugin>
-			<!--<plugin>-->
-				<!--<groupId>org.apache.maven.plugins</groupId>-->
-				<!--<artifactId>maven-war-plugin</artifactId>-->
-				<!--<version>2.1.1</version>-->
-				<!--<configuration>-->
-					<!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
-				<!--</configuration>-->
-			<!--</plugin>-->
 		</plugins>
 </build>
 <dependencies>
@@ -35,16 +43,6 @@
 		<version>3.1.0</version>
 	</dependency>
 
-	<!--<dependency>-->
-		<!--<groupId>org.slf4j</groupId>-->
-		<!--<artifactId>slf4j-api</artifactId>-->
-		<!--<version>2.0.0-alpha1</version>-->
-	<!--</dependency>-->
-	<!--<dependency>-->
-		<!--<groupId>org.slf4j</groupId>-->
-		<!--<artifactId>slf4j-api</artifactId>-->
-		<!--<version>1.8.0-beta4</version>-->
-	<!--</dependency>-->
 	<dependency>
 		<groupId>org.slf4j</groupId>
 		<artifactId>slf4j-api</artifactId>
@@ -72,48 +70,8 @@
 	<dependency>
 		<groupId>org.apache.poi</groupId>
 		<artifactId>poi-ooxml-schemas</artifactId>
-		<version>3.9</version>
+		<version>3.17</version>
 	</dependency>
-	<!--<dependency>-->
-		<!--<groupId>org.apache.poi</groupId>-->
-		<!--<artifactId>poi</artifactId>-->
-		<!--<version>4.0.0</version>-->
-	<!--</dependency>-->
-	<!--<dependency>-->
-		<!--<groupId>org.apache.poi</groupId>-->
-		<!--<artifactId>poi-ooxml</artifactId>-->
-		<!--<version>4.0.0</version>-->
-	<!--</dependency>-->
-	<!--<dependency>-->
-		<!--<groupId>org.apache.poi</groupId>-->
-		<!--<artifactId>poi-ooxml-schemas</artifactId>-->
-		<!--<version>4.0.0</version>-->
-	<!--</dependency>-->
-
-	<!--<dependency>-->
-		<!--<groupId>org.apache.poi</groupId>-->
-		<!--<artifactId>poi</artifactId>-->
-		<!--<version>4.1.2</version>-->
-	<!--</dependency>-->
-
-	<!--<dependency>-->
-		<!--<groupId>org.apache.poi</groupId>-->
-		<!--<artifactId>poi-ooxml</artifactId>-->
-		<!--<version>4.1.2</version>-->
-	<!--</dependency>-->
-
-	<!--<dependency>-->
-		<!--<groupId>org.apache.poi</groupId>-->
-		<!--<artifactId>poi-ooxml-schemas</artifactId>-->
-		<!--<version>4.1.2</version>-->
-	<!--</dependency>-->
-<!--org.apache.poi ooxml-schemas 1.4 альбомная ориентация-->
-	<!--<dependency>-->
-		<!--<groupId>org.apache.poi</groupId>-->
-		<!--<artifactId>poi-ooxml-schemas</artifactId>-->
-		<!--<version>1.4</version>-->
-	<!--</dependency>-->
-
 	<dependency>
 		<groupId>org.apache.xmlbeans</groupId>
 		<artifactId>xmlbeans</artifactId>
@@ -123,28 +81,19 @@
 	<dependency>
 		<groupId>org.postgresql</groupId>
 		<artifactId>postgresql</artifactId>
-		<version>42.2.5</version>
+		<version>VERSION</version>
+	</dependency>
+
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.17</version>
 	</dependency>
 	<dependency>
 		<groupId>org.apache.poi</groupId>
 		<artifactId>ooxml-schemas</artifactId>
 		<version>1.4</version>
 	</dependency>
-	<dependency>
-		<groupId>log4j</groupId>
-		<artifactId>log4j</artifactId>
-		<version>1.2.17</version>
-	</dependency>
-
-	<!--
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.15</version>
-		</dependency>
-	-->
-
 </dependencies>
-
 
 </project>

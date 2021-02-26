@@ -1,15 +1,14 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xmlns="https://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="https://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_3_0.xsd
-https://java.sun.com/xml/ns/javaee " id="WebApp_ID" version="3.0">
-	<display-name>ServletDBLog4jExample</display-name>
+https://java.sun.com/xml/ns/javaee " id="WebApp_ID" version="4.0">
+	<display-name>CreateReportAndContract</display-name>
 	<welcome-file-list>
 		<welcome-file>login.html</welcome-file>
 	</welcome-file-list>
 	<context-param>
 		<param-name>dbUser</param-name>
-		<param-value>postgres</param-value>
+		<param-value>raspisanie</param-value>
 	</context-param>
 	<context-param>
 		<param-name>dbPassword</param-name>
@@ -17,7 +16,7 @@ https://java.sun.com/xml/ns/javaee " id="WebApp_ID" version="3.0">
 	</context-param>
 	<context-param>
 		<param-name>dbURL</param-name>
-		<param-value>jdbc:postgresql://localhost:5432/postgres</param-value>
+		<param-value>jdbc:postgresql://localhost:5432/raspisanie</param-value>
 	</context-param>
 	<context-param>
 		<param-name>log4j-config</param-name>

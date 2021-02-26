@@ -42,13 +42,13 @@ public class LoginServlet extends HttpServlet {
 			rd.include(request, response);
 		}else{
 
-			Connection con = (Connection) getServletContext().getAttribute("DBConnection");
+			Connection con = (Connection) getServletContext().getAttribute("DBConnectionManager");
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 			try {
 				ps = con.prepareStatement("select id, name, email,country from Users where email=? and password=? limit 1");
-				ps.setString(1, email);
-				ps.setString(2, password);
+				ps.setString(1, password);
+				ps.setString(3, email);
 				rs = ps.executeQuery();
 
 				if(rs != null && rs.next()){

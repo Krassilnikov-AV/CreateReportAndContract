@@ -7,7 +7,7 @@
 	<!--описание ресурса специальным набором тегов-->
 	<display-name>PoolDB</display-name>
 	<resource-ref>
-		<description>DB Connection</description>  <!--какое то описание-->
+		<description>DB Connection</description>  <!--какое то описани-->
 		<res-ref-name>jdbc/schedule</res-ref-name> <!--то имя, через которое будем искать данный ресурс-->
 		<!--
 		1. DataSource (интерфейс)- ссылка на ресурс, который предназначен для работы с пуллом коннектов.

@@ -19,7 +19,7 @@ public class RegisterServlet extends HttpServlet {
 	static Logger logger = Logger.getLogger(RegisterServlet.class);
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected  void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
@@ -45,10 +45,10 @@ public class RegisterServlet extends HttpServlet {
 			rd.include(request, response);
 		}else{
 
-			Connection con = (Connection) getServletContext().getAttribute("DBConnection");
+			Connection con = (Connection) getServletContext().getAttribute("DBConnectionManager");
 			PreparedStatement ps = null;
 			try {
-				ps = con.prepareStatement("insert into Users(name,email,country, password) values (?,?,?,?)");
+				ps = con.prepareStatement("insert into Users(name, email, country, password) values (?,?,?,?)");
 				ps.setString(1, name);
 				ps.setString(2, email);
 				ps.setString(3, country);
@@ -63,6 +63,7 @@ public class RegisterServlet extends HttpServlet {
 				PrintWriter out= response.getWriter();
 				out.println("<font color=green>Registration successful, please login below.</font>");
 				rd.include(request, response);
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 				logger.error("Database connection problem");
@@ -75,7 +76,5 @@ public class RegisterServlet extends HttpServlet {
 				}
 			}
 		}
-
 	}
-
 }
