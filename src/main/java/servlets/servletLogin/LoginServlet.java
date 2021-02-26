@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 			try {
-				ps = con.prepareStatement("select id, name, email,country from Users where email=? and password=? limit 1");
+				ps = con.prepareStatement("select id, name, email,country from userskey where email=? and password=? limit 1");
 				ps.setString(1, password);
 				ps.setString(3, email);
 				rs = ps.executeQuery();

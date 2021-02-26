@@ -46,9 +46,9 @@ public class RegisterServlet extends HttpServlet {
 		}else{
 
 			Connection con = (Connection) getServletContext().getAttribute("DBConnection");
-			PreparedStatement ps = null;
-			try {
-				ps = con.prepareStatement("insert into Users(name,email,country, password) values (?,?,?,?)");
+
+			try (PreparedStatement ps = con.prepareStatement("insert into userskey(name,email,country, password) " +
+				"values (?,?,?,?)")){
 				ps.setString(1, name);
 				ps.setString(2, email);
 				ps.setString(3, country);
@@ -67,13 +67,15 @@ public class RegisterServlet extends HttpServlet {
 				e.printStackTrace();
 				logger.error("Database connection problem");
 				throw new ServletException("DB Connection problem.");
-			}finally{
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.error("SQLException in closing PreparedStatement");
-				}
 			}
+//			finally{
+//				try {
+//					ps.close();
+//				}
+//				catch (SQLException e) {
+//					logger.error("SQLException in closing PreparedStatement");
+//				}
+//			}
 		}
 	}
 }
