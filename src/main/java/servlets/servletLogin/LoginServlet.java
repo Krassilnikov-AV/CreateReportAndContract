@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 			rd.include(request, response);
 		}else{
 
-			Connection con = (Connection) getServletContext().getAttribute("DBConnectionManager");
+			Connection con = (Connection) getServletContext().getAttribute("DBConnection");
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 			try {
