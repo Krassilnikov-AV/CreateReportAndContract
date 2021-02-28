@@ -12,43 +12,55 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.sql.*;
 
-@WebServlet(name = "Register", urlPatterns = { "/Register" })
+@WebServlet(name = "Register", urlPatterns = {"/Register"})
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	static Logger logger = Logger.getLogger(RegisterServlet.class);
 
+	private Connection con;
+
 	@Override
-	protected  void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void init() {
+		String driverClassName = "org.postgresql.Driver";
+		try {
+			Class.forName(driverClassName);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
 		String country = request.getParameter("country");
 		String errorMsg = null;
-		if(email == null || email.equals("")){
+		if (email == null || email.equals("")) {
 			errorMsg = "Email ID can't be null or empty.";
 		}
-		if(password == null || password.equals("")){
+		if (password == null || password.equals("")) {
 			errorMsg = "Password can't be null or empty.";
 		}
-		if(name == null || name.equals("")){
+		if (name == null || name.equals("")) {
 			errorMsg = "Name can't be null or empty.";
 		}
-		if(country == null || country.equals("")){
+		if (country == null || country.equals("")) {
 			errorMsg = "Country can't be null or empty.";
 		}
 
-		if(errorMsg != null){
+		if (errorMsg != null) {
 			RequestDispatcher rd = getServletContext().getRequestDispatcher("/register.html");
-			PrintWriter out= response.getWriter();
-			out.println("<font color=red>"+errorMsg+"</font>");
+			PrintWriter out = response.getWriter();
+			out.println("<font color=red>" + errorMsg + "</font>");
 			rd.include(request, response);
-		}else{
+		} else {
 
-			Connection con = (Connection) getServletContext().getAttribute("DBConnection");
+			con = (Connection) getServletContext().getAttribute("DBConnection");
 
-			try (PreparedStatement ps = con.prepareStatement("insert into userskey(name,email,country, password) " +
-				"values (?,?,?,?)")){
+			try (PreparedStatement ps =
+					 con.prepareStatement("insert into userskey(name, email, country, password) values (?,?,?,?)")) {
 				ps.setString(1, name);
 				ps.setString(2, email);
 				ps.setString(3, country);
@@ -56,11 +68,11 @@ public class RegisterServlet extends HttpServlet {
 
 				ps.execute();
 
-				logger.info("User registered with email="+email);
+				logger.info("User registered with email=" + email);
 
 				//forward to login page to login
 				RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
-				PrintWriter out= response.getWriter();
+				PrintWriter out = response.getWriter();
 				out.println("<font color=green>Registration successful, please login below.</font>");
 				rd.include(request, response);
 			} catch (SQLException e) {

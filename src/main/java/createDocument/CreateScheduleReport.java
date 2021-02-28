@@ -30,7 +30,6 @@ package createDocument;
  * (https://poi.apache.org/apidocs/index.html?org/apache/poi/openxml4j/opc/internal/package-summary.html.)
  */
 
-import com.sun.istack.internal.NotNull;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
@@ -50,7 +49,7 @@ public class CreateScheduleReport implements CreateDocument {
 	/**
 	 * @param args the command line arguments
 	 */
-	@NotNull
+
 	@Override
 	public void createDoc() throws SQLException, ParseException {
 

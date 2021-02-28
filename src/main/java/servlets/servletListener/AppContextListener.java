@@ -31,9 +31,7 @@ public class AppContextListener implements ServletContextListener {
 			DBConnectionManager connectionManager = new DBConnectionManager(dbURL, user, pwd);
 			ctx.setAttribute("DBConnection", connectionManager.getConnection());
 			System.out.println("DB Connection initialized successfully.");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 
