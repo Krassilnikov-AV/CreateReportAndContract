@@ -52,13 +52,13 @@ public class ReadExcelData {
 	static int columnInt = 1;
 
 	// основной метод класса для проверки считывания данных с таблицы
-	public static void main(String[] args) throws IOException {
-		ReadExcelData exr = new ReadExcelData();
-		exr.getString(0);
-//		exr.buildingTable();
-//		exr.getDate(columnIndex);
-//		exr.getTime(columnIndex);
-	}
+//	public static void main(String[] args) throws IOException {
+//		ReadExcelData exr = new ReadExcelData();
+//		exr.getString(0);
+////		exr.buildingTable();
+////		exr.getDate(columnIndex);
+////		exr.getTime(columnIndex);
+//	}
 
 	public java.sql.Date columndataDateSql;
 	List<java.sql.Date> columnListDateSql;
@@ -91,7 +91,6 @@ public class ReadExcelData {
 
 						if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
 							if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
-
 								Date date = cell.getDateCellValue();
 								columndataDateSql = new java.sql.Date(date.getTime());
 								columnListDateSql.add(columndataDateSql);

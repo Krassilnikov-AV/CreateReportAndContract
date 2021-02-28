@@ -1,8 +1,5 @@
 package servlets.servletUpload;
 
-import connection.ConnectionApp;
-import query.SQLQueryData;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
@@ -18,8 +15,28 @@ public class ServletUpload extends HttpServlet {
 
 	String path = null;
 	String name = "";
-	ConnectionApp conApp = new ConnectionApp();
-	SQLQueryData sqlQuery = new SQLQueryData();
+//	Connection connection = null;
+
+//	@Override
+//	public void init() {
+//		Properties properties = new Properties();
+//		try {
+//			properties.load(new FileInputStream(getServletContext().getRealPath("/WEB-INF/classes/usersKey" +
+//				".properties")));
+//			String dbUrl = properties.getProperty("db.url");
+//			String dbUsername = properties.getProperty("db.username");
+//			String dbPassword = properties.getProperty("db.password");
+//			String driverClassName = properties.getProperty("db.driverClassName");
+//
+//			Class.forName(driverClassName);
+//
+//			connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+//		} catch (IOException e) {
+//			throw new IllegalStateException(e);
+//		} catch (SQLException | ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,9 +46,20 @@ public class ServletUpload extends HttpServlet {
 		name = part.getSubmittedFileName();          // получить в классе чтения, создать в свойствах->читать и
 		// получать в необходимом классе для чтения
 		download(part.getInputStream(), name);
-		request.getRequestDispatcher("/index.html").forward(request, response);  // позволяет не выкидывать новую
-		// страницу
+		request.getRequestDispatcher("/index.html").forward(request, response);
+//		SQLQueryData sqd = new SQLQueryData();
+//		boolean delete = request.getParameter("delete") !=null;
+//		if(delete)
+//		try {
+//			sqd.deletedDataSQL(connection);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 	}
+
+//	private void deleteDate() throws SQLException {
+//
+//	}
 
 	private void download(InputStream fileStream, String name) {
 		try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(

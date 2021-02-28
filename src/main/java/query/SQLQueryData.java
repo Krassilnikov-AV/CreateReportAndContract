@@ -16,6 +16,7 @@ import static java.util.Calendar.getInstance;
 /**
  * Класс SQLQueryData
  */
+
 public class SQLQueryData implements SQLQuery {
 
 	final static int code = 0;    // код (строка)
@@ -74,70 +75,76 @@ public class SQLQueryData implements SQLQuery {
 	 * метод добавления данных  с применением executeBatch()
 	 * для более быстрой вставки в БД
 	 */
-	@Override
-	public void insertExecuteBatchQuerySQL() throws IOException, SQLException {
-		try (Connection connection = con.getPostConnection()) {
-			String insertStartSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, " +
-				"timefinish, auditorium, typelesson, teacher) " +
-				"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			try (PreparedStatement stm = connection.prepareStatement(insertStartSQL)) {
+//	@Override
+	public void insertExecuteBatchQuerySQL(Connection connection) throws IOException, SQLException {
+//		try (Connection connection = con.getPostConnection()) {
 
-				LinkedList<String> listProgram = (LinkedList<String>) read.getString(discipline);
-				LinkedList<String> listCodgroup = (LinkedList<String>) read.getString(codeGroup);
-				LinkedList<Date> listDateStart = read.getDate(dateStart);
-				LinkedList<Date> listTimeStart = read.getDate(timeStart);
-				LinkedList<Date> listDateFinish = read.getDate(dateEnd);
-				LinkedList<Date> listTimeFinish = read.getDate(timeEnd);
-				LinkedList<String> listAuditorium = (LinkedList<String>) read.getString(clasRum);
-				LinkedList<String> listTypelesson = (LinkedList<String>) read.getString(typeLearn);
-				LinkedList<String> listTeacher = (LinkedList<String>) read.getString(teacher);
+		String insertStartSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, " +
+			"timefinish, auditorium, typelesson, teacher) " +
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		try (PreparedStatement stm = connection.prepareStatement(insertStartSQL)) {
 
-				int size = listDateStart.size();
+			LinkedList<String> listProgram = (LinkedList<String>) read.getString(discipline);
+			LinkedList<String> listCodgroup = (LinkedList<String>) read.getString(codeGroup);
+			LinkedList<Date> listDateStart = read.getDate(dateStart);
+			LinkedList<Date> listTimeStart = read.getDate(timeStart);
+			LinkedList<Date> listDateFinish = read.getDate(dateEnd);
+			LinkedList<Date> listTimeFinish = read.getDate(timeEnd);
+			LinkedList<String> listAuditorium = (LinkedList<String>) read.getString(clasRum);
+			LinkedList<String> listTypelesson = (LinkedList<String>) read.getString(typeLearn);
+			LinkedList<String> listTeacher = (LinkedList<String>) read.getString(teacher);
 
-				long start = System.currentTimeMillis();
-				for (int i = 0; i < size; i++) {
+			int size = listDateStart.size();
 
-					String prog = listProgram.pop();
-					stm.setString(1, prog);
+			long start = System.currentTimeMillis();
+			for (int i = 0; i < size; i++) {
 
-					String cod = listCodgroup.pop();
-					stm.setString(2, cod);
+				String prog = listProgram.pop();
+				stm.setString(1, prog);
 
-					Date ds = listDateStart.pop();
-					stm.setTimestamp(3, new Timestamp(ds.getTime()));
+				String cod = listCodgroup.pop();
+				stm.setString(2, cod);
 
-					Date ts = listTimeStart.pop();
-					stm.setTime(4, new Time(ts.getTime()));
+				Date ds = listDateStart.pop();
+				stm.setTimestamp(3, new Timestamp(ds.getTime()));
 
-					Date df = listDateFinish.pop();     //возвращает в LinkedList
-					stm.setTimestamp(5, new Timestamp(df.getTime()));
+				Date ts = listTimeStart.pop();
+				stm.setTime(4, new Time(ts.getTime()));
 
-					Date tf = listTimeFinish.pop();
-					stm.setTime(6, new Time(tf.getTime()));
+				Date df = listDateFinish.pop();     //возвращает в LinkedList
+				stm.setTimestamp(5, new Timestamp(df.getTime()));
 
-					String audit = listAuditorium.pop();
-					stm.setString(7, audit);
+				Date tf = listTimeFinish.pop();
+				stm.setTime(6, new Time(tf.getTime()));
 
-					String typeLes = listTypelesson.pop();
-					stm.setString(8, typeLes);
+				String audit = listAuditorium.pop();
+				stm.setString(7, audit);
 
-					String teach = listTeacher.pop();
-					stm.setString(9, teach);
+				String typeLes = listTypelesson.pop();
+				stm.setString(8, typeLes);
 
-					stm.addBatch();
+				String teach = listTeacher.pop();
+				stm.setString(9, teach);
+
+				stm.addBatch();
 //					long startInternal = System.currentTimeMillis();
 //					System.out.println("время вставки эелемента: " +
 //						(System.currentTimeMillis() - startInternal) + " " + "ms");
-				}
-				long end = System.currentTimeMillis();
-				System.out.println("Вставлено: " + size + " строк");
-				System.out.println("суммарное время вставки: " + (end - start) + " ms");
-				stm.executeBatch();
-			} catch (Exception e) {
-				System.out.println("Данные не занесены, ошибка при выполнении....!!!");
-				e.printStackTrace();
 			}
+			long end = System.currentTimeMillis();
+			System.out.println("Вставлено: " + size + " строк");
+			System.out.println("суммарное время вставки: " + (end - start) + " ms");
+			stm.executeBatch();
+		} catch (Exception e) {
+			System.out.println("Данные не занесены, ошибка при выполнении....!!!");
+			e.printStackTrace();
 		}
+//		}
+	}
+
+	@Override
+	public void insertExecuteBatchQuerySQL() throws IOException, SQLException {
+
 	}
 
 	@Override
@@ -567,12 +574,12 @@ public class SQLQueryData implements SQLQuery {
 	 */
 	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParseException {
 		long start = System.currentTimeMillis();
-		String search ="Java";
-		String dateMonth ="2020-06-01";
+		String search = "Java";
+		String dateMonth = "2020-06-01";
 		SQLQueryData sql = new SQLQueryData();
 //		sql.searchToProgram("Java", "2020-06-01");
 
-		sql.searchToCodegroup("Java", "2020-06-01");
+//		sql.searchToCodegroup("Java", "2020-06-01");
 //		sql.searchToDateStart(search, dateMonth);  // выбор по дате
 //		sql.searchToAuditorium("Java", "2020-06-01");
 		//		sql.searchToTeacher("Java", "2020-06-01");
@@ -582,8 +589,8 @@ public class SQLQueryData implements SQLQuery {
 //		sql.prog();
 //		sql.deletedDataSQLloc();
 //		sql.insertExecuteBatchQuerySQL();
-		long finish = System.currentTimeMillis();
-		System.out.println("Время выпонения: " + (finish - start) + " ms");
+//		long finish = System.currentTimeMillis();
+//		System.out.println("Время выпонения: " + (finish - start) + " ms");
 	}
 
 	/**
@@ -670,6 +677,8 @@ public class SQLQueryData implements SQLQuery {
 		return connectionBuilder.getConnection();
 	}
 
+	/*
+	 * deletedDataSQL() - для локальной работы  */
 	public void deletedDataSQL() throws SQLException {
 		try (Connection connection = getConnection()) {
 			String deletedSQL = "DELETE FROM schedule";
@@ -678,6 +687,17 @@ public class SQLQueryData implements SQLQuery {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	/*для удаления с бразера данных в таблице*/
+	public void deletedDataSQL(Connection connection) throws SQLException {
+
+		String deletedSQL = "DELETE FROM schedule";
+		try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
+			stm.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

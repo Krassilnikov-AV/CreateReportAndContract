@@ -18,7 +18,8 @@ public class DBConnectionManager {
 		this.connection = DriverManager.getConnection(dbURL, user, pwd);
 	}
 
-	public Connection getConnection(){
+
+	public Connection getConnection() {
 		return this.connection;
 	}
 }
