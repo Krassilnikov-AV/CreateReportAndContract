@@ -4,28 +4,35 @@
 
 package servlets;
 
-import org.apache.log4j.Logger;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
 import java.sql.*;
+import java.util.Properties;
 
 @WebServlet(name = "Register", urlPatterns = {"/Register"})
 public class RegisterServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	static Logger logger = Logger.getLogger(RegisterServlet.class);
-
-	private Connection con;
+	private Connection connection;
 
 	@Override
 	public void init() {
-		String driverClassName = "org.postgresql.Driver";
+		Properties properties = new Properties();
 		try {
+			properties.load(new FileInputStream(getServletContext().getRealPath("/WEB-INF/classes/usersKey" +
+				".properties")));
+			String dbUrl = properties.getProperty("db.url");
+			String dbUsername = properties.getProperty("db.username");
+			String dbPassword = properties.getProperty("db.password");
+			String driverClassName = properties.getProperty("db.driverClassName");
+
 			Class.forName(driverClassName);
-		} catch (ClassNotFoundException e) {
+
+			connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
@@ -34,8 +41,8 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String name = request.getParameter("name");
-		String country = request.getParameter("country");
+		String firstname = request.getParameter("first-name");
+		String lastname = request.getParameter("last-name");
 		String errorMsg = null;
 		if (email == null || email.equals("")) {
 			errorMsg = "Email ID can't be null or empty.";
@@ -43,10 +50,10 @@ public class RegisterServlet extends HttpServlet {
 		if (password == null || password.equals("")) {
 			errorMsg = "Password can't be null or empty.";
 		}
-		if (name == null || name.equals("")) {
+		if (firstname == null || firstname.equals("")) {
 			errorMsg = "Name can't be null or empty.";
 		}
-		if (country == null || country.equals("")) {
+		if (lastname == null || lastname.equals("")) {
 			errorMsg = "Country can't be null or empty.";
 		}
 
@@ -57,37 +64,21 @@ public class RegisterServlet extends HttpServlet {
 			rd.include(request, response);
 		} else {
 
-			con = (Connection) getServletContext().getAttribute("DBConnection");
-
 			try (PreparedStatement ps =
-					 con.prepareStatement("insert into userskey(name, email, country, password) values (?,?,?,?)")) {
-				ps.setString(1, name);
-				ps.setString(2, email);
-				ps.setString(3, country);
+					 connection.prepareStatement("insert into userskey(first_name, last_name, email_, password_) " +
+						 "values (?,?,?,?)")) {
+				ps.setString(1, firstname);
+				ps.setString(2, lastname);
+				ps.setString(3, email);
 				ps.setString(4, password);
 
 				ps.execute();
-
-				logger.info("User registered with email=" + email);
-
-				//forward to login page to login
-				RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
-				PrintWriter out = response.getWriter();
-				out.println("<font color=green>Registration successful, please login below.</font>");
-				rd.include(request, response);
+				/*
+				* после успешной регистрации, должно выйти на страницу входа пользователя*/
 			} catch (SQLException e) {
 				e.printStackTrace();
-				logger.error("Database connection problem");
 				throw new ServletException("DB Connection problem.");
 			}
-//			finally{
-//				try {
-//					ps.close();
-//				}
-//				catch (SQLException e) {
-//					logger.error("SQLException in closing PreparedStatement");
-//				}
-//			}
 		}
 	}
 }

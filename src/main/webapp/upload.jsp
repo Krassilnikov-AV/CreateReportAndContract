@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>Отправка файла на сервер</h1>
-<form action="Servlet" method="POST" enctype="multipart/form-data">
+<form action="servletUpload" method="POST" enctype="multipart/form-data">
 
   <input type="text" name="path" value="" /></BR></BR>
   <input type="file" name="fileToUpload"  size="63" /></BR></BR>

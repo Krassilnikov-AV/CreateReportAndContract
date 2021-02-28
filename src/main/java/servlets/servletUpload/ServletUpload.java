@@ -13,7 +13,7 @@ import java.nio.file.*;
  * Класс ServletUpload
  */
 @MultipartConfig
-@WebServlet("/servletErrorHandler")
+@WebServlet("/servletUpload")
 public class ServletUpload extends HttpServlet {
 
 	String path = null;

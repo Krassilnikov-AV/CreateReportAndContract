@@ -18,7 +18,7 @@ import java.sql.SQLException;
  */
 @WebServlet(name = "ServletDelete", urlPatterns = {"/servletDelete"})
 public class ServletDelete extends HttpServlet {
-//private static final Logger logger = LoggerFactory.getLogger(ServletDelete.class);
+
 	private SQLQueryData sqlQueryData;
 
 	@Override
