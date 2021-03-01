@@ -14,15 +14,16 @@ import java.sql.*;
  * Класс DataOperationsService
  */
 public class DataOperationsService {
-	private SQLQueryData sqd = null;
+	private SQLQueryData sqd = new SQLQueryData();
 	ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
 	//getJDBCConnect();
 	Connection connection = connectionManager.getConnection();
 
 	public boolean deleteDB() throws SQLException {
-		return sqd.deletedDataSQL(connection);
-	}
 
+		return sqd.deletedDataSQL(connection);
+
+	}
 	public boolean insertDB() throws IOException, SQLException {
 		return sqd.insertExecuteBatchQuerySQL(connection);
 

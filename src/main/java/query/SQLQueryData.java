@@ -696,7 +696,6 @@ public class SQLQueryData implements SQLQuery {
 
 	/*для удаления с бразера данных в таблице*/
 	public boolean deletedDataSQL(Connection connection) throws SQLException {
-
 		String deletedSQL = "DELETE FROM schedule";
 		try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
 			int result =stm.executeUpdate();
