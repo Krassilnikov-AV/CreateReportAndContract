@@ -4,6 +4,7 @@
 
 package servlets.servletUpload;
 
+import model.Shedules;
 import services.DataOperationsService;
 
 import javax.servlet.ServletException;
@@ -21,24 +22,27 @@ public class ServletDelete extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		boolean insert = req.getParameter("insert") != null;
-		boolean delete = req.getParameter("delete") != null;
+		Operation operationType = Operation.fromString(req.getParameter("operation"));
 		DataOperationsService dos = new DataOperationsService();
+		try {
+			switch (operationType) {
+				case DELETE:
+					dos.deleteDB();
+					break;
+				case INSERT:
+					dos.insertDB();
+					break;
+				case VIEW:
+					Shedules shedules = dos.viewDataBD();
+					req.setAttribute("shedules", shedules.getShedules());
 
-		if (insert) {
-			try {
-				dos.insertDB();
+					break;
+			}
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} else if (delete) {
-			try {
-				dos.deleteDB();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+
 		req.getRequestDispatcher("/delete.jsp").forward(req, resp);
 	}
 }

@@ -22,13 +22,16 @@
 
 	<!--отдельное згрузка и удаление-->
 	<form action="servletDelete" method="post">
+		<input type="hidden" name="operation" id="upload" value="upload" style="display:none"/>
 		<input type="submit" value="Загрузите данные" name="insert"/></BR></br>
 	</form>
 	<form action="servletDelete" method="post">
+		<input type="hidden" name="operation" id="delete" value="delete" style="display:none"/>
 		<input type="submit" value="Удалить данные" name="delete"/></BR></br>
 	</form>
 
 	<input type="submit" value="СМОТРЕТЬ ДАННЫЕ" name="view"/>
+
 
 	<body>
 	<p><a href="schedule.jsp">

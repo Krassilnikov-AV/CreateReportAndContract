@@ -5,6 +5,7 @@
 package services;
 
 import connection.dbConnection.*;
+import model.Shedules;
 import query.SQLQueryData;
 
 import java.io.IOException;
@@ -28,5 +29,7 @@ public class DataOperationsService {
 		return sqd.insertExecuteBatchQuerySQL(connection);
 
 	}
-	// public  ________ viewDataBD(){}
+	 public Shedules viewDataBD() throws SQLException {
+		return sqd.view(connection);
+	 }
 }

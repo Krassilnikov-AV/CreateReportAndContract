@@ -1,7 +1,9 @@
 package query;
 
 
-import connection.*;
+import connection.ConnectionApp;
+import model.Shedule;
+import model.*;
 import readDoc.ReadExcelData;
 
 import java.io.IOException;
@@ -601,47 +603,38 @@ public class SQLQueryData implements SQLQuery {
 	 * метод для просмотра имеющихся данных в БД
 	 */
 	@Override
-	public void view() {
-		ConnectionApp con = new ConnectionApp();
+	public Shedules view(Connection connection) throws SQLException {
 
-		LinkedList<String> pro = new LinkedList<>();
-		LinkedList<String> code = new LinkedList<>();
-		LinkedList<String> audit = new LinkedList<>();
-		LinkedList<String> type = new LinkedList<>();
-		LinkedList<String> tech = new LinkedList<>();
+		List<Shedule> shedules = new ArrayList<>();
+		String SQL = "SELECT * FROM schedule";
+		try (Statement statement = connection.createStatement()) {
 
-		try (Connection connection = con.getPostConnection()) {
-			String SQL = "SELECT * FROM schedule";
-			try (Statement statement = connection.createStatement()) {
+			ResultSet resultSet = statement.executeQuery(SQL);
+			String program, codegroup, auditorium, typelesson, teacher;
+			while (resultSet.next()) {
+				program = resultSet.getString("program");
+				codegroup = resultSet.getString("codgroup");
+				auditorium = resultSet.getString("auditorium");
+				typelesson = resultSet.getString("typelesson");
+				teacher = resultSet.getString("teacher");
+				model.Shedule shedule = new model.Shedule(
+					program
+					, codegroup
+					, auditorium
+					, typelesson
+					, teacher
+				);
+				shedules.add(shedule);
 
-				ResultSet resultSet = statement.executeQuery(SQL);
-				String program, codegroup, auditorium, typelesson, teacher;
-//				Date ;
-
-				while (resultSet.next()) {
-					program = resultSet.getString("program");
-					codegroup = resultSet.getString("codgroup");
-					auditorium = resultSet.getString("auditorium");
-					typelesson = resultSet.getString("typelesson");
-					teacher = resultSet.getString("teacher");
-					pro.add(program);
-					code.add(codegroup);
-					audit.add(auditorium);
-					type.add(typelesson);
-					tech.add(teacher);
-					System.out.println("№: " +
-						pro.pop() + " || " +
-						code.pop() + " || " +
-						audit.pop() + " || " +
-						type.pop() + " || " +
-						tech.pop());
-				}
-				System.out.println("Запрошенные данные успешно выбраны!");
+				System.out.println(shedule.toString());
 			}
-		} catch (SQLException | IOException e) {
-			e.printStackTrace();
+			System.out.println("Запрошенные данные успешно выбраны!");
+
+			return new Shedules(shedules);
 		}
+
 	}
+
 
 	/**
 	 * метод для удаления данных с таблицы schedule (локально)
@@ -671,38 +664,38 @@ public class SQLQueryData implements SQLQuery {
 	- getConnection() - геттер получение pool соединения
 	  метод для удаления внесённых данных в таблицу через сервлет
 	*/
-	private ConnectionBuilder connectionBuilder;
-
-	public void setConnectionBuilder(ConnectionBuilder connectionBuilder) {
-		this.connectionBuilder = connectionBuilder;
-	}
-
-	private Connection getConnection() throws SQLException {
-		return connectionBuilder.getConnection();
-	}
+//	private ConnectionBuilder connectionBuilder;
+//
+//	public void setConnectionBuilder(ConnectionBuilder connectionBuilder) {
+//		this.connectionBuilder = connectionBuilder;
+//	}
+//
+//	private Connection getConnection() throws SQLException {
+//		return connectionBuilder.getConnection();
+//	}
 
 	/*
 	 * deletedDataSQL() - для локальной работы  */
-	public void deletedDataSQL() throws SQLException {
-		try (Connection connection = getConnection()) {
-			String deletedSQL = "DELETE FROM schedule";
-			try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
-				stm.executeUpdate();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
+//	public void deletedDataSQL() throws SQLException {
+//		try (Connection connection = getConnection()) {
+//			String deletedSQL = "DELETE FROM schedule";
+//			try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
+//				stm.executeUpdate();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 	/*для удаления с бразера данных в таблице*/
 	public boolean deletedDataSQL(Connection connection) throws SQLException {
 		String deletedSQL = "DELETE FROM schedule";
 		try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
-			int result =stm.executeUpdate();
-			if(result != 0) {
+			int result = stm.executeUpdate();
+			if (result != 0) {
 				return true;
 			}
 		}
-	return  false;
+		return false;
 	}
 }

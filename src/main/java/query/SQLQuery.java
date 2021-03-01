@@ -1,7 +1,9 @@
 package query;
 
+import model.Shedules;
+
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
 
@@ -21,6 +23,6 @@ public interface SQLQuery {
 	public LinkedList<String> searchToAuditorium(String search, String dateMonth) throws SQLException, ParseException;
 	public LinkedList<String> searchToTeacher(String search, String dateMonth) throws SQLException, ParseException;
 
-	public void view();
+	public Shedules view(Connection connection) throws SQLException;
 	public int deletedDataSQLloc() throws SQLException;
 }
