@@ -48,8 +48,8 @@ public class ServletUpload extends HttpServlet {
 		download(part.getInputStream(), name);
 		request.getRequestDispatcher("/index.html").forward(request, response);
 //		SQLQueryData sqd = new SQLQueryData();
-//		boolean delete = request.getParameter("delete") !=null;
-//		if(delete)
+//		boolean deleteDB = request.getParameter("deleteDB") !=null;
+//		if(deleteDB)
 //		try {
 //			sqd.deletedDataSQL(connection);
 //		} catch (SQLException e) {

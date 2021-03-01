@@ -76,7 +76,7 @@ public class SQLQueryData implements SQLQuery {
 	 * для более быстрой вставки в БД
 	 */
 //	@Override
-	public void insertExecuteBatchQuerySQL(Connection connection) throws IOException, SQLException {
+	public boolean insertExecuteBatchQuerySQL(Connection connection) throws IOException, SQLException {
 //		try (Connection connection = con.getPostConnection()) {
 
 		String insertStartSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, " +
@@ -134,12 +134,16 @@ public class SQLQueryData implements SQLQuery {
 			long end = System.currentTimeMillis();
 			System.out.println("Вставлено: " + size + " строк");
 			System.out.println("суммарное время вставки: " + (end - start) + " ms");
-			stm.executeBatch();
+			int[] operationResult = stm.executeBatch();
+			if (operationResult.length > 0) {
+				return true;
+			}
 		} catch (Exception e) {
 			System.out.println("Данные не занесены, ошибка при выполнении....!!!");
 			e.printStackTrace();
 		}
 //		}
+		return false;
 	}
 
 	@Override
@@ -691,13 +695,15 @@ public class SQLQueryData implements SQLQuery {
 	}
 
 	/*для удаления с бразера данных в таблице*/
-	public void deletedDataSQL(Connection connection) throws SQLException {
+	public boolean deletedDataSQL(Connection connection) throws SQLException {
 
 		String deletedSQL = "DELETE FROM schedule";
 		try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
-			stm.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
+			int result =stm.executeUpdate();
+			if(result != 0) {
+				return true;
+			}
 		}
+	return  false;
 	}
 }
