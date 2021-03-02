@@ -29,7 +29,7 @@ public class DataOperationsService {
 		return sqd.insertExecuteBatchQuerySQL(connection);
 
 	}
-	 public Shedules viewDataBD() throws SQLException {
+	 public Shedules viewDataDB() throws SQLException {
 		return sqd.view(connection);
 	 }
 }

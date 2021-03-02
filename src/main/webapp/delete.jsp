@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 
 <html>
@@ -21,15 +23,23 @@
   <input type="hidden" name="operation" id="view" value="view" style="display:none"/>
   <input type="submit" value="Просмотр" name="view"/>
 </form>
+<%--<%= %>--%>
+<table>
+  <tr>
+    <th>pro</th>
+    <th>code</th>
+    <th>audit</th>
+    <th>type</th>
+  </tr>
+  <c:forEach items="${requestScope.shedules}" var="shedule">
+    <tr>
+      <td>"<c:out value="${shedule.pro}"></c:out>"</td>
+      <td>"<c:out value="${shedule.code}"></c:out>"</td>
+      <td>"<c:out value="${shedule.audit}"></c:out>"</td>
+      <td>"<c:out value="${shedule.type}"></c:out>"</td>
+    </tr>
 
-<%--<table><tbody></tbody></table>--%>
-<%--<c:forEach items="${requestScope.shedules}" var="shedule">--%>
-
-  <%--<p id="pro<c:out value="${shedule.pro}"></c:out>" code = "<c:out value="${shedule.code}"></c:out>" audit = "<c:out value="${shedule.audit}"></c:out>"  type = "<c:out value="${shedule.type}"></c:out>">--%>
-
-  <%--</p>--%>
-
-
-<%--</c:forEach>--%>
-<%--</body>--%>
+  </c:forEach>
+</table>
+</body>
 </html>

@@ -33,12 +33,10 @@ public class ServletDelete extends HttpServlet {
 					dos.insertDB();
 					break;
 				case VIEW:
-					Shedules shedules = dos.viewDataBD();
+					Shedules shedules = dos.viewDataDB();
 					req.setAttribute("shedules", shedules.getShedules());
-
 					break;
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
