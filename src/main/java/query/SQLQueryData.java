@@ -73,6 +73,30 @@ public class SQLQueryData implements SQLQuery {
 		}
 	}
 
+	/*
+главный метод порверки выполнения запросов
+ */
+	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParseException {
+		long start = System.currentTimeMillis();
+//		String search = "Java";
+		String dateMonth = "2020-06-01";
+		SQLQueryData sql = new SQLQueryData();
+		sql.searchToProgram("Java", "2020-06-01");
+
+//		sql.searchToCodegroup("Java", "2020-06-01");
+//		sql.searchToDateStart(search, dateMonth);  // выбор по дате
+//		sql.searchToAuditorium("Java", "2020-06-01");
+		//		sql.searchToTeacher("Java", "2020-06-01");
+//		sql.searchToTimeStart(search, dateMonth);
+//		sql.regexExample();
+//		sql.view();
+//		sql.prog();
+//		sql.deletedDataSQLloc();
+//		sql.insertExecuteBatchQuerySQL();
+		long finish = System.currentTimeMillis();
+		System.out.println("Время выпонения: " + (finish - start) + " ms");
+	}
+
 	/**
 	 * метод добавления данных  с применением executeBatch()
 	 * для более быстрой вставки в БД
@@ -178,7 +202,7 @@ public class SQLQueryData implements SQLQuery {
 					dateSearh = String.valueOf(resultSet.getDate("datestart"));
 					codegroup = resultSet.getString(2);
 					words = new HashSet<String>(
-						Arrays.asList(programs.split("\\s"))
+						Arrays.asList(programs.split(" "))
 					);
 //					сравнение полученной даты с БД с полученным параметром даты
 					java.util.Date dateResult;
@@ -199,9 +223,9 @@ public class SQLQueryData implements SQLQuery {
 						row = resultSet.getRow();
 						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
 						((LinkedList<String>) code).add(codegroup);  // добвляет указанный элемент в конец этого списка
-//						System.out.println("индекс: " +
-//							row + ": " + " код программы: " +
-//							((LinkedList<String>) code).pop());
+						System.out.println("индекс: " +
+							row + ": " + " код программы: " +
+							((LinkedList<String>) code).pop());
 					}
 				}
 				assert words != null;
@@ -253,7 +277,7 @@ public class SQLQueryData implements SQLQuery {
 					programs = resultSet.getString(1);
 					dateSearh = String.valueOf(resultSet.getDate("datestart"));
 					words = new HashSet<String>(
-						Arrays.asList(programs.split("\\s"))
+						Arrays.<String>asList(String.valueOf(programs.contains(search)))
 					);
 //					сравнение полученной даты с БД с полученным параметром даты
 					java.util.Date dateResult;
@@ -317,7 +341,7 @@ public class SQLQueryData implements SQLQuery {
 //	!!! доработать поиск, чтоб учитывал слово в скобках
 
 					words = new HashSet<String>(
-						Arrays.asList(programs.split("\\s"))
+						Arrays.<String>asList(String.valueOf(programs.contains(search)))
 					);
 //					сравнение полученной даты с БД с полученным параметром даты
 					java.util.Date dateResult;
@@ -390,7 +414,7 @@ public class SQLQueryData implements SQLQuery {
 //	!!! доработать поиск, чтоб учитывал слово в скобках
 
 					words = new HashSet<>(
-						Arrays.asList(programs.split("\\s"))
+						Arrays.<String>asList(String.valueOf(programs.contains(search)))
 					);
 //					сравнение полученной даты с БД с полученным параметром даты
 					java.util.Date dateResult;
@@ -471,7 +495,7 @@ public class SQLQueryData implements SQLQuery {
 //	!!! доработать поиск, чтоб учитывал слово в скобках
 					// поиск слова в получаемом списке
 					words = new HashSet<>(
-						Arrays.asList(program.split(" "))
+						Arrays.<String>asList(String.valueOf(program.contains(search)))
 					);
 					java.util.Date dateResult =
 						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
@@ -575,29 +599,40 @@ public class SQLQueryData implements SQLQuery {
 		return (LinkedList<String>) tech;
 	}
 
-	/*
-	главный метод порверки выполнения запросов
+	/**
+	 * метод для поиска данных с выбором ключевого слова и даты
+	 * - эксперименты по поиску ключевого слова и даты
 	 */
-	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParseException {
-		long start = System.currentTimeMillis();
-		String search = "Java";
-		String dateMonth = "2020-06-01";
-		SQLQueryData sql = new SQLQueryData();
-//		sql.searchToProgram("Java", "2020-06-01");
 
-//		sql.searchToCodegroup("Java", "2020-06-01");
-//		sql.searchToDateStart(search, dateMonth);  // выбор по дате
-//		sql.searchToAuditorium("Java", "2020-06-01");
-		//		sql.searchToTeacher("Java", "2020-06-01");
-//		sql.searchToTimeStart(search, dateMonth);
-//		sql.regexExample();
-//		sql.view();
-//		sql.prog();
-//		sql.deletedDataSQLloc();
-//		sql.insertExecuteBatchQuerySQL();
-//		long finish = System.currentTimeMillis();
-//		System.out.println("Время выпонения: " + (finish - start) + " ms");
+	public void searhDAta(Connection con, String searh, String dateMonth) throws SQLException {
+		List<Shedule> shedules = new ArrayList<>();
+		String SQL = "SELECT * FROM schedule";
+		try (Statement statement = con.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE,
+			ResultSet.CONCUR_READ_ONLY)) {
+			ResultSet resultSet = statement.executeQuery(SQL);
+			String program, codegroup, auditorium, typelesson, teacher;
+			while (resultSet.next()) {
+				program = resultSet.getString("program");
+				codegroup = resultSet.getString("codgroup");
+				auditorium = resultSet.getString("auditorium");
+				typelesson = resultSet.getString("typelesson");
+				teacher = resultSet.getString("teacher");
+				model.Shedule shedule = new model.Shedule(
+					program
+					, codegroup
+					, auditorium
+					, typelesson
+					, teacher
+				);
+				shedules.add(shedule);
+
+				System.out.println(shedule.toString());
+			}
+			System.out.println("Запрошенные данные успешно выбраны!");
+
+		}
 	}
+
 
 	/**
 	 * метод для просмотра имеющихся данных в БД
@@ -632,7 +667,6 @@ public class SQLQueryData implements SQLQuery {
 
 			return new Shedules(shedules);
 		}
-
 	}
 
 
