@@ -30,26 +30,15 @@ package createDocument;
  * (https://poi.apache.org/apidocs/index.html?org/apache/poi/openxml4j/opc/internal/package-summary.html.)
  */
 
-import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
-import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
-import query.SQLQueryData;
-
-import java.io.*;
-import java.math.BigInteger;
-import java.sql.SQLException;
-import java.text.*;
-import java.util.*;
-
 /**
  * Класс WriteWordRaspisanie
- */
+ *//*
 public class CreateScheduleReport implements CreateDocument {
 
 	/**
 	 * @param args the command line arguments
 	 */
-
+/*
 	@Override
 	public void createDoc() throws SQLException, ParseException {
 
@@ -62,7 +51,7 @@ public class CreateScheduleReport implements CreateDocument {
 		LinkedList<String> listTimeEnd;
 		LinkedList<String> listAuditorium;
 		LinkedList<String> listTeach;
-
+/**
 		String search = "Java"; // слово для поиска
 		String dateMonth = "2020-06-01";
 		SQLQueryData sqlQueryData = new SQLQueryData();
@@ -157,6 +146,7 @@ public class CreateScheduleReport implements CreateDocument {
 
 			/*
 			 * Доработать_название месяца, окончание на -ь вместо -я!*/
+/*
 			String resMonth = listDateStart.getFirst();
 			DateFormat date = new SimpleDateFormat("yyyy.MM.dd", Locale.US);
 			Date date1 = date.parse(resMonth);
@@ -254,3 +244,4 @@ public class CreateScheduleReport implements CreateDocument {
 		return ctpHeaderModel;
 	}
 }
+*/

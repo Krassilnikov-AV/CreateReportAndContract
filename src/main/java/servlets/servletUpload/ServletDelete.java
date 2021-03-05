@@ -19,7 +19,6 @@ import java.sql.SQLException;
 @WebServlet(name = "ServletDelete", urlPatterns = {"/servletDelete"})
 public class ServletDelete extends HttpServlet {
 
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Operation operationType = Operation.fromString(req.getParameter("operation"));
@@ -40,7 +39,6 @@ public class ServletDelete extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		req.getRequestDispatcher("/delete.jsp").forward(req, resp);
 	}
 }
