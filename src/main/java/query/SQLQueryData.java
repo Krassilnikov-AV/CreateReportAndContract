@@ -8,8 +8,10 @@ import readDoc.ReadExcelData;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.*;
-import java.text.ParseException;
+import java.text.*;
 import java.util.*;
+
+import static java.util.Calendar.MONTH;
 
 /**
  * Класс SQLQueryData
@@ -75,10 +77,10 @@ public class SQLQueryData {
 	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParseException {
 		long start = System.currentTimeMillis();
 		String search = "C";
-//		String dateMonth = "2020-06-01";
+		String dateMonth = "2020-03-01";
 		SQLQueryData sql = new SQLQueryData();
 //		sql.searchToProgram("Java", "2020-06-01");
-		sql.addValueTableShedule(search);
+		sql.addValueTableShedule(search, dateMonth);
 //		sql.searchToCodegroup("Java", "2020-06-01");
 //		sql.searchToDateStart(search, dateMonth);  // выбор по дате
 //		sql.searchToAuditorium("Java", "2020-06-01");
@@ -453,17 +455,6 @@ public class SQLQueryData {
 //		return timeStart;
 //	}
 
-//	@Override
-//	public List<String> searchToDateEnd(String search, String dateMonth) throws SQLException, ParseException {
-//		return null;
-//
-//	}
-
-//	@Override
-//	public List<String> searchToTimeEnd(String search, String dateMonth) throws SQLException, ParseException {
-//		return null;
-//	}
-
 //
 //	@Override
 //	public LinkedList<String> searchToAuditorium(String search, String dateMonth) throws SQLException, ParseException {
@@ -592,18 +583,17 @@ public class SQLQueryData {
 //		}
 //		return (LinkedList<String>) tech;
 //	}
-//
+
 
 	/**
 	 * метод для поиска данных с выбором ключевого слова и даты
-	 * - эксперименты по поиску ключевого слова и даты
+	 *
 	 */
 
-	public Shedules addValueTableShedule(String search) throws SQLException, IOException {
-//		ConnectionApp connection = new ConnectionApp();
-		List<Shedule> shedules = new ArrayList();
+	public ShedulesSearch addValueTableShedule(String search, String dateMonth) throws SQLException, IOException, ParseException {
+		List<SheduleSearch> shedules = new ArrayList();
 
-		String program, codegroup, auditorium, typelesson, teacher;
+		String program, codegroup, timeStart, dateEnd, timeEnd, auditorium, typelesson, teacher;
 		try (Connection connection = con.getPostConnection()) {
 			String SQL = "SELECT * FROM schedule";
 			try (Statement statement = connection.createStatement(
@@ -611,37 +601,40 @@ public class SQLQueryData {
 				ResultSet.CONCUR_READ_ONLY)) {
 				ResultSet resultSet = statement.executeQuery(SQL);
 				String dateSearh;
-				List<String> words;
 				int row;
-				Shedule shedule;
+				SheduleSearch shedule;
 				while (resultSet.next()) {
 					codegroup = resultSet.getString("codgroup");
 					program = resultSet.getString("program");
 					dateSearh = String.valueOf(resultSet.getDate("datestart"));
-					timeStart= Integer.parseInt(String.valueOf(resultSet.getTime("timestart")));
-					dateEnd=Integer.parseInt(String.valueOf(resultSet.getTime("datefinish")));
-					timeEnd=Integer.parseInt(String.valueOf(resultSet.getTime("timefinish")));
+					timeStart = String.valueOf(resultSet.getTime("timestart"));
+					dateEnd = String.valueOf(resultSet.getTime("datefinish"));
+					timeEnd = String.valueOf(resultSet.getTime("timefinish"));
 					auditorium = resultSet.getString("auditorium");
 					typelesson = resultSet.getString("typelesson");
 					teacher = resultSet.getString("teacher");
-/**/
-//					java.util.Date dateResult =
-//						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-//					java.util.Date date1 =
-//						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
-//
-//					Calendar cal = getInstance();
-//					cal.setTime(dateResult);
-//					Calendar cal1 = getInstance();
-//					cal1.setTime(date1);
-//
-//					boolean sameDay = cal.get(MONTH) == cal1.get(MONTH);
-					if (program.contains(search)) {
+					/**/
+					java.util.Date dateResult =
+						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
+					java.util.Date date1 =
+						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
+
+					Calendar calendar =Calendar.getInstance();
+					calendar.setTime(dateResult);
+					Calendar calendar1 = Calendar.getInstance();
+					calendar1.setTime(date1);
+
+					boolean sameDay = calendar.get(MONTH) == calendar1.get(MONTH);
+					if (program.contains(search) && sameDay) {
 						row = resultSet.getRow();
 						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-						shedule = new Shedule(
-							program
-							, codegroup
+						shedule = new SheduleSearch(
+							 codegroup
+							, program
+							, dateSearh
+							, timeStart
+							, dateEnd
+							, timeEnd
 							, auditorium
 							, typelesson
 							, teacher
@@ -654,13 +647,13 @@ public class SQLQueryData {
 					}
 				}
 				System.out.println("Запрошенные данные успешно выбраны!");
-				return new Shedules(shedules);
+				return new ShedulesSearch(shedules);
 			}
 		}
 	}
 
 	/**
-	 * метод для просмотра имеющихся данных в БД
+	 * метод для просмотра имеющихся данных в БД на странице браузера после загрузки данных
 	 */
 //	@Override
 	public Shedules view(Connection connection) throws SQLException {
@@ -698,21 +691,21 @@ public class SQLQueryData {
 	 * @throws SQLException
 	 */
 //	@Override
-	public int deletedDataSQLloc() throws SQLException {
-		ConnectionApp con = new ConnectionApp();
-		try (Connection connection = con.getPostConnection()) {
-			String deletedSQL = "DELETE FROM schedule";
-			try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
-				stm.executeUpdate();
-				System.out.println("Данные БД успешно удалены!");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return -1;
-	}
+//	public int deletedDataSQLloc() throws SQLException {
+//		ConnectionApp con = new ConnectionApp();
+//		try (Connection connection = con.getPostConnection()) {
+//			String deletedSQL = "DELETE FROM schedule";
+//			try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
+//				stm.executeUpdate();
+//				System.out.println("Данные БД успешно удалены!");
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return -1;
+//	}
 
 	/*
 	- setConnectionBuilder - сеттер установления пул соединения

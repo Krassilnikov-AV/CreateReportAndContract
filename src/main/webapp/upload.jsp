@@ -5,12 +5,11 @@
 
 <html>
 <head>
-  <title>Загрузка данных</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Загрузка данных на сервер</title>
 </head>
-<body>
-<form action="servletDelete" method="post"
+<br>
+<h1>Загрузка файла</h1>
+<form action="servletUpload" method="post"
       enctype="multipart/form-data">
   <p>
     укажите путь сохранения: <input type="text" name="path" value=""/>
@@ -23,6 +22,7 @@
   <!--<input type="hidden" name="ws_code" value="shopCode" style="display:none">-->
   <input type="submit" value="Загрузите файл"/>
 </form>
+
 <%--выбор операций с сервлета delete--%>
 <h1>Выбор операции: </h1>
 <form action="servletDelete" method="POST">
@@ -57,8 +57,14 @@
 
   </c:forEach>
 </table>
+
+<body>
+<p><a href="schedule.jsp">
+  <h>Отчёт расписания занятий</h>
+</a></p>
+<p><a href="gph.jsp">
+  <h>Договор ГПХ внештатных сотрудников</h>
+</a></p>
+
 </body>
 </html>
-<%--return " //код группы: " + group + " //программа: " + pro + " //аудитория: " + audit +
-			" //тип занятия: " + type + " //преподаватель: " + tech;
---%>

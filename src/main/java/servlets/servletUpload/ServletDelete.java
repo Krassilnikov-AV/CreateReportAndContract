@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2021 Tander, All Rights Reserved.
- */
 
 package servlets.servletUpload;
 
@@ -18,7 +15,6 @@ import java.sql.SQLException;
  */
 @WebServlet(name = "ServletDelete", urlPatterns = {"/servletDelete"})
 public class ServletDelete extends HttpServlet {
-
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,7 +36,6 @@ public class ServletDelete extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		req.getRequestDispatcher("/delete.jsp").forward(req, resp);
+		req.getRequestDispatcher("/upload.jsp").forward(req, resp);
 	}
 }
