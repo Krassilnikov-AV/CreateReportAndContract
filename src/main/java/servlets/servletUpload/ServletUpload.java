@@ -10,33 +10,11 @@ import java.nio.file.*;
  * Класс ServletUpload
  */
 @MultipartConfig
-@WebServlet("/servletUpload")
+@WebServlet(name = "ServletUpload", urlPatterns = {"/servletUpload"})
 public class ServletUpload extends HttpServlet {
 
 	String path = null;
 	String name = "";
-//	Connection connection = null;
-
-//	@Override
-//	public void init() {
-//		Properties properties = new Properties();
-//		try {
-//			properties.load(new FileInputStream(getServletContext().getRealPath("/WEB-INF/classes/usersKey" +
-//				".properties")));
-//			String dbUrl = properties.getProperty("db.url");
-//			String dbUsername = properties.getProperty("db.username");
-//			String dbPassword = properties.getProperty("db.password");
-//			String driverClassName = properties.getProperty("db.driverClassName");
-//
-//			Class.forName(driverClassName);
-//
-//			connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-//		} catch (IOException e) {
-//			throw new IllegalStateException(e);
-//		} catch (SQLException | ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,19 +24,30 @@ public class ServletUpload extends HttpServlet {
 		name = part.getSubmittedFileName();          // получить в классе чтения, создать в свойствах->читать и
 		// получать в необходимом классе для чтения
 		download(part.getInputStream(), name);
-		request.getRequestDispatcher("/index.html").forward(request, response);
-//		SQLQueryData sqd = new SQLQueryData();
-//		boolean deleteDB = request.getParameter("deleteDB") !=null;
-//		if(deleteDB)
+		request.getRequestDispatcher("/uploadFileDb.jsp").forward(request, response);
+//		insertDeleteView(request, response);
+	}
+
+//	private void insertDeleteView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		Operation operationType = Operation.fromString(req.getParameter("operation"));
+//		DataOperationsService dos = new DataOperationsService();
 //		try {
-//			sqd.deletedDataSQL(connection);
+//			switch (operationType) {
+//				case DELETE:
+//					dos.deleteDB();
+//					break;
+//				case INSERT:
+//					dos.insertDB();
+//					break;
+//				case VIEW:
+//					Shedules shedules = dos.viewDataDB();
+//					req.setAttribute("shedules", shedules.getShedules());
+//					break;
+//			}
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
-	}
-
-//	private void deleteDate() throws SQLException {
-//
+//		req.getRequestDispatcher("/uploadFileDb.jsp").forward(req, resp);
 //	}
 
 	private void download(InputStream fileStream, String name) {

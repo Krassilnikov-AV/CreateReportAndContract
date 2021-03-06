@@ -2,14 +2,13 @@ package readDoc;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
-
 import java.io.*;
 import java.util.*;
 
 /**
  * Класс ExReadExcelData
  */
-public class ReadExcelData {
+public class ReadExcelData implements ReadData {
 
 	/**
 	 * @param args
@@ -74,6 +73,7 @@ public class ReadExcelData {
 	 * метод должен получить определённые номера колонок, вызвать метод, который обработает тип ячейки
 	 * и вернуть считанные данные
 	 */
+	@Override
 	public LinkedList<java.sql.Date> getDate(int columnIndex) {
 		try {
 			File f = new File(fileName);
@@ -112,8 +112,8 @@ public class ReadExcelData {
 		return (LinkedList<java.sql.Date>) columnListDateSql;
 	}
 
+	@Override
 	public List<String> getString(int columnIndex) {
-
 		try {
 			File f = new File(fileName);
 			try (FileInputStream ios = new FileInputStream(f)) {

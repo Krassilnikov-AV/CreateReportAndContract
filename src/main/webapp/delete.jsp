@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<h1>Удалить все данные с базы данных</h1>
+<h1>Выбор </h1>
 <form action="servletDelete" method="POST">
   <input type="hidden" name="operation" id="delete" value="delete" style="display:none"/>
   <input type="submit" value="Удалить" name="delete"/>
@@ -26,20 +26,25 @@
 <%--<%= %>--%>
 <table>
   <tr>
+    <th>group</th>
     <th>pro</th>
-    <th>code</th>
     <th>audit</th>
     <th>type</th>
+    <th>tech</th>
   </tr>
   <c:forEach items="${requestScope.shedules}" var="shedule">
     <tr>
+      <td>"<c:out value="${shedule.group}"></c:out>"</td>
       <td>"<c:out value="${shedule.pro}"></c:out>"</td>
-      <td>"<c:out value="${shedule.code}"></c:out>"</td>
       <td>"<c:out value="${shedule.audit}"></c:out>"</td>
       <td>"<c:out value="${shedule.type}"></c:out>"</td>
+      <td>"<c:out value="${shedule.tech}"></c:out>"</td>
     </tr>
 
   </c:forEach>
 </table>
 </body>
 </html>
+<%--return " //код группы: " + group + " //программа: " + pro + " //аудитория: " + audit +
+			" //тип занятия: " + type + " //преподаватель: " + tech;
+--%>

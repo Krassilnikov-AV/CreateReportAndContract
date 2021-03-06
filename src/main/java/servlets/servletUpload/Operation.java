@@ -12,7 +12,6 @@ public enum Operation {
 		this.title = title;
 	}
 
-
 	/**
 	 * Возвращает
 	 *
