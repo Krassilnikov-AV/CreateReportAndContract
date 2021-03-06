@@ -13,10 +13,4 @@ import javax.servlet.http.HttpServlet;
 @WebServlet
 public class ServletSchedule extends HttpServlet {
 
-//	CreateScheduleReport sc = new CreateScheduleReport();
-//
-//	@Override
-//	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		sc.ceateDoc();
-//	}
 }

@@ -30,32 +30,33 @@ package createDocument;
  * (https://poi.apache.org/apidocs/index.html?org/apache/poi/openxml4j/opc/internal/package-summary.html.)
  */
 
+import model.*;
+import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
+import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
+import query.SQLQueryData;
+
+import java.io.*;
+import java.math.BigInteger;
+import java.sql.SQLException;
+import java.text.*;
+import java.util.*;
+
 /**
  * Класс WriteWordRaspisanie
- *//*
+ */
 public class CreateScheduleReport implements CreateDocument {
 
 	/**
 	 * @param args the command line arguments
 	 */
-/*
+
 	@Override
 	public void createDoc() throws SQLException, ParseException {
 
-		LinkedList<String> listCodeGroup;
-		LinkedList<String> listProgs;
-
-		LinkedList<String> listDateStart;
-		LinkedList<String> listTimeStart;
-		LinkedList<String> listDateEnd;
-		LinkedList<String> listTimeEnd;
-		LinkedList<String> listAuditorium;
-		LinkedList<String> listTeach;
-/**
 		String search = "Java"; // слово для поиска
 		String dateMonth = "2020-06-01";
 		SQLQueryData sqlQueryData = new SQLQueryData();
-		listProgs = sqlQueryData.searchToProgram(search, dateMonth);
 		try (OutputStream outputStream
 				 = new FileOutputStream("D:\\REPOSITORIES-2\\WordTest.docx")) {
 			// создаем  документа docx, к которому будем прикручивать наполнение (колонтитулы, текст)
@@ -135,21 +136,35 @@ public class CreateScheduleReport implements CreateDocument {
 //				 result) {
 //				nameProg="Классная программа";
 //			}
-//			String res = null;
-			listCodeGroup = sqlQueryData.searchToCodegroup(search, dateMonth);
-			listDateStart = (LinkedList<String>) sqlQueryData.searchToDateStart(search, dateMonth);
-			listTimeStart = (LinkedList<String>) sqlQueryData.searchToTimeStart(search, dateMonth);
-			listAuditorium = sqlQueryData.searchToAuditorium(search, dateMonth);
-			listTeach = sqlQueryData.searchToTeacher(search, dateMonth);
-
+////			String res = null;
+//			listCodeGroup = sqlQueryData.searchToCodegroup(search, dateMonth);
+//			listDateStart = (LinkedList<String>) sqlQueryData.searchToDateStart(search, dateMonth);
+//			listTimeStart = (LinkedList<String>) sqlQueryData.searchToTimeStart(search, dateMonth);
+//			listAuditorium = sqlQueryData.searchToAuditorium(search, dateMonth);
+//			listTeach = sqlQueryData.searchToTeacher(search, dateMonth);
+			ShedulesSearch shedulesSearch = sqlQueryData.addValueTableShedule(search, dateMonth);
 			paragraphProg.setText("по программе профессиональной переподготовки ___________________");
 
 			/*
 			 * Доработать_название месяца, окончание на -ь вместо -я!*/
-/*
-			String resMonth = listDateStart.getFirst();
+
+//			String resMonth = listDateStart.getFirst();
+//			String resultMonth = String.valueOf(shedulesSearch.getShedules().get(0));
+			int size = shedulesSearch.getShedules().size();
+			for (int i = 0; i < size; i++) {
+				for (SheduleSearch sheduleSearch:shedulesSearch.getShedules()) {
+					sheduleSearch.getDateStart().getChars(0,0,);
+				}
+				shedulesSearch.getShedules().get(0);
+
+			}
+//			char numOne=0;
+//			for () {
+////				numOne = sheduleSearch.getDateStart().charAt();
+//				sheduleSearch.getDateStart().;
+//			}
 			DateFormat date = new SimpleDateFormat("yyyy.MM.dd", Locale.US);
-			Date date1 = date.parse(resMonth);
+			Date date1 = date.parse(String.valueOf(numOne));
 
 			String dateStr = new SimpleDateFormat("MMMM yyyy").format(date1);
 
@@ -160,11 +175,12 @@ public class CreateScheduleReport implements CreateDocument {
 			paragraphProg.setText("____________________________________________________________________________");
 
 
-			int listTableSize = listProgs.size();  // определяет количество строкразмер вставляемых значений из
+			int listTableSize = shedulesSearch.getShedules().size();  // определяет количество строкразмер
+			// вставляемых значений из
 			// списка и заголовка таблицы
-			int listSelectData = listDateStart.size();  // кол-во строк вставляемых в таблицу с БД
+//			int listSelectData = listDateStart.size();  // кол-во строк вставляемых в таблицу с БД
 
-			XWPFTable table = document.createTable(listTableSize+2, 6);
+			XWPFTable table = document.createTable(listTableSize + 2, 6);
 			table.setWidth(100);
 //			table.setCellMargins(0, 0,0,1 );
 //			table.setRowBandSize(10);
@@ -180,28 +196,29 @@ public class CreateScheduleReport implements CreateDocument {
 			table.getRow(1).getCell(3).setText("4");
 			table.getRow(1).getCell(4).setText("5");
 			table.getRow(1).getCell(5).setText("6");
-			for (int i = 0; i < listSelectData; i++) {
-				table.getRow(i+2).getCell(0).setText(listCodeGroup.get(i));
-				if (table.getRow(i+2).getCell(1).getText().isEmpty()) {
-					table.getRow(i+2).getCell(1).setText(listProgs.get(i));
+
+			int countRows = 0;
+			for (SheduleSearch sheduleSearch : shedulesSearch.getShedules()) {
+				table.getRow(countRows + 2).getCell(0).setText(sheduleSearch.getGroup());
+				if (table.getRow(countRows + 2).getCell(1).getText().isEmpty()) {
+					table.getRow(countRows + 2).getCell(1).setText(sheduleSearch.getPro());
 				}
-				if (table.getRow(i+2).getCell(2).getText().isEmpty()) {
-					table.getRow(i+2).getCell(2).setText(listDateStart.get(i));
+				if (table.getRow(countRows + 2).getCell(2).getText().isEmpty()) {
+					table.getRow(countRows + 2).getCell(2).setText(sheduleSearch.getDateStart());
 				}
-				if (table.getRow(i+2).getCell(3).getText().isEmpty()) {
-					table.getRow(i+2).getCell(3).setText(listTimeStart.get(i));
+				if (table.getRow(countRows + 2).getCell(3).getText().isEmpty()) {
+					table.getRow(countRows + 2).getCell(3).setText(sheduleSearch.getTimeStart());
 				}
-				if (table.getRow(i+2).getCell(4).getText().isEmpty()) {
-					table.getRow(i+2).getCell(4).setText(listAuditorium.get(i));
+				if (table.getRow(countRows + 2).getCell(4).getText().isEmpty()) {
+					table.getRow(countRows + 2).getCell(4).setText(sheduleSearch.getAudit());
 				}
-				if (table.getRow(i+2).getCell(5).getText().isEmpty()) {
-					table.getRow(i+2).getCell(5).setText(listTeach.get(i));
+				if (table.getRow(countRows + 2).getCell(5).getText().isEmpty()) {
+					table.getRow(countRows + 2).getCell(5).setText(sheduleSearch.getTech());
 				}
+
+				countRows = +2;
 			}
-//			table.addNewCol();
-//			for (String str : listProgs) {
-//				table.createRow().getCell(1).setText(str);
-//			}
+
 			// сохраняем шаблон docx документа в файл
 
 			document.write(outputStream);
@@ -244,4 +261,3 @@ public class CreateScheduleReport implements CreateDocument {
 		return ctpHeaderModel;
 	}
 }
-*/

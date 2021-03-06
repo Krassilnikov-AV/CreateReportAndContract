@@ -10,28 +10,10 @@ package model;
 public class Shedule {
 	private final String group;
 	private final String pro;
-//	private final String dateStart;
-//	private final String timeStart;
-//	private final String dateFinish;
-//	private final String timeFinish;
 	private final String audit;
 	private final String type;
 	private final String tech;
 
-//	public Shedule(String group, String pro, int dateStart,
-//				   int timeStart, int dateFinish,
-//				   int timeFinish, String audit,
-//				   String type, String tech) {
-//		this.group = group;
-//		this.pro = pro;
-//		this.dateStart = dateStart;
-//		this.timeStart = timeStart;
-//		this.dateFinish = dateFinish;
-//		this.timeFinish = timeFinish;
-//		this.audit = audit;
-//		this.type = type;
-//		this.tech = tech;
-//	}
 
 	public Shedule(String pro, String code, String audit, String type, String tech) {
 		this.pro = pro;
@@ -40,12 +22,6 @@ public class Shedule {
 		this.type = type;
 		this.tech = tech;
 	}
-/*
-* 	   LinkedList<Date> listDateStart = read.getDate(dateStart);
-			LinkedList<Date> listTimeStart = read.getDate(timeStart);
-			LinkedList<Date> listDateFinish = read.getDate(dateEnd);
-			LinkedList<Date> listTimeFinish = read.getDate(timeEnd);
-* */
 
 	/**
 	 * Возвращает

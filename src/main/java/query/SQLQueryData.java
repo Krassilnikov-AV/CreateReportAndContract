@@ -99,7 +99,20 @@ public class SQLQueryData {
 	 * метод добавления данных  с применением executeBatch()
 	 * для более быстрой вставки в БД
 	 */
-//	@Override
+
+	public void insertDataExcelFileToDB(Connection connection) throws IOException, SQLException {
+		List<SheduleInsert> shedules = new ArrayList();
+		final String insertDataSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, " +
+			"timefinish, auditorium, typelesson, teacher, period) " +
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		try (PreparedStatement stm = connection.prepareStatement(insertDataSQL)) {
+			SheduleInsert sheduleInsert;
+
+		}
+	}
+
+
+	//	@Override
 	public boolean insertExecuteBatchQuerySQL(Connection connection) throws IOException, SQLException {
 
 		String insertStartSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, " +
@@ -169,77 +182,6 @@ public class SQLQueryData {
 		return false;
 	}
 
-//	@Override
-//	public void insertExecuteBatchQuerySQL() throws IOException, SQLException {
-//
-//	}
-
-//	@Override
-//	public LinkedList<String> searchToCodegroup(String search, String dateMonth) throws SQLException, ParseException {
-//		ConnectionApp con = new ConnectionApp();
-//		List<String> pro = new LinkedList<>();
-//		List<String> code = new LinkedList<>();
-//
-//		try (Connection connection = con.getPostConnection()) {
-//			String SQL = "SELECT * FROM schedule";
-//			try (Statement statement =
-//					 connection.createStatement(
-//						 ResultSet.TYPE_SCROLL_INSENSITIVE,
-//						 ResultSet.CONCUR_READ_ONLY)) {
-//
-//				ResultSet resultSet;
-//				resultSet = statement.executeQuery(SQL);
-//				String programs;
-//				String dateSearh;
-//				String codegroup;
-//				int row;
-//				Set<String> words = null;
-//				while (resultSet.next()) {
-//					programs = resultSet.getString(1);
-//					dateSearh = String.valueOf(resultSet.getDate("datestart"));
-//					codegroup = resultSet.getString(2);
-//					words = new HashSet<String>(
-//						Arrays.asList(programs.split(" "))
-//					);
-////					сравнение полученной даты с БД с полученным параметром даты
-//					java.util.Date dateResult;
-//					dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-//					java.util.Date date1;
-//					date1 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
-//
-//					Calendar cal = getInstance();
-//					cal.setTime(dateResult);
-//					Calendar cal1;
-//					cal1 = getInstance();
-//					cal1.setTime(date1);
-//
-//					boolean sameDay;
-//					sameDay = cal.get(MONTH) == cal1.get(MONTH);
-//// если данное слово содержится в столбце БД добавляем учителя в список
-//					if (words.contains(search) && sameDay) {
-//						row = resultSet.getRow();
-//						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-//						((LinkedList<String>) code).add(codegroup);  // добвляет указанный элемент в конец этого списка
-//						System.out.println("индекс: " +
-//							row + ": " + " код программы: " +
-//							((LinkedList<String>) code).pop());
-//					}
-//				}
-//				assert words != null;
-//				if (words.isEmpty()) {
-//					System.out.println("Совпадений не найдено!");
-//				} else {
-//					System.out.println("Данные успешно выбраны!");
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return (LinkedList<String>) code;
-//	}
-
 
 	/**
 	 * метод для получения запрашиваемых данных по на правлению с таблицы
@@ -248,346 +190,8 @@ public class SQLQueryData {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-
-//	String searchToProgram = "Java";  // слово для поиска данных
-//	@Override
-//	public LinkedList<String> searchToProgram(String search, String dateMonth) throws SQLException, ParseException {
-//
-//		ConnectionApp con = new ConnectionApp();
-//		List<String> listProgs = new LinkedList<>();
-//		List<String> date = new LinkedList<>();
-//
-//		try (Connection connection = con.getPostConnection()) {
-//			String SQL = "SELECT * FROM schedule";
-//			try (Statement statement =
-//					 connection.createStatement(
-//						 ResultSet.TYPE_SCROLL_INSENSITIVE,
-//						 ResultSet.CONCUR_READ_ONLY)) {
-//
-//				ResultSet resultSet = statement.executeQuery(SQL);
-//				String programs;
-//				String dateSearh;
-//				int row = 0;
-//				Set<String> words = null;
-////				List<String> listSearh=null;
-//				while (resultSet.next()) {
-//					programs = resultSet.getString(1);
-//					dateSearh = String.valueOf(resultSet.getDate("datestart"));
-//					words = new HashSet<String>(
-//						Arrays.<String>asList(String.valueOf(programs.contains(search)))
-//					);
-////					сравнение полученной даты с БД с полученным параметром даты
-//					java.util.Date dateResult;
-//					dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-//					java.util.Date date1;
-//					date1 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
-//
-//					Calendar cal = getInstance();
-//					cal.setTime(dateResult);
-//					Calendar cal1 = getInstance();
-//					cal1.setTime(date1);
-//
-//					boolean sameDay;
-//					sameDay = cal.get(MONTH) == cal1.get(MONTH);
-//// если данное слово содержится в столбце БД добавляем учителя в список
-//					if (words.contains(search) && sameDay) {
-//						row = resultSet.getRow();
-//						listProgs.add(programs);
-////						System.out.println("индекс: " + row + ": " +
-////							((LinkedList<String>) listProgs).pop());
-//					}
-//				}
-//				assert words != null;
-//				if (words.isEmpty()) {
-//					System.out.println("Совпадений не найдено!");
-//				} else {
-//					System.out.println("Данные успешно выбраны!");
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return (LinkedList<String>) listProgs;
-//	}
-
-
-//	@Override
-//	public List<String> searchToDateStart(String search, String dateMonth) throws SQLException, ParseException {
-//		ConnectionApp con = new ConnectionApp();
-////		List<String> pro = new LinkedList<>();
-//		List<String> dateStart = new LinkedList<>();
-//
-//		try (Connection connection = con.getPostConnection()) {
-//			String SQL = "SELECT * FROM schedule";
-//			try (Statement statement =
-//					 connection.createStatement(
-//						 ResultSet.TYPE_SCROLL_INSENSITIVE,
-//						 ResultSet.CONCUR_READ_ONLY)) {
-//
-//				ResultSet resultSet = statement.executeQuery(SQL);
-//				String programs;
-//				String dateSearh;
-//				Set<String> words = null;
-//				int row;
-//
-//				while (resultSet.next()) {
-//					programs = resultSet.getString(1);
-//					dateSearh = String.valueOf(resultSet.getDate("datestart"));
-////	!!! доработать поиск, чтоб учитывал слово в скобках
-//
-//					words = new HashSet<String>(
-//						Arrays.<String>asList(String.valueOf(programs.contains(search)))
-//					);
-////					сравнение полученной даты с БД с полученным параметром даты
-//					java.util.Date dateResult;
-//					dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-//					java.util.Date date1;
-//					date1 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
-//
-//					Calendar cal = getInstance();
-//					cal.setTime(dateResult);
-//					Calendar cal1;
-//					cal1 = getInstance();
-//					cal1.setTime(date1);
-//
-//					boolean sameDay;
-//					sameDay = cal.get(MONTH) == cal1.get(MONTH);
-//// если данное слово содержится в столбце БД добавляем учителя в список
-//					if (words.contains(search) && sameDay) {
-//						row = resultSet.getRow();
-//						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-//						java.util.Date dates = new SimpleDateFormat("yyyy-MM-dd").parse(dateSearh);  // парсит
-//						SimpleDateFormat simplDate = new SimpleDateFormat("yyyy.MM.dd");
-////						java.util.Date dateRefact = new java.util.Date();
-//						String exp = simplDate.format(dates);
-//						((LinkedList<String>) dateStart).add(exp);  // добвляет указанный
-//						// элемент в конец этого списка
-////						System.out.println("индекс: " +
-////							row + ": " + " дата начала: " +
-////							((LinkedList<String>) dateStart).pop());
-//					}
-//				}
-//				if (!words.isEmpty()) {
-//					System.out.println("Запрошенные данные по дате начала успешно выбраны!");
-//				} else {
-//					System.out.println("Совпадений не нашлось");
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return dateStart;
-//	}
-
-//	@Override
-//	public List<String> searchToTimeStart(String search, String dateMonth) throws SQLException, ParseException {
-//		ConnectionApp con = new ConnectionApp();
-//		List<String> pro = new LinkedList<>();
-//		List<String> timeStart = new LinkedList<>();
-//
-//		try (Connection connection = con.getPostConnection()) {
-//			String SQL = "SELECT * FROM schedule";
-//			try (Statement statement =
-//					 connection.createStatement(
-//						 ResultSet.TYPE_SCROLL_INSENSITIVE,
-//						 ResultSet.CONCUR_READ_ONLY)) {
-//
-//				ResultSet resultSet;
-//				resultSet = statement.executeQuery(SQL);
-//				String programs;
-//				String timeSearh;
-//				String dateSearh;
-//				Set<String> words = null;
-//				int row;
-//
-//				while (resultSet.next()) {
-//					programs = resultSet.getString(1);
-//					dateSearh = String.valueOf(resultSet.getDate("datestart"));
-//					timeSearh = String.valueOf(resultSet.getTime("timestart"));
-////	!!! доработать поиск, чтоб учитывал слово в скобках
-//
-//					words = new HashSet<>(
-//						Arrays.<String>asList(String.valueOf(programs.contains(search)))
-//					);
-////					сравнение полученной даты с БД с полученным параметром даты
-//					java.util.Date dateResult;
-//					dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-//					java.util.Date date1 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
-//
-//					Calendar cal = getInstance();
-//					cal.setTime(dateResult);
-//					Calendar cal1;
-//					cal1 = getInstance();
-//					cal1.setTime(date1);
-//
-//					boolean sameDay;
-//					sameDay = cal.get(MONTH) == cal1.get(MONTH);
-//// если данное слово содержится в столбце БД добавляем учителя в список
-//					if (words.contains(search) && sameDay) {
-//						row = resultSet.getRow();
-//						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-//						java.util.Date timeS = new SimpleDateFormat("HH:mm").parse(timeSearh);  // парсит
-//						SimpleDateFormat simplDate = new SimpleDateFormat("HH:mm");
-////						java.util.Date dateRefact = new java.util.Date();
-//						String exp = simplDate.format(timeS);
-//						((LinkedList<String>) timeStart).add(exp);  // добвляет указанный
-//						// элемент в конец этого списка
-////						System.out.println("индекс: " +
-////							row + ": " + " дата начала: " +
-////							((LinkedList<String>) timeStart).pop());
-//					}
-//				}
-//				if (!words.isEmpty()) {
-//					System.out.println("Запрошенные данные по времени начала успешно выбраны!");
-//				} else {
-//					System.out.println("Совпадений не нашлось");
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return timeStart;
-//	}
-
-//
-//	@Override
-//	public LinkedList<String> searchToAuditorium(String search, String dateMonth) throws SQLException, ParseException {
-//		ConnectionApp con = new ConnectionApp();
-//		List<String> pro = new LinkedList<>();
-//		List<String> audit = new LinkedList<>();
-//
-//		try (Connection connection = con.getPostConnection()) {
-//			String SQL = "SELECT * FROM schedule";
-//			try (Statement statement =
-//					 connection.createStatement(
-//						 ResultSet.TYPE_SCROLL_INSENSITIVE,
-//						 ResultSet.CONCUR_READ_ONLY)) {
-//				ResultSet resultSet = statement.executeQuery(SQL);
-//				String program;
-//				String dateSearh;
-//				String aud;
-//				int row;
-//				Set<String> words = null;
-//				while (resultSet.next()) {
-//					program = resultSet.getString(1);
-//					dateSearh = String.valueOf(resultSet.getDate("datestart"));
-//					aud = resultSet.getString(7);
-////	!!! доработать поиск, чтоб учитывал слово в скобках
-//					// поиск слова в получаемом списке
-//					words = new HashSet<>(
-//						Arrays.<String>asList(String.valueOf(program.contains(search)))
-//					);
-//					java.util.Date dateResult =
-//						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-//					java.util.Date date1 =
-//						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
-//
-//					Calendar cal = getInstance();
-//					cal.setTime(dateResult);
-//					Calendar cal1 = getInstance();
-//					cal1.setTime(date1);
-//
-//					boolean sameDay = cal.get(MONTH) == cal1.get(MONTH);
-//// если данное слово содержится в столбце БД добавляем учителя в список
-//					if (words.contains(search) && sameDay) {
-//						row = resultSet.getRow();
-//						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-//						((LinkedList<String>) audit).add(aud);  // добвляет указанный элемент в конец этого списка
-////						System.out.println("индекс: " +
-////							row + ": " + " аудитория: " +
-////							((LinkedList<String>) audit).pop());
-//					}
-//				}
-//				if (!words.isEmpty()) {
-//					System.out.println("Запрошенные данные по аудиториям успешно выбраны!");
-//				} else {
-//					System.out.println("Совпадений не найдено!");
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return (LinkedList<String>) audit;
-//	}
-//	@Override
-//	public LinkedList<String> searchToTeacher(String search, String dateMonth) throws SQLException, ParseException {
-//		ConnectionApp con = new ConnectionApp();
-//		List<String> pro = new LinkedList<>();
-//		List<String> tech = new LinkedList<>();
-//
-//		try (Connection connection = con.getPostConnection()) {
-//			String SQL = "SELECT * FROM schedule";
-//			try (Statement statement =
-//					 connection.createStatement(
-//						 ResultSet.TYPE_SCROLL_INSENSITIVE,
-//						 ResultSet.CONCUR_READ_ONLY)) {
-//
-//				ResultSet resultSet = statement.executeQuery(SQL);
-//				String program;
-//				String dateSearh;
-//				String teacher;
-//				Set<String> words = null;
-//				int row;
-//				while (resultSet.next()) {
-//					program = resultSet.getString(1);
-//					dateSearh = String.valueOf(resultSet.getDate("datestart"));
-//					teacher = resultSet.getString(9);
-////	!!! доработать поиск, чтоб учитывал слово в скобках
-//					// поиск слова в получаемом списке
-//					words = new HashSet<>(
-//						Arrays.asList(program.split(" "))
-//					);
-//					java.util.Date dateResult;
-//					dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-//					java.util.Date date1 =
-//						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
-//
-//					Calendar cal = getInstance();
-//					cal.setTime(dateResult);
-//					Calendar cal1 = getInstance();
-//					cal1.setTime(date1);
-//
-//					boolean sameDay;
-//					if (cal.get(MONTH) == cal1.get(MONTH)) sameDay = true;
-//					else sameDay = false;
-//// если данное слово содержится в столбце БД добавляем учителя в список
-//					if (words.contains(search) && sameDay) {
-//						row = resultSet.getRow();
-//						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-//						((LinkedList<String>) tech).add(teacher);  // добвляет указанный элемент в конец этого списка
-////						System.out.println("индекс: " +
-////							row + ": " + " учитель: " +
-////							((LinkedList<String>) tech).pop());
-//					}
-//				}
-//				if (words != null) {
-//					if (words.isEmpty()) {
-//						System.out.println("нет совпадений");
-//					} else {
-//						System.out.println("Запрошенные данные по учителям успешно выбраны!");
-//					}
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return (LinkedList<String>) tech;
-//	}
-
-
 	/**
 	 * метод для поиска данных с выбором ключевого слова и даты
-	 *
 	 */
 
 	public ShedulesSearch addValueTableShedule(String search, String dateMonth) throws SQLException, IOException, ParseException {
@@ -619,7 +223,7 @@ public class SQLQueryData {
 					java.util.Date date1 =
 						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
 
-					Calendar calendar =Calendar.getInstance();
+					Calendar calendar = Calendar.getInstance();
 					calendar.setTime(dateResult);
 					Calendar calendar1 = Calendar.getInstance();
 					calendar1.setTime(date1);
@@ -629,7 +233,7 @@ public class SQLQueryData {
 						row = resultSet.getRow();
 						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
 						shedule = new SheduleSearch(
-							 codegroup
+							codegroup
 							, program
 							, dateSearh
 							, timeStart
@@ -653,6 +257,7 @@ public class SQLQueryData {
 	}
 
 	/**
+	 * добавить дату и время!!!
 	 * метод для просмотра имеющихся данных в БД на странице браузера после загрузки данных
 	 */
 //	@Override
