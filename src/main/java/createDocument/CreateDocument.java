@@ -1,6 +1,6 @@
 package createDocument;
 
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 
 /**
@@ -8,6 +8,6 @@ import java.text.ParseException;
  */
 public interface CreateDocument {
 
-	public void createDoc() throws SQLException, ParseException;
+	void createDoc(Connection connection) throws SQLException, ParseException;
 
 }

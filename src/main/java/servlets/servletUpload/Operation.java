@@ -4,7 +4,8 @@ package servlets.servletUpload;
  * Класс Operation
  */
 public enum Operation {
-	DELETE("delete"), INSERT("insert"), VIEW("view");
+	DELETE("delete"), INSERT("insert"), VIEW("view"),
+	CREATE_SHEDULE("create");
 
 	private String title;
 

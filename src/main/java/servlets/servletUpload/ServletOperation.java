@@ -11,10 +11,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * Класс ServletDelete
+ * Класс ServletOperation
  */
-@WebServlet(name = "ServletDelete", urlPatterns = {"/servletDelete"})
-public class ServletDelete extends HttpServlet {
+@WebServlet(name = "ServletOperation", urlPatterns = {"/servletOperation"})
+public class ServletOperation extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

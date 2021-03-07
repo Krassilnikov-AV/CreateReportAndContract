@@ -19,7 +19,6 @@ public class SheduleInsert {
 	private final String tech;
 	private final int period;
 
-
 	public SheduleInsert(String group, String pro
 		, String dateStart, String timeStart
 		, String dateFinish, String timeFinish

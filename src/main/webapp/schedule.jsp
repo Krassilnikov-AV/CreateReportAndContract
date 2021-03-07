@@ -5,10 +5,15 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Расписание занятий</title>
 </head>
+<body>
+<p><a href="upload.jsp">
+  <h>Назад</h>
+</a></p>
 
+</body>
 <body>
 <h2>Создание отчёта расписания занятий</h2>
-<form name="inserting.jsp" action="" method="POST">
+<form action="servletSchedule" method="POST">
   <table width="400" border="0" cellpadding="3" cellspacing="0">
     <col width="100" valign="top">
     <col width="250" valign="top">
@@ -45,8 +50,16 @@
         <input type="submit" value="Удалить" name="delete">
       </p></td>
     </tr>
-    <%--<tr>--%>
-      <td><p><input type="submit" value="Создать_отчёт" name="create"></p></td>
-    <%--</tr>--%>
 </form>
+    <%--ПРИМЕР ПРИВЯЗКИ КНОПКИ--%>
+    <%--<form action="servletOperation" method="POST">--%>
+      <%--<input type="hidden" name="operation" id="view" value="view" style="display:none"/>--%>
+      <%--<input type="submit" value="Просмотр" name="view"/>--%>
+    <%--</form>--%>
+    <form action="servletSchedule" method="POST">
+      <input type="hidden" name="operation" id="create" value="create" style="display:none"/>
+      <td><p><input type="submit" value="СОЗДАТЬ ОТЧЁТ" name="create"></p></td>
+    </form>
+      <%--</tr>--%>
+
 </body>

@@ -34,29 +34,32 @@ import model.*;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
-import query.SQLQueryData;
+import query.SQLQueryDataImpl;
 
 import java.io.*;
 import java.math.BigInteger;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.*;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Класс WriteWordRaspisanie
  */
 public class CreateScheduleReport implements CreateDocument {
 
+	private XWPFTable tab;
+
 	/**
 	 * @param args the command line arguments
 	 */
 
 	@Override
-	public void createDoc() throws SQLException, ParseException {
-
+	public void createDoc(Connection connection) throws SQLException, ParseException {
+		LinkedList<String> listDateStart;
 		String search = "Java"; // слово для поиска
 		String dateMonth = "2020-06-01";
-		SQLQueryData sqlQueryData = new SQLQueryData();
+		SQLQueryDataImpl sqlQueryDataImpl = new SQLQueryDataImpl();
 		try (OutputStream outputStream
 				 = new FileOutputStream("D:\\REPOSITORIES-2\\WordTest.docx")) {
 			// создаем  документа docx, к которому будем прикручивать наполнение (колонтитулы, текст)
@@ -137,34 +140,27 @@ public class CreateScheduleReport implements CreateDocument {
 //				nameProg="Классная программа";
 //			}
 ////			String res = null;
-//			listCodeGroup = sqlQueryData.searchToCodegroup(search, dateMonth);
-//			listDateStart = (LinkedList<String>) sqlQueryData.searchToDateStart(search, dateMonth);
-//			listTimeStart = (LinkedList<String>) sqlQueryData.searchToTimeStart(search, dateMonth);
-//			listAuditorium = sqlQueryData.searchToAuditorium(search, dateMonth);
-//			listTeach = sqlQueryData.searchToTeacher(search, dateMonth);
-			ShedulesSearch shedulesSearch = sqlQueryData.addValueTableShedule(search, dateMonth);
+//			listCodeGroup = sqlQueryDataImpl.searchToCodegroup(search, dateMonth);
+
+			listDateStart = (LinkedList<String>) sqlQueryDataImpl.searchToDateStart(connection, search, dateMonth);
+//			listTimeStart = (LinkedList<String>) sqlQueryDataImpl.searchToTimeStart(search, dateMonth);
+//			listAuditorium = sqlQueryDataImpl.searchToAuditorium(search, dateMonth);
+//			listTeach = sqlQueryDataImpl.searchToTeacher(search, dateMonth);
+			ShedulesSearch shedulesSearch = sqlQueryDataImpl.addValueTableShedule(connection, search, dateMonth);
 			paragraphProg.setText("по программе профессиональной переподготовки ___________________");
 
 			/*
-			 * Доработать_название месяца, окончание на -ь вместо -я!*/
+			 * Доработать_название месяца, окончание на -ь вместо -я!
+			 * необходимо получить первый элемент пропарсить и получить
+			 * название месяца для заголовка расписания
+			 * */
 
-//			String resMonth = listDateStart.getFirst();
-//			String resultMonth = String.valueOf(shedulesSearch.getShedules().get(0));
-			int size = shedulesSearch.getShedules().size();
-			for (int i = 0; i < size; i++) {
-				for (SheduleSearch sheduleSearch:shedulesSearch.getShedules()) {
-					sheduleSearch.getDateStart().getChars(0,0,);
-				}
-				shedulesSearch.getShedules().get(0);
 
-			}
-//			char numOne=0;
-//			for () {
-////				numOne = sheduleSearch.getDateStart().charAt();
-//				sheduleSearch.getDateStart().;
-//			}
+			String resMonth = listDateStart.getFirst();
+//				String resultMonth = String.valueOf(shedulesSearch.getShedules().get(0));
+
 			DateFormat date = new SimpleDateFormat("yyyy.MM.dd", Locale.US);
-			Date date1 = date.parse(String.valueOf(numOne));
+			Date date1 = date.parse(resMonth);
 
 			String dateStr = new SimpleDateFormat("MMMM yyyy").format(date1);
 
@@ -181,7 +177,14 @@ public class CreateScheduleReport implements CreateDocument {
 //			int listSelectData = listDateStart.size();  // кол-во строк вставляемых в таблицу с БД
 
 			XWPFTable table = document.createTable(listTableSize + 2, 6);
-			table.setWidth(100);
+			getWidth(table, 9150);         // установка ширины таблицы
+//			table.setWidth(100);
+
+			/*
+			 *метод для задания ширтны таблицы
+			 */
+			//	9150
+
 //			table.setCellMargins(0, 0,0,1 );
 //			table.setRowBandSize(10);
 			table.getRow(0).getCell(0).setText("Группа");
@@ -228,14 +231,13 @@ public class CreateScheduleReport implements CreateDocument {
 		System.out.println("Файл успешно создан!");
 	}
 
-	public static void main(String[] args) throws SQLException, ParseException {
-		long start = System.currentTimeMillis();
-		CreateScheduleReport csr = new CreateScheduleReport();
-		csr.createDoc();
-		long finish = System.currentTimeMillis();
-		System.out.println("Время выполнения: " + (finish - start) + "_ms");
-	}
-//
+//	public static void main(String[] args) throws SQLException, ParseException {
+//		long start = System.currentTimeMillis();
+//		CreateScheduleReport csr = new CreateScheduleReport();
+//		csr.createDoc();
+//		long finish = System.currentTimeMillis();
+//		System.out.println("Время выполнения: " + (finish - start) + "_ms");
+//	}
 
 	private CTP createFooterModel(String footerContent) {
 		// создаем футер или нижний колонтитул
@@ -259,5 +261,29 @@ public class CreateScheduleReport implements CreateDocument {
 //		CTText cttFIO = ctrFIO.addNewT();
 //		cttFIO.setStringValue(headFIO);
 		return ctpHeaderModel;
+	}
+
+	/*
+	* метод получения ширины таблицы
+	* */
+	private CTTblWidth getWidth(XWPFTable tab, int value) {
+		CTTblWidth width = tab.getCTTbl().addNewTblPr().addNewTblW();
+		width.setType(STTblWidth.DXA);
+		width.setW(BigInteger.valueOf(value));
+		return width;
+	}
+
+	static void setColumnWidth(XWPFTable table, int row, int col, int width) {
+		CTTblWidth tblWidth = CTTblWidth.Factory.newInstance();
+		tblWidth.setW(BigInteger.valueOf(width));
+		tblWidth.setType(STTblWidth.DXA);
+		CTTcPr tcPr = table.getRow(row).getCell(col).getCTTc().getTcPr();
+		if (tcPr != null) {
+			tcPr.setTcW(tblWidth);
+		} else {
+			tcPr = CTTcPr.Factory.newInstance();
+			tcPr.setTcW(tblWidth);
+			table.getRow(row).getCell(col).getCTTc().setTcPr(tcPr);
+		}
 	}
 }

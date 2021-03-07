@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Класс ExReadExcelData
  */
-public class ReadExcelData implements ReadData {
+public class ReadExcelDataImpl implements ReadData {
 
 	/**
 	 * @param args
@@ -52,7 +52,7 @@ public class ReadExcelData implements ReadData {
 
 	// основной метод класса для проверки считывания данных с таблицы
 //	public static void main(String[] args) throws IOException {
-//		ReadExcelData exr = new ReadExcelData();
+//		ReadExcelDataImpl exr = new ReadExcelDataImpl();
 //		exr.getString(0);
 ////		exr.buildingTable();
 ////		exr.getDate(columnIndex);

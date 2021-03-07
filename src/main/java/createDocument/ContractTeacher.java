@@ -9,7 +9,7 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
 import java.io.*;
 import java.math.BigInteger;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 
 /**
@@ -18,16 +18,16 @@ import java.text.ParseException;
 public class ContractTeacher implements CreateDocument {
 	private enum Border {LEFT, TOP, BOTTOM, RIGHT}
 
-	public static void main(String[] args) throws SQLException, ParseException {
-		long start = System.currentTimeMillis();
-		ContractTeacher contr = new ContractTeacher();
-		contr.createDoc();
-		long finish = System.currentTimeMillis();
-		System.out.println("Время выполнения: " + (finish - start) + "_ms");
-	}
+//	public static void main(String[] args) throws SQLException, ParseException {
+//		long start = System.currentTimeMillis();
+//		ContractTeacher contr = new ContractTeacher();
+//		contr.createDoc();
+//		long finish = System.currentTimeMillis();
+//		System.out.println("Время выполнения: " + (finish - start) + "_ms");
+//	}
 
 	@Override
-	public void createDoc() throws SQLException, ParseException {
+	public void createDoc(Connection connection) throws SQLException, ParseException {
 
 		try (OutputStream outputStream
 				 = new FileOutputStream("D:\\REPOSITORIES-2\\ContractTeach.docx")) {
@@ -386,6 +386,7 @@ public class ContractTeacher implements CreateDocument {
 			e.printStackTrace();
 			System.out.println("Файл к сожалению не создан");
 		}
+
 	}
 
 	/*метод для получения акта №1*/

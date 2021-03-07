@@ -5,17 +5,20 @@
 package services;
 
 import connection.dbConnection.*;
+import createDocument.CreateScheduleReport;
 import model.Shedules;
-import query.SQLQueryData;
+import query.SQLQueryDataImpl;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
 
 /**
  * Класс DataOperationsService
  */
 public class DataOperationsService {
-	private SQLQueryData sqd = new SQLQueryData();
+	private SQLQueryDataImpl sqd = new SQLQueryDataImpl();
+	private CreateScheduleReport createScheduleReport = new CreateScheduleReport();
 	ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
 	//getJDBCConnect();
 	Connection connection = connectionManager.getConnection();
@@ -32,4 +35,7 @@ public class DataOperationsService {
 	 public Shedules viewDataDB() throws SQLException {
 		return sqd.view(connection);
 	 }
+	public void createDoc() throws SQLException, ParseException {
+		createScheduleReport.createDoc(connection);
+	}
 }

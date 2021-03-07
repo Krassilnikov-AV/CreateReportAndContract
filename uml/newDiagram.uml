@@ -3,35 +3,23 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="292.0" y="0.0">model.Shedule</node>
-    <node x="274.0" y="331.0">query.SQLQueryData</node>
-    <node x="0.0" y="331.0">readDoc.ReadData</node>
-    <node x="0.0" y="101.0">connection.dbConnection.ConnectionManagerPostgeImpl</node>
-    <node x="0.0" y="572.0">query.SQLQuery</node>
-    <node x="536.0" y="572.0">connection.dbConnection.DBConnectionManager</node>
-    <node x="0.0" y="454.0">readDoc.ReadExcelData</node>
-    <node x="299.0" y="572.0">services.DataOperationsService</node>
-    <node x="0.0" y="712.0">model.Shedules</node>
-    <node x="36.5" y="0.0">connection.dbConnection.ConnectionManager</node>
+    <node x="0.0" y="260.0">servlets.servletGPH.ServletContract</node>
+    <node x="0.0" y="0.0">servlets.servletUpload.Operation</node>
+    <node x="0.0" y="378.0">servlets.servletUpload.ServletOperation</node>
+    <node x="399.0" y="1.0">services.DataOperationsService</node>
+    <node x="0.0" y="142.0">servlets.servletUpload.ServletUpload</node>
   </nodes>
   <notes />
-  <edges>
-    <edge source="readDoc.ReadExcelData" target="readDoc.ReadData">
-      <point x="0.0" y="-36.5" />
-      <point x="0.0" y="36.5" />
-    </edge>
-    <edge source="connection.dbConnection.ConnectionManagerPostgeImpl" target="connection.dbConnection.ConnectionManager">
-      <point x="0.0" y="-92.5" />
-      <point x="0.0" y="25.5" />
-    </edge>
-  </edges>
-  <settings layout="Hierarchic Group" zoom="0.6267217630853994" x="441.0" y="353.00000000000006" />
-  <SelectedNodes />
+  <edges />
+  <settings layout="Hierarchic Group" zoom="1.0" x="260.5" y="231.5" />
+  <SelectedNodes>
+    <node>services.DataOperationsService</node>
+  </SelectedNodes>
   <Categories>
     <Category>Constructors</Category>
     <Category>Methods</Category>
-    <Category>Inner Classes</Category>
     <Category>Properties</Category>
+    <Category>Inner Classes</Category>
   </Categories>
   <SCOPE>All</SCOPE>
   <VISIBILITY>private</VISIBILITY>

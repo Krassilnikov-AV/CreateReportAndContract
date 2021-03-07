@@ -25,15 +25,15 @@
 
 <%--выбор операций с сервлета delete--%>
 <h1>Выбор операции: </h1>
-<form action="servletDelete" method="POST">
+<form action="servletOperation" method="POST">
   <input type="hidden" name="operation" id="upload" value="insert" style="display:none"/>
-  <input type="submit" value="Вставить" name="insert"/>
+  <input type="submit" value="Внести днные в Базу данных" name="insert"/>
 </form>
-<form action="servletDelete" method="POST">
+<form action="servletOperation" method="POST">
   <input type="hidden" name="operation" id="delete" value="delete" style="display:none"/>
   <input type="submit" value="Удалить" name="delete"/>
 </form>
-<form action="servletDelete" method="POST">
+<form action="servletOperation" method="POST">
   <input type="hidden" name="operation" id="view" value="view" style="display:none"/>
   <input type="submit" value="Просмотр" name="view"/>
 </form>

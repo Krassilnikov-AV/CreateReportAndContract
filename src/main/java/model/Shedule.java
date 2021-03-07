@@ -14,7 +14,6 @@ public class Shedule {
 	private final String type;
 	private final String tech;
 
-
 	public Shedule(String pro, String code, String audit, String type, String tech) {
 		this.pro = pro;
 		this.group = code;
