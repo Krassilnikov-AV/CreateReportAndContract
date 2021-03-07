@@ -4,26 +4,40 @@
 
 package servlets.servletGPH;
 
-import createDocument.ContractTeacher;
+import services.DataOperationsService;
+import servlets.servletUpload.Operation;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
 
 /**
  * Класс ServletContract
  */
 @WebServlet
 public class ServletContract extends HttpServlet {
-	ContractTeacher ct = new ContractTeacher();
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		ct.ceateDoc();
-	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		super.doGet(req, resp);
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Operation operationType = Operation.fromString(req.getParameter("operation"));
+		DataOperationsService dos = new DataOperationsService();
+		try {
+			if (operationType == Operation.CREATE_CONTRACT) {
+				dos.createDocTeacher();
+			}
+		} catch (SQLException | ParseException e) {
+			e.printStackTrace();
+		}
+		req.getRequestDispatcher("/ghp.jsp").forward(req, resp);
 	}
 }
+
+/*();*/
+//	@Override
+//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		super.doGet(req, resp);
+//	}
+//}

@@ -5,7 +5,7 @@
 package services;
 
 import connection.dbConnection.*;
-import createDocument.CreateScheduleReport;
+import createDocument.*;
 import model.Shedules;
 import query.SQLQueryDataImpl;
 
@@ -19,7 +19,9 @@ import java.text.ParseException;
 public class DataOperationsService {
 	private SQLQueryDataImpl sqd = new SQLQueryDataImpl();
 	private CreateScheduleReport createScheduleReport = new CreateScheduleReport();
-	ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
+	private ContractTeacher contractTeacher = new ContractTeacher();
+
+		ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
 	//getJDBCConnect();
 	Connection connection = connectionManager.getConnection();
 
@@ -37,5 +39,8 @@ public class DataOperationsService {
 	 }
 	public void createDoc() throws SQLException, ParseException {
 		createScheduleReport.createDoc(connection);
+	}
+	public void createDocTeacher() throws SQLException, ParseException {
+		contractTeacher.createDocTeacher();
 	}
 }

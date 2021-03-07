@@ -8,6 +8,12 @@ import java.text.ParseException;
  */
 public interface CreateDocument {
 
-	void createDoc(Connection connection) throws SQLException, ParseException;
+	default void createDoc(Connection connection) throws SQLException, ParseException {
+	}
 
+	default void createDocTeacher() throws SQLException, ParseException {
+
+	}
+
+//	void createDocTeacher() throws SQLException, ParseException;
 }

@@ -27,7 +27,7 @@ public class ContractTeacher implements CreateDocument {
 //	}
 
 	@Override
-	public void createDoc(Connection connection) throws SQLException, ParseException {
+	public void createDocTeacher() throws SQLException, ParseException {
 
 		try (OutputStream outputStream
 				 = new FileOutputStream("D:\\REPOSITORIES-2\\ContractTeach.docx")) {

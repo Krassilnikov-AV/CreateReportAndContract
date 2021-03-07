@@ -5,6 +5,11 @@
 
 </head>
 <body>
+<p><a href="upload.jsp">
+  <h>Назад</h>
+</a></p>
+</body>
+<body>
 <h2>Создание договора гражданско правового характера внештатных сотрудников</h2>
 <td>
   <p>Выбрать период: <input type="month" name="calendar">
@@ -56,12 +61,17 @@
   <p>Номер страхового свидетельства:<input type="text" name="serviceСost" size="57"></p>
   <p>Наименование банка: <input type="text" name="serviceСost" size="57"></p>
   <p>БИК банка: <input type="text" name="serviceСost" size="57"></p>
-
   <p>
-<td><p><input type="submit" value="Создать договор" name="create"></p></td>
-<%--
-
---%>
 </td>
+    <form action="servletOperation" method="POST">
+      <input type="hidden" name="operation" id="create_contract" value="create_contract" style="display:none"/>
+<td><p><input type="submit" value="Создать договор" name="create_contract"</p></td>
+</form>
+<%--ПРИМЕР ПРИВЯЗКИ КНОПКИ--%>
+<%--<form action="servletOperation" method="POST">--%>
+<%----%>
+<%--<input type="submit" value="Просмотр" name="view"/>--%>
+<%----%>
+
 </body>
 </html>
