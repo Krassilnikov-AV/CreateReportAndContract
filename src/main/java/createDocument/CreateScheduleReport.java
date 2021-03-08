@@ -177,7 +177,7 @@ public class CreateScheduleReport implements CreateDocument {
 //			int listSelectData = listDateStart.size();  // кол-во строк вставляемых в таблицу с БД
 
 			XWPFTable table = document.createTable(listTableSize + 2, 6);
-			getWidth(table, 9150);         // установка ширины таблицы
+			getWidth(table, 12000);         // установка ширины таблицы
 //			table.setWidth(100);
 
 			/*
@@ -200,26 +200,26 @@ public class CreateScheduleReport implements CreateDocument {
 			table.getRow(1).getCell(4).setText("5");
 			table.getRow(1).getCell(5).setText("6");
 
-			int countRows = 0;
+			int countRows = 2;
 			for (SheduleSearch sheduleSearch : shedulesSearch.getShedules()) {
-				table.getRow(countRows + 2).getCell(0).setText(sheduleSearch.getGroup());
-				if (table.getRow(countRows + 2).getCell(1).getText().isEmpty()) {
-					table.getRow(countRows + 2).getCell(1).setText(sheduleSearch.getPro());
+				table.getRow(countRows).getCell(0).setText(sheduleSearch.getGroup());
+				if (table.getRow(countRows).getCell(1).getText().isEmpty()) {
+					table.getRow(countRows).getCell(1).setText(sheduleSearch.getPro());
 				}
-				if (table.getRow(countRows + 2).getCell(2).getText().isEmpty()) {
-					table.getRow(countRows + 2).getCell(2).setText(sheduleSearch.getDateStart());
+				if (table.getRow(countRows).getCell(2).getText().isEmpty()) {
+					table.getRow(countRows).getCell(2).setText(sheduleSearch.getDateStart());
 				}
-				if (table.getRow(countRows + 2).getCell(3).getText().isEmpty()) {
-					table.getRow(countRows + 2).getCell(3).setText(sheduleSearch.getTimeStart());
+				if (table.getRow(countRows ).getCell(3).getText().isEmpty()) {
+					table.getRow(countRows).getCell(3).setText(sheduleSearch.getTimeStart());
 				}
-				if (table.getRow(countRows + 2).getCell(4).getText().isEmpty()) {
-					table.getRow(countRows + 2).getCell(4).setText(sheduleSearch.getAudit());
+				if (table.getRow(countRows).getCell(4).getText().isEmpty()) {
+					table.getRow(countRows).getCell(4).setText(sheduleSearch.getAudit());
 				}
-				if (table.getRow(countRows + 2).getCell(5).getText().isEmpty()) {
-					table.getRow(countRows + 2).getCell(5).setText(sheduleSearch.getTech());
+				if (table.getRow(countRows).getCell(5).getText().isEmpty()) {
+					table.getRow(countRows).getCell(5).setText(sheduleSearch.getTech());
 				}
 
-				countRows = +2;
+				countRows = countRows + 1;
 			}
 
 			// сохраняем шаблон docx документа в файл
