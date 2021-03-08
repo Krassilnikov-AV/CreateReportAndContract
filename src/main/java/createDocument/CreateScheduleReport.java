@@ -131,16 +131,6 @@ public class CreateScheduleReport implements CreateDocument {
 			paragraph.addCarriageReturn();     // новый абзац
 			XWPFRun paragraphProg = bodyParagraph.createRun();
 			paragraphProg.setColor("000000");
-//			String nameProg = null;
-//			List<String> result=listProgs.stream()
-//				.filter(listProg -> listProg.contains(search)).collect(Collectors.toList());
-//			List<String> result = listProgs;
-//			for (String res :
-//				 result) {
-//				nameProg="Классная программа";
-//			}
-////			String res = null;
-//			listCodeGroup = sqlQueryDataImpl.searchToCodegroup(search, dateMonth);
 
 			listDateStart = (LinkedList<String>) sqlQueryDataImpl.searchToDateStart(connection, search, dateMonth);
 //			listTimeStart = (LinkedList<String>) sqlQueryDataImpl.searchToTimeStart(search, dateMonth);
@@ -154,8 +144,6 @@ public class CreateScheduleReport implements CreateDocument {
 			 * необходимо получить первый элемент пропарсить и получить
 			 * название месяца для заголовка расписания
 			 * */
-
-
 			String resMonth = listDateStart.getFirst();
 //				String resultMonth = String.valueOf(shedulesSearch.getShedules().get(0));
 
@@ -170,23 +158,19 @@ public class CreateScheduleReport implements CreateDocument {
 			paragraphProg.addCarriageReturn();     // новый абзац
 			paragraphProg.setText("____________________________________________________________________________");
 
-
 			int listTableSize = shedulesSearch.getShedules().size();  // определяет количество строкразмер
 			// вставляемых значений из
 			// списка и заголовка таблицы
 //			int listSelectData = listDateStart.size();  // кол-во строк вставляемых в таблицу с БД
 
 			XWPFTable table = document.createTable(listTableSize + 2, 6);
-			getWidth(table, 12000);         // установка ширины таблицы
+			getWidth(table, 13500);         // установка ширины таблицы
 //			table.setWidth(100);
 
 			/*
 			 *метод для задания ширтны таблицы
 			 */
-			//	9150
 
-//			table.setCellMargins(0, 0,0,1 );
-//			table.setRowBandSize(10);
 			table.getRow(0).getCell(0).setText("Группа");
 			table.getRow(0).getCell(1).setText("Образовательная программа");
 			table.getRow(0).getCell(2).setText("Дата начала");
@@ -209,7 +193,7 @@ public class CreateScheduleReport implements CreateDocument {
 				if (table.getRow(countRows).getCell(2).getText().isEmpty()) {
 					table.getRow(countRows).getCell(2).setText(sheduleSearch.getDateStart());
 				}
-				if (table.getRow(countRows ).getCell(3).getText().isEmpty()) {
+				if (table.getRow(countRows).getCell(3).getText().isEmpty()) {
 					table.getRow(countRows).getCell(3).setText(sheduleSearch.getTimeStart());
 				}
 				if (table.getRow(countRows).getCell(4).getText().isEmpty()) {
@@ -230,14 +214,6 @@ public class CreateScheduleReport implements CreateDocument {
 		}
 		System.out.println("Файл успешно создан!");
 	}
-
-//	public static void main(String[] args) throws SQLException, ParseException {
-//		long start = System.currentTimeMillis();
-//		CreateScheduleReport csr = new CreateScheduleReport();
-//		csr.createDoc();
-//		long finish = System.currentTimeMillis();
-//		System.out.println("Время выполнения: " + (finish - start) + "_ms");
-//	}
 
 	private CTP createFooterModel(String footerContent) {
 		// создаем футер или нижний колонтитул
@@ -264,26 +240,12 @@ public class CreateScheduleReport implements CreateDocument {
 	}
 
 	/*
-	* метод получения ширины таблицы
-	* */
+	 * метод получения ширины таблицы
+	 * */
 	private CTTblWidth getWidth(XWPFTable tab, int value) {
 		CTTblWidth width = tab.getCTTbl().addNewTblPr().addNewTblW();
 		width.setType(STTblWidth.DXA);
 		width.setW(BigInteger.valueOf(value));
 		return width;
-	}
-
-	static void setColumnWidth(XWPFTable table, int row, int col, int width) {
-		CTTblWidth tblWidth = CTTblWidth.Factory.newInstance();
-		tblWidth.setW(BigInteger.valueOf(width));
-		tblWidth.setType(STTblWidth.DXA);
-		CTTcPr tcPr = table.getRow(row).getCell(col).getCTTc().getTcPr();
-		if (tcPr != null) {
-			tcPr.setTcW(tblWidth);
-		} else {
-			tcPr = CTTcPr.Factory.newInstance();
-			tcPr.setTcW(tblWidth);
-			table.getRow(row).getCell(col).getCTTc().setTcPr(tcPr);
-		}
 	}
 }

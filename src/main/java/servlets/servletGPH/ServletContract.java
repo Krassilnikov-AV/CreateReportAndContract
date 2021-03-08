@@ -1,6 +1,4 @@
-/*
- * Copyright (c) 2021 Tander, All Rights Reserved.
- */
+
 
 package servlets.servletGPH;
 
@@ -14,9 +12,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-/**
- * Класс ServletContract
- */
 @WebServlet
 public class ServletContract extends HttpServlet {
 
@@ -34,10 +29,3 @@ public class ServletContract extends HttpServlet {
 		req.getRequestDispatcher("/ghp.jsp").forward(req, resp);
 	}
 }
-
-/*();*/
-//	@Override
-//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		super.doGet(req, resp);
-//	}
-//}

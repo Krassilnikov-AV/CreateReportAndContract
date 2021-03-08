@@ -54,7 +54,16 @@
       <td>"<c:out value="${shedule.type}"></c:out>"</td>
       <td>"<c:out value="${shedule.tech}"></c:out>"</td>
     </tr>
-
+    <%--<tr>--%>
+      <%--<ol>--%>
+        <%--<td><input type="checkbox" name="musik" value="juze" unchecked></td>--%>
+        <%--<td>"<c:out value="${shedule.group}"></c:out>"</td>--%>
+        <%--<td>"<c:out value="${shedule.pro}"></c:out>"</td>--%>
+        <%--<td>"<c:out value="${shedule.audit}"></c:out>"</td>--%>
+        <%--<td>"<c:out value="${shedule.type}"></c:out>"</td>--%>
+        <%--<td>"<c:out value="${shedule.tech}"></c:out>"</td>--%>
+      <%--</ol>--%>
+    <%--</tr>--%>
   </c:forEach>
 </table>
 

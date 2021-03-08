@@ -5,7 +5,8 @@ package servlets.servletUpload;
  */
 public enum Operation {
 	DELETE("delete"), INSERT("insert"), VIEW("view"),
-	CREATE_SHEDULE("create"), CREATE_CONTRACT("create_contract");
+	CREATE_SHEDULE("create"), CREATE_CONTRACT("create_contract"),
+	SELECT_SHEDULE("data_shedule");
 
 	private String title;
 

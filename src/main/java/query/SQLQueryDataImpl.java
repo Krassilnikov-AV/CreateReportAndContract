@@ -164,9 +164,6 @@ public class SQLQueryDataImpl implements SQLQuery {
 				 * вставить метод проверки
 				 * **/
 				stm.addBatch();
-//					long startInternal = System.currentTimeMillis();
-//					System.out.println("время вставки эелемента: " +
-//						(System.currentTimeMillis() - startInternal) + " " + "ms");
 			}
 			long end = System.currentTimeMillis();
 			System.out.println("Вставлено: " + size + " строк");
@@ -179,7 +176,6 @@ public class SQLQueryDataImpl implements SQLQuery {
 			System.out.println("Данные не занесены, ошибка при выполнении....!!!");
 			e.printStackTrace();
 		}
-//		}
 		return false;
 	}
 
@@ -364,7 +360,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException, IOException, ParseException {
 		List<SheduleSearch> shedules = new ArrayList();
 
-		String program, codegroup, timeStart, dateEnd, timeEnd, auditorium, typelesson, teacher;
+		String id, program, codegroup, timeStart, dateEnd, timeEnd, auditorium, typelesson, teacher;
 //		try (Connection connection = con.getPostConnection()) {
 			String SQL = "SELECT * FROM schedule";
 			try (Statement statement = connection.createStatement(
@@ -375,6 +371,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 				int row;
 				SheduleSearch shedule;
 				while (resultSet.next()) {
+					id = resultSet.getString("id");
 					codegroup = resultSet.getString("codgroup");
 					program = resultSet.getString("program");
 					dateSearh = String.valueOf(resultSet.getDate("datestart"));
@@ -410,6 +407,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 							, typelesson
 							, teacher
 						);
+						shedule.setId(id);
 						shedules.add(shedule);
 						System.out.println("индекс: " + row + ": " + shedule.toString());
 //						((LinkedList<String>) tech).add(teacher);  // добвляет указанный элемент в конец этого списка
@@ -462,22 +460,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 	 * @return
 	 * @throws SQLException
 	 */
-//	@Override
-//	public int deletedDataSQLloc() throws SQLException {
-//		ConnectionApp con = new ConnectionApp();
-//		try (Connection connection = con.getPostConnection()) {
-//			String deletedSQL = "DELETE FROM schedule";
-//			try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
-//				stm.executeUpdate();
-//				System.out.println("Данные БД успешно удалены!");
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return -1;
-//	}
+
 
 	/*
 	- setConnectionBuilder - сеттер установления пул соединения

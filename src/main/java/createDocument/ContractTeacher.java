@@ -12,9 +12,6 @@ import java.math.BigInteger;
 import java.sql.*;
 import java.text.ParseException;
 
-/**
- * Класс ContractTeacher
- */
 public class ContractTeacher implements CreateDocument {
 	private enum Border {LEFT, TOP, BOTTOM, RIGHT}
 

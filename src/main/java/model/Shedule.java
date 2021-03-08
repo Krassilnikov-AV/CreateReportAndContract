@@ -8,6 +8,7 @@ package model;
  * Класс Shedule
  */
 public class Shedule {
+	private String id;
 	private final String group;
 	private final String pro;
 	private final String audit;
@@ -20,6 +21,24 @@ public class Shedule {
 		this.audit = audit;
 		this.type = type;
 		this.tech = tech;
+	}
+
+	/**
+	 * Возвращает
+	 *
+	 * @return
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Устанавливает
+	 *
+	 * @param AbstractElement{name='id', isArray=false, isPrimitiveArray=false, isObjectArray=false, isStringArray=false, isCollection=false, isMap=false, isSet=false, isList=false, isPrimitive=false, isString=true, isNumeric=false, isObject=true, isDate=false, isCalendar=false, isBoolean=false, isLong=false, isFloat=false, isDouble=false, isVoid=false, isChar=false, isByte=false, isShort=false, typeName='String', type='java.lang.String', typeQualifiedName='java.lang.String', isModifierStatic=false, isModifierPublic=false, isModifierProtected=false, isModifierPackageLocal=false, isModifierPrivate=true, isModifierFinal=false} ::: FieldElement{isConstant=false, isEnum=false, isModifierTransient=false, isModifierVolatile=false}
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/**

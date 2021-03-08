@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 
-/**
- * Класс DataOperationsService
- */
 public class DataOperationsService {
 	private SQLQueryDataImpl sqd = new SQLQueryDataImpl();
 	private CreateScheduleReport createScheduleReport = new CreateScheduleReport();

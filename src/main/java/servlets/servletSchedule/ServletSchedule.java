@@ -4,6 +4,7 @@
 
 package servlets.servletSchedule;
 
+import model.Shedules;
 import services.DataOperationsService;
 import servlets.servletUpload.Operation;
 
@@ -22,14 +23,20 @@ public class ServletSchedule extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Operation operationType = Operation.fromString(req.getParameter("operation"));
-		DataOperationsService dos=new DataOperationsService();
+		DataOperationsService dos = new DataOperationsService();
 		try {
-			if (operationType == Operation.CREATE_SHEDULE) {
-				dos.createDoc();
+			switch (operationType) {
+				case CREATE_SHEDULE:
+					dos.createDoc();
+					break;
+				case SELECT_SHEDULE:
+					Shedules shedules = dos.viewDataDB();
+					req.setAttribute("shedules", shedules.getShedules());
+					break;
 			}
 		} catch (SQLException | ParseException e) {
-		e.printStackTrace();
-	}
+			e.printStackTrace();
+		}
 		req.getRequestDispatcher("/shedule.jsp").forward(req, resp);
 	}
 }

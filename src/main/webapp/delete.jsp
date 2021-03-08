@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<form action="servletDelete" method="post"
+<form action="ServletOperation" method="post"
       enctype="multipart/form-data">
   <p>
     укажите путь сохранения: <input type="text" name="path" value=""/>
@@ -25,15 +25,15 @@
 </form>
 <%--выбор операций с сервлета delete--%>
 <h1>Выбор операции: </h1>
-<form action="servletDelete" method="POST">
+<form action="ServletOperation" method="POST">
   <input type="hidden" name="operation" id="upload" value="insert" style="display:none"/>
   <input type="submit" value="Вставить" name="insert"/>
 </form>
-<form action="servletDelete" method="POST">
+<form action="ServletOperation" method="POST">
   <input type="hidden" name="operation" id="delete" value="delete" style="display:none"/>
   <input type="submit" value="Удалить" name="delete"/>
 </form>
-<form action="servletDelete" method="POST">
+<form action="ServletOperation" method="POST">
   <input type="hidden" name="operation" id="view" value="view" style="display:none"/>
   <input type="submit" value="Просмотр" name="view"/>
 </form>
@@ -48,13 +48,15 @@
   </tr>
   <c:forEach items="${requestScope.shedules}" var="shedule">
     <tr>
+    <ol>
+      <td><input type="checkbox" name="musik" value="juze" checked></td>
       <td>"<c:out value="${shedule.group}"></c:out>"</td>
       <td>"<c:out value="${shedule.pro}"></c:out>"</td>
       <td>"<c:out value="${shedule.audit}"></c:out>"</td>
       <td>"<c:out value="${shedule.type}"></c:out>"</td>
       <td>"<c:out value="${shedule.tech}"></c:out>"</td>
+    </ol>
     </tr>
-
   </c:forEach>
 </table>
 </body>
