@@ -40,7 +40,7 @@
   </form>
   <form type="hidden">
     <p>Результаты поиска: </p>
-    <table >
+    <table>
       <tr>
         <th>group</th>
         <th>pro</th>
