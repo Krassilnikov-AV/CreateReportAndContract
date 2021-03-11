@@ -406,14 +406,6 @@ public class SQLQueryDataImpl implements SQLQuery {
 		}
 	}
 
-	/**
-	 * метод для удаления данных с таблицы schedule (локально)
-	 *
-	 * @return
-	 * @throws SQLException
-	 */
-
-
 	/*
 	- setConnectionBuilder - сеттер установления пул соединения
 	- getConnection() - геттер получение pool соединения
