@@ -11,11 +11,9 @@ import java.text.*;
 import java.util.*;
 
 import static java.util.Calendar.MONTH;
-
-/**
- * Класс SQLQueryDataImpl
- */
-
+/*
+* класс для создания запросов к таблицам в БД
+* **/
 
 public class SQLQueryDataImpl implements SQLQuery {
 	//public class SQLQueryDataImpl {
@@ -40,22 +38,6 @@ public class SQLQueryDataImpl implements SQLQuery {
 	final static int periodDay = 18;   // период дней(число)
 	final static int academHour = 19;   // академических часов (число)
 	final static int academRecord = 20;   // академических записей (число)
-
-	/**
-	 * Команда INSERT INTO <table_name> в SQL отвечает за добавление данных в таблицу:
-	 * <p>
-	 * INSERT INTO <table_name> (<col_name1>, <col_name2>, <col_name3>, …)
-	 * VALUES (<value1>, <value2>, <value3>, …);
-	 */
-//	String insertTimeStartSQL = "INSERT INTO schedule(timestart) VALUES(?)";
-//	String insertDateStartSQL = "INSERT INTO schedule(datestart) VALUES(?)";
-
-
-	//	String insertSQL = "INSERT INTO schedule(program) VALUES(?)";
-
-//	String insertSQL = "insert into group(groupid) values (?)";
-//	String searchToProgram = "SELECT datestart, timestart FROM schedule";
-//	String searchToProgram = "SELECT programm FROM raspisanie";
 
 //	ConnectionApp connection = new ConnectionApp();
 	ReadExcelDataImpl read = new ReadExcelDataImpl();
@@ -199,11 +181,8 @@ public class SQLQueryDataImpl implements SQLQuery {
 	@Override
 	public List<String> searchToDateStart(Connection connection, String search, String dateMonth) throws SQLException,
 		ParseException {
-//		ConnectionApp con = new ConnectionApp();
-//		List<String> pro = new LinkedList<>();
 		List<String> dateStart = new LinkedList<>();
 
-//		try (Connection connection = con.getPostConnection()) {
 		String SQL = "SELECT * FROM schedule";
 		try (Statement statement =
 				 connection.createStatement(
@@ -213,7 +192,6 @@ public class SQLQueryDataImpl implements SQLQuery {
 			ResultSet resultSet = statement.executeQuery(SQL);
 			String programs = null;
 			String dateSearh;
-//				Set<String> words = null;
 			int row;
 
 			while (resultSet.next()) {
@@ -236,13 +214,8 @@ public class SQLQueryDataImpl implements SQLQuery {
 					resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
 					java.util.Date dates = new SimpleDateFormat("yyyy-MM-dd").parse(dateSearh);  // парсит
 					SimpleDateFormat simplDate = new SimpleDateFormat("yyyy.MM.dd");
-//						java.util.Date dateRefact = new java.util.Date();
 					String exp = simplDate.format(dates);
 					((LinkedList<String>) dateStart).add(exp);  // добвляет указанный
-					// элемент в конец этого списка
-//						System.out.println("индекс: " +
-//							row + ": " + " дата начала: " +
-//							((LinkedList<String>) dateStart).pop());
 				}
 			}
 			if (!programs.isEmpty()) {
@@ -256,18 +229,11 @@ public class SQLQueryDataImpl implements SQLQuery {
 		return dateStart;
 	}
 
-//	@Override
-//	public LinkedList<String> searchToTeacher(String search, String dateMonth) throws SQLException, ParseException {
-//		return null;
-//	}
-
 	@Override
 	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException
-		, ParseException {
+		{
 		List<SheduleSearch> shedules = new ArrayList();
-//		ConnectionApp con = new ConnectionApp();
 		String id, program, codegroup, timeStart, dateEnd, timeEnd, auditorium, typelesson, teacher;
-//		try (Connection connection = con.getPostConnection()) {
 		String searchSql = "%" + search + "%";
 		String dateMonthSql = "%" + dateMonth + "%";
 		String SQL = "SELECT * FROM schedule WHERE  UPPER(program) LIKE UPPER(?) AND  text(datestart) like ?";
@@ -302,14 +268,10 @@ public class SQLQueryDataImpl implements SQLQuery {
 				);
 				shedule.setId(id);
 				shedules.add(shedule);
-//						((LinkedList<String>) tech).add(teacher);  // добвляет указанный элемент в конец этого списка
-//						System.out.println( " учитель: " +
-//							((LinkedList<String>) tech).pop());
 			}
 		}
 		return new ShedulesSearch(shedules);
 	}
-//	}
 
 	/**
 	 * добавить дату и время!!!
