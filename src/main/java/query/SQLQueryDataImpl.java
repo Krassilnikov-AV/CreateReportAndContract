@@ -373,7 +373,6 @@ public class SQLQueryDataImpl implements SQLQuery {
 				codegroup = resultSet.getString("codgroup");
 				program = resultSet.getString("program");
 				DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
-//				Calendar calendar = new GregorianCalendar(2017, 0 , 25);
 
 				dateStart = resultSet.getString("datestart");
 				dateStart = df.format(new java.util.Date());
