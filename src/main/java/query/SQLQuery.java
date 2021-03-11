@@ -28,8 +28,12 @@ public interface SQLQuery {
 
 //	public LinkedList<String> searchToTeacher(String search, String dateMonth) throws SQLException, ParseException;
 
-	public Shedules view(Connection connection) throws SQLException;
+//	ShedulesSearch addValueTableShedule(Connection connection, String search, java.util.Date dateMonth) throws SQLException
+//		, IOException, ParseException;
 
+//	public Shedules view(Connection connection) throws SQLException;
+
+	public ShedulesSearch view(Connection connection) throws SQLException;
 
 	//	public LinkedList<String> searchToCodegroup(String search, String dateMonth) throws SQLException, ParseException;
 //	public LinkedList<String> searchToProgram(String search, String dateMonth) throws SQLException, ParseException;

@@ -58,19 +58,19 @@ public class SQLQueryDataImpl implements SQLQuery {
 //	String searchToProgram = "SELECT datestart, timestart FROM schedule";
 //	String searchToProgram = "SELECT programm FROM raspisanie";
 
-	ConnectionApp con = new ConnectionApp();
+	ConnectionApp connection = new ConnectionApp();
 	ReadExcelDataImpl read = new ReadExcelDataImpl();
 
 	/**
 	 * метод извлечения данных из БД (преполавателя, даты и времени начала занятий)
 	 * Данный метод позволит избежать внесения повторяющих значений в БД
 	 */
-	public void gettingLearnTime() throws IOException, SQLException {
-		try (Connection conn = con.getPostConnection()) {
-			String getLearnTime = "SELECT teacher, datestart, timestart FROM schedule";
-
-		}
-	}
+//	public void gettingLearnTime() throws IOException, SQLException {
+//		try (Connection conn = con.getPostConnection()) {
+//			String getLearnTime = "SELECT teacher, datestart, timestart FROM schedule";
+//
+//		}
+//	}
 
 	/*
 главный метод порверки выполнения запросов
@@ -99,21 +99,21 @@ public class SQLQueryDataImpl implements SQLQuery {
 	/**
 	 * метод добавления данных  с применением executeBatch()
 	 * для более быстрой вставки в БД
+	 * ------------------------------------------------
+	 * INSERT INTO table_listnames (name, address, tele)
+	 * SELECT * FROM (SELECT 'Rupert', 'Somewhere', '022') AS tmp
+	 * WHERE NOT EXISTS (
+	 * SELECT name FROM table_listnames WHERE name = 'Rupert'
+	 * ) LIMIT 1;
 	 */
-
-//	public void insertDataExcelFileToDB(Connection connection) throws IOException, SQLException {
-//		List<SheduleInsert> shedules = new ArrayList();
-//		final String insertDataSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, " +
-//			"timefinish, auditorium, typelesson, teacher, period) " +
-//			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-//		try (PreparedStatement stm = connection.prepareStatement(insertDataSQL)) {
-//			SheduleInsert sheduleInsert;
-//
-//		}
-//	}
 	@Override
 	public boolean insertExecuteBatchQuerySQL(Connection connection) throws IOException, SQLException {
-
+//		String insertUnikSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, timefinish, " +
+//			"auditorium, typelesson, teacher) " +
+//			"SELECT * FROM(SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?) AS tmp WHERE NOT EXISTS(" +
+//			"SELECT program, codgroup, datestart, timestart, datefinish, timefinish, auditorium, typelesson, teacher" +
+//			"FROM schedule WHERE program =? AND codgroup =? AND datestart =? AND timestart =? AND datefinish=?" +
+//			"AND timefinish=? AND auditorium =? AND typelesson =? AND teacher =?) LIMIT 1";
 		String insertStartSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, " +
 			"timefinish, auditorium, typelesson, teacher) " +
 			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -121,7 +121,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 
 			LinkedList<String> listProgram = (LinkedList<String>) read.getString(discipline);
 			LinkedList<String> listCodgroup = (LinkedList<String>) read.getString(codeGroup);
-			LinkedList<Date> listDateStart = read.getDate(dateStart);
+			LinkedList<Date> listDateStart = read.getDate(dateStart);     //
 			LinkedList<Date> listTimeStart = read.getDate(timeStart);
 			LinkedList<Date> listDateFinish = read.getDate(dateEnd);
 			LinkedList<Date> listTimeFinish = read.getDate(timeEnd);
@@ -179,105 +179,13 @@ public class SQLQueryDataImpl implements SQLQuery {
 		return false;
 	}
 
-//	@Override
-//	public List<String> searchToDateStart(String search, String dateMonth) throws SQLException, ParseException {
-//		return null;
-//	}
-
 	/**
 	 * 1. необходимо создать условие по которому можно было бы задать запрос, выполняющий наличие данных в БД
 	 * по преподавателю дате начал и времени в SQL. После заносил в список эти данные.
 	 * 2. Перед занесением данных в БД проверяется наличие в списке совпадений
 	 * 3. если нет совпадений, то заносятся в БД
 	 */
-//	public List<ChekListTeacher> chekTeacher() {
-//
-//	}
 
-	/**
-	 * if (words.contains(search) && sameDay) {
-	 * row = resultSet.getRow();
-	 * resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-	 * java.util.Date timeS = new SimpleDateFormat("HH:mm").parse(timeSearh);  // парсит
-	 * SimpleDateFormat simplDate = new SimpleDateFormat("HH:mm");
-	 * //						java.util.Date dateRefact = new java.util.Date();
-	 * String exp = simplDate.format(timeS);
-	 * ((LinkedList<String>) timeStart).add(exp);  // добвляет указанный
-	 * // элемент в конец этого списка
-	 * //						System.out.println("индекс: " +
-	 * //							row + ": " + " дата начала: " +
-	 * //							((LinkedList<String>) timeStart).pop());
-	 * }
-	 */
-
-//	@Override
-//	public boolean searchToTeacher(String teacher, String dateSearch, String timeSearch) throws SQLException,
-//		ParseException {
-//		ConnectionApp con = new ConnectionApp();
-////		List<String> pro = new LinkedList<>();
-//		List<String> tech = new LinkedList<>();
-//
-//		try (Connection connection = con.getPostConnection()) {
-//			String SQL = "SELECT * FROM schedule";
-//			try (Statement statement =
-//					 connection.createStatement(
-//						 ResultSet.TYPE_SCROLL_INSENSITIVE,
-//						 ResultSet.CONCUR_READ_ONLY)) {
-//
-//				ResultSet resultSet = statement.executeQuery(SQL);
-//				String program = null;
-//				String dateStart, timeStart, teacherExist;
-//				while (resultSet.next()) {
-//					dateStart = String.valueOf(resultSet.getDate("datestart"));
-//					timeStart = String.valueOf(resultSet.getTime("timestart"));
-//					teacherExist = resultSet.getString("teacher");
-//
-//					java.util.Date dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearch);
-//					java.util.Date existsDate =
-//						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateStart);
-//
-//					java.util.Date timeResult = new SimpleDateFormat("HH:mm").parse(timeSearch);  // парсит
-//					java.util.Date existsTime = new SimpleDateFormat("HH:mm").parse(timeStart);
-//
-//					Calendar resultCalendarDate = Calendar.getInstance();
-//					resultCalendarDate.setTime(dateResult);
-//					Calendar existsCalendarDate = Calendar.getInstance();
-//					existsCalendarDate.setTime(existsDate);
-//
-//					Calendar resultCalendarTime = Calendar.getInstance();
-//					resultCalendarTime.setTime(timeResult);
-//					Calendar existsCalendarTime = Calendar.getInstance();
-//					existsCalendarTime.setTime(existsTime);
-//
-//					boolean sameDate = resultCalendarDate == existsCalendarDate;
-//					boolean sameTime = resultCalendarTime == existsCalendarTime;
-//					boolean resultTeacher = teacherExist.equals(teacher);
-//
-//// если данное слово содержится в столбце БД добавляем учителя в список
-//					if (sameDate && sameTime && resultTeacher) {
-//						int row = resultSet.getRow();
-//						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-//						((LinkedList<String>) tech).add(teacherExist);  // добвляет указанный элемент в конец этого списка
-////						System.out.println("индекс: " +
-////							row + ": " + " учитель: " +
-////							((LinkedList<String>) tech).pop());
-//					}
-//				}
-//				if (program != null) {
-//					if (program.isEmpty()) {
-//						System.out.println("нет совпадений");
-//					} else {
-//						System.out.println("Запрошенные данные по учителям успешно выбраны!");
-//					}
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return true;
-//	}
 
 	/**
 	 * метод для получения запрашиваемых данных по на правлению с таблицы
@@ -297,59 +205,57 @@ public class SQLQueryDataImpl implements SQLQuery {
 		List<String> dateStart = new LinkedList<>();
 
 //		try (Connection connection = con.getPostConnection()) {
-			String SQL = "SELECT * FROM schedule";
-			try (Statement statement =
-					 connection.createStatement(
-						 ResultSet.TYPE_SCROLL_INSENSITIVE,
-						 ResultSet.CONCUR_READ_ONLY)) {
+		String SQL = "SELECT * FROM schedule";
+		try (Statement statement =
+				 connection.createStatement(
+					 ResultSet.TYPE_SCROLL_INSENSITIVE,
+					 ResultSet.CONCUR_READ_ONLY)) {
 
-				ResultSet resultSet = statement.executeQuery(SQL);
-				String programs = null;
-				String dateSearh;
+			ResultSet resultSet = statement.executeQuery(SQL);
+			String programs = null;
+			String dateSearh;
 //				Set<String> words = null;
-				int row;
+			int row;
 
-				while (resultSet.next()) {
-					programs = resultSet.getString("program");
-					dateSearh = String.valueOf(resultSet.getDate("datestart"));
-					java.util.Date dateResult;
-					dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-					java.util.Date date1;
-					date1 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
+			while (resultSet.next()) {
+				programs = resultSet.getString("program");
+				dateSearh = String.valueOf(resultSet.getDate("datestart"));
+				java.util.Date dateResult;
+				dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
+				java.util.Date date1;
+				date1 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
 
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(dateResult);
-					Calendar cal1;
-					cal1 = Calendar.getInstance();
-					cal1.setTime(date1);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(dateResult);
+				Calendar cal1;
+				cal1 = Calendar.getInstance();
+				cal1.setTime(date1);
 
-					boolean sameDay;
-					sameDay = cal.get(MONTH) == cal1.get(MONTH);
-// если данное слово содержится в столбце БД добавляем учителя в список
-					if (programs.contains(search) && sameDay) {
-						row = resultSet.getRow();
-						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-						java.util.Date dates = new SimpleDateFormat("yyyy-MM-dd").parse(dateSearh);  // парсит
-						SimpleDateFormat simplDate = new SimpleDateFormat("yyyy.MM.dd");
+				boolean sameDay = cal.get(MONTH) == cal1.get(MONTH);
+				if (programs.contains(search) && sameDay) {
+					row = resultSet.getRow();
+					resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
+					java.util.Date dates = new SimpleDateFormat("yyyy-MM-dd").parse(dateSearh);  // парсит
+					SimpleDateFormat simplDate = new SimpleDateFormat("yyyy.MM.dd");
 //						java.util.Date dateRefact = new java.util.Date();
-						String exp = simplDate.format(dates);
-						((LinkedList<String>) dateStart).add(exp);  // добвляет указанный
-						// элемент в конец этого списка
+					String exp = simplDate.format(dates);
+					((LinkedList<String>) dateStart).add(exp);  // добвляет указанный
+					// элемент в конец этого списка
 //						System.out.println("индекс: " +
 //							row + ": " + " дата начала: " +
 //							((LinkedList<String>) dateStart).pop());
-					}
 				}
-				if (!programs.isEmpty()) {
-					System.out.println("Запрошенные данные по дате начала успешно выбраны!");
-				} else {
-					System.out.println("Совпадений не нашлось");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
-		return dateStart;
+			if (!programs.isEmpty()) {
+				System.out.println("Запрошенные данные по дате начала успешно выбраны!");
+			} else {
+				System.out.println("Совпадений не нашлось");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		return dateStart;
+	}
 
 //	@Override
 //	public LinkedList<String> searchToTeacher(String search, String dateMonth) throws SQLException, ParseException {
@@ -357,102 +263,155 @@ public class SQLQueryDataImpl implements SQLQuery {
 //	}
 
 	@Override
-	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException, IOException, ParseException {
+	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException
+		, IOException, ParseException {
 		List<SheduleSearch> shedules = new ArrayList();
-
+//		ConnectionApp con = new ConnectionApp();
 		String id, program, codegroup, timeStart, dateEnd, timeEnd, auditorium, typelesson, teacher;
 //		try (Connection connection = con.getPostConnection()) {
-			String SQL = "SELECT * FROM schedule";
-			try (Statement statement = connection.createStatement(
-				ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY)) {
-				ResultSet resultSet = statement.executeQuery(SQL);
-				String dateSearh;
-				int row;
-				SheduleSearch shedule;
-				while (resultSet.next()) {
-					id = resultSet.getString("id");
-					codegroup = resultSet.getString("codgroup");
-					program = resultSet.getString("program");
-					dateSearh = String.valueOf(resultSet.getDate("datestart"));
-					timeStart = String.valueOf(resultSet.getTime("timestart"));
-					dateEnd = String.valueOf(resultSet.getTime("datefinish"));
-					timeEnd = String.valueOf(resultSet.getTime("timefinish"));
-					auditorium = resultSet.getString("auditorium");
-					typelesson = resultSet.getString("typelesson");
-					teacher = resultSet.getString("teacher");
-					/**/
-					java.util.Date dateResult =
-						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-					java.util.Date date1 =
-						new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
 
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTime(dateResult);
-					Calendar calendar1 = Calendar.getInstance();
-					calendar1.setTime(date1);
+		String SQL = "SELECT * FROM schedule";
+		try (Statement statement = connection.createStatement(
+			ResultSet.TYPE_SCROLL_INSENSITIVE,
+			ResultSet.CONCUR_READ_ONLY)) {
+			ResultSet resultSet = statement.executeQuery(SQL);
+			String dateSearh;
+			int row;
+			SheduleSearch shedule;
+			while (resultSet.next()) {
+				id = resultSet.getString("id");
+				codegroup = resultSet.getString("codgroup");
+				program = resultSet.getString("program");
+				dateSearh = String.valueOf(resultSet.getDate("datestart"));
+				timeStart = String.valueOf(resultSet.getTime("timestart"));
+				dateEnd = String.valueOf(resultSet.getTime("datefinish"));
+				timeEnd = String.valueOf(resultSet.getTime("timefinish"));
+				auditorium = resultSet.getString("auditorium");
+				typelesson = resultSet.getString("typelesson");
+				teacher = resultSet.getString("teacher");
+				/**/
+				java.util.Date dateResult =
+					new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
+				java.util.Date date1 =
+					new SimpleDateFormat("yyyy-MM", Locale.ENGLISH).parse(dateMonth);
 
-					boolean sameDay = calendar.get(MONTH) == calendar1.get(MONTH);
-					if (program.contains(search) && sameDay) {
-						row = resultSet.getRow();
-						resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-						shedule = new SheduleSearch(
-							codegroup
-							, program
-							, dateSearh
-							, timeStart
-							, dateEnd
-							, timeEnd
-							, auditorium
-							, typelesson
-							, teacher
-						);
-						shedule.setId(id);
-						shedules.add(shedule);
-						System.out.println("индекс: " + row + ": " + shedule.toString());
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(dateResult);
+				Calendar calendar1 = Calendar.getInstance();
+				calendar1.setTime(date1);
+
+				boolean sameDay = calendar.get(MONTH) == calendar1.get(MONTH);
+				if (program.contains(search) && sameDay) {
+					row = resultSet.getRow();
+					resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
+					shedule = new SheduleSearch(
+						codegroup
+						, program
+						, dateSearh
+						, timeStart
+						, dateEnd
+						, timeEnd
+						, auditorium
+						, typelesson
+						, teacher
+					);
+					shedule.setId(id);
+					shedules.add(shedule);
+					System.out.println("индекс: " + row + ": " + shedule.toString());
 //						((LinkedList<String>) tech).add(teacher);  // добвляет указанный элемент в конец этого списка
 //						System.out.println( " учитель: " +
 //							((LinkedList<String>) tech).pop());
-					}
 				}
-				System.out.println("Запрошенные данные успешно выбраны!");
-				return new ShedulesSearch(shedules);
 			}
+			System.out.println("Запрошенные данные успешно выбраны!");
+			return new ShedulesSearch(shedules);
 		}
+	}
 //	}
 
 	/**
 	 * добавить дату и время!!!
 	 * метод для просмотра имеющихся данных в БД на странице браузера после загрузки данных
 	 */
+//	@Override
+//	public Shedules view(Connection connection) throws SQLException {
+//		List<Shedule> shedules = new ArrayList<>();
+//		String SQL = "SELECT * FROM schedule";
+//		try (Statement statement = connection.createStatement()) {
+//			ResultSet resultSet = statement.executeQuery(SQL);
+//			String program, codegroup, auditorium, typelesson, teacher;
+//			while (resultSet.next()) {
+//				program = resultSet.getString("program");
+//				codegroup = resultSet.getString("codgroup");
+//				auditorium = resultSet.getString("auditorium");
+//				typelesson = resultSet.getString("typelesson");
+//				teacher = resultSet.getString("teacher");
+//				Shedule shedule = new model.Shedule(
+//					program
+//					, codegroup
+//					, auditorium
+//					, typelesson
+//					, teacher
+//				);
+//				shedules.add(shedule);
+//				System.out.println(shedule.toString());
+//			}
+//			System.out.println("Запрошенные данные успешно выбраны!");
+//			return new Shedules(shedules);
+//		}
+//	}
 	@Override
-	public Shedules view(Connection connection) throws SQLException {
-		List<Shedule> shedules = new ArrayList<>();
+	public ShedulesSearch view(Connection connection) throws SQLException {
+		List<SheduleSearch> shedules = new ArrayList<>();
 		String SQL = "SELECT * FROM schedule";
 		try (Statement statement = connection.createStatement()) {
 			ResultSet resultSet = statement.executeQuery(SQL);
-			String program, codegroup, auditorium, typelesson, teacher;
+			String id, program, codegroup, dateStart, timeStart, dateFinish, timeFinish, auditorium, typelesson, teacher;
+			SheduleSearch shedule = null;
 			while (resultSet.next()) {
-				program = resultSet.getString("program");
+				id = resultSet.getString("id");
 				codegroup = resultSet.getString("codgroup");
+				program = resultSet.getString("program");
+				DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+//				Calendar calendar = new GregorianCalendar(2017, 0 , 25);
+
+				dateStart = resultSet.getString("datestart");
+				dateStart = df.format(new java.util.Date());
+
+				timeStart = resultSet.getString("timestart");
+//				SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm:ss a");
+//				sdfTime.setTimeZone(java.util.TimeZone.getTimeZone("IST"));
+//				String timeSt = sdfTime.format(timeStart);
+
+				dateFinish = resultSet.getString("datefinish");
+				dateFinish = df.format(new java.util.Date());
+				timeFinish = resultSet.getString("timefinish");
+//				SimpleDateFormat sdfTimeEnd = new SimpleDateFormat("hh:mm:ss a");
+//				sdfTimeEnd.setTimeZone(java.util.TimeZone.getTimeZone("IST"));
+//				String timeEnd = sdfTime.format(timeFinish);
+
 				auditorium = resultSet.getString("auditorium");
 				typelesson = resultSet.getString("typelesson");
 				teacher = resultSet.getString("teacher");
-				Shedule shedule = new model.Shedule(
-					program
-					, codegroup
+				shedule = new model.SheduleSearch(
+					codegroup
+					, program
+					, dateStart
+					, timeStart
+					, dateFinish
+					, timeFinish
 					, auditorium
 					, typelesson
 					, teacher
 				);
+				shedule.setId(id);
 				shedules.add(shedule);
 				System.out.println(shedule.toString());
 			}
 			System.out.println("Запрошенные данные успешно выбраны!");
-			return new Shedules(shedules);
+			return new ShedulesSearch(shedules);
 		}
 	}
-
 
 	/**
 	 * метод для удаления данных с таблицы schedule (локально)

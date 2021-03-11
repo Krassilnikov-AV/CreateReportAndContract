@@ -136,6 +136,7 @@ public class CreateScheduleReport implements CreateDocument {
 //			listTimeStart = (LinkedList<String>) sqlQueryDataImpl.searchToTimeStart(search, dateMonth);
 //			listAuditorium = sqlQueryDataImpl.searchToAuditorium(search, dateMonth);
 //			listTeach = sqlQueryDataImpl.searchToTeacher(search, dateMonth);
+
 			ShedulesSearch shedulesSearch = sqlQueryDataImpl.addValueTableShedule(connection, search, dateMonth);
 			paragraphProg.setText("по программе профессиональной переподготовки ___________________");
 

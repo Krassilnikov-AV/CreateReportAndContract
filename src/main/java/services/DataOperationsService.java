@@ -6,7 +6,7 @@ package services;
 
 import connection.dbConnection.*;
 import createDocument.*;
-import model.Shedules;
+import model.*;
 import query.SQLQueryDataImpl;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class DataOperationsService {
 	private CreateScheduleReport createScheduleReport = new CreateScheduleReport();
 	private ContractTeacher contractTeacher = new ContractTeacher();
 
-		ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
+	ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
 	//getJDBCConnect();
 	Connection connection = connectionManager.getConnection();
 
@@ -27,17 +27,31 @@ public class DataOperationsService {
 		return sqd.deletedDataSQL(connection);
 
 	}
+
 	public boolean insertDB() throws IOException, SQLException {
 		return sqd.insertExecuteBatchQuerySQL(connection);
 
 	}
-	 public Shedules viewDataDB() throws SQLException {
+
+//	public Shedules viewDataDB() throws SQLException {
+	public ShedulesSearch viewDataDB() throws SQLException {
 		return sqd.view(connection);
-	 }
+	}
+
 	public void createDoc() throws SQLException, ParseException {
 		createScheduleReport.createDoc(connection);
 	}
+
 	public void createDocTeacher() throws SQLException, ParseException {
 		contractTeacher.createDocTeacher();
 	}
+
+	public ShedulesSearch searcheShedule(String searh, String dateMonth) throws SQLException, ParseException,
+		IOException {
+
+		return sqd.addValueTableShedule(connection, searh, dateMonth);
+	}
+//public void searcheShedule() throws SQLException, ParseException {
+//	sqd.addValueTableShedule(connection, "java", "01/") ;
+//}
 }

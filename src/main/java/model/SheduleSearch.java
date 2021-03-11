@@ -15,7 +15,7 @@ public class SheduleSearch {
 	private String timeStart;
 	private String dateFinish;
 	private String timeFinish;
-	private final String audit;
+	private String audit;
 	private final String type;
 	private final String tech;
 
@@ -44,20 +44,11 @@ public class SheduleSearch {
 		this.id = id;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public String getGroup() {
 		return group;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public String getPro() {
 		return pro;
 	}
@@ -71,92 +62,52 @@ public class SheduleSearch {
 		return dateStart;
 	}
 
-	/**
-	 * Устанавливает
-	 *
-	 * @param AbstractElement{name='dateStart', isArray=false, isPrimitiveArray=false, isObjectArray=false, isStringArray=false, isCollection=false, isMap=false, isSet=false, isList=false, isPrimitive=false, isString=true, isNumeric=false, isObject=true, isDate=false, isCalendar=false, isBoolean=false, isLong=false, isFloat=false, isDouble=false, isVoid=false, isChar=false, isByte=false, isShort=false, typeName='String', type='java.lang.String', typeQualifiedName='java.lang.String', isModifierStatic=false, isModifierPublic=false, isModifierProtected=false, isModifierPackageLocal=false, isModifierPrivate=true, isModifierFinal=false} ::: FieldElement{isConstant=false, isEnum=false, isModifierTransient=false, isModifierVolatile=false}
-	 */
 	public void setDateStart(String dateStart) {
 		this.dateStart = dateStart;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public String getTimeStart() {
 		return timeStart;
 	}
 
-	/**
-	 * Устанавливает
-	 *
-	 * @param AbstractElement{name='timeStart', isArray=false, isPrimitiveArray=false, isObjectArray=false, isStringArray=false, isCollection=false, isMap=false, isSet=false, isList=false, isPrimitive=false, isString=true, isNumeric=false, isObject=true, isDate=false, isCalendar=false, isBoolean=false, isLong=false, isFloat=false, isDouble=false, isVoid=false, isChar=false, isByte=false, isShort=false, typeName='String', type='java.lang.String', typeQualifiedName='java.lang.String', isModifierStatic=false, isModifierPublic=false, isModifierProtected=false, isModifierPackageLocal=false, isModifierPrivate=true, isModifierFinal=false} ::: FieldElement{isConstant=false, isEnum=false, isModifierTransient=false, isModifierVolatile=false}
-	 */
+
 	public void setTimeStart(String timeStart) {
 		this.timeStart = timeStart;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public String getDateFinish() {
 		return dateFinish;
 	}
 
-	/**
-	 * Устанавливает
-	 *
-	 * @param AbstractElement{name='dateFinish', isArray=false, isPrimitiveArray=false, isObjectArray=false, isStringArray=false, isCollection=false, isMap=false, isSet=false, isList=false, isPrimitive=false, isString=true, isNumeric=false, isObject=true, isDate=false, isCalendar=false, isBoolean=false, isLong=false, isFloat=false, isDouble=false, isVoid=false, isChar=false, isByte=false, isShort=false, typeName='String', type='java.lang.String', typeQualifiedName='java.lang.String', isModifierStatic=false, isModifierPublic=false, isModifierProtected=false, isModifierPackageLocal=false, isModifierPrivate=true, isModifierFinal=false} ::: FieldElement{isConstant=false, isEnum=false, isModifierTransient=false, isModifierVolatile=false}
-	 */
+
 	public void setDateFinish(String dateFinish) {
 		this.dateFinish = dateFinish;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public String getTimeFinish() {
 		return timeFinish;
 	}
 
-	/**
-	 * Устанавливает
-	 *
-	 * @param AbstractElement{name='timeFinish', isArray=false, isPrimitiveArray=false, isObjectArray=false, isStringArray=false, isCollection=false, isMap=false, isSet=false, isList=false, isPrimitive=false, isString=true, isNumeric=false, isObject=true, isDate=false, isCalendar=false, isBoolean=false, isLong=false, isFloat=false, isDouble=false, isVoid=false, isChar=false, isByte=false, isShort=false, typeName='String', type='java.lang.String', typeQualifiedName='java.lang.String', isModifierStatic=false, isModifierPublic=false, isModifierProtected=false, isModifierPackageLocal=false, isModifierPrivate=true, isModifierFinal=false} ::: FieldElement{isConstant=false, isEnum=false, isModifierTransient=false, isModifierVolatile=false}
-	 */
 	public void setTimeFinish(String timeFinish) {
 		this.timeFinish = timeFinish;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public String getAudit() {
 		return audit;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+	public void setAudit(String audit) {
+		this.audit = audit;
+	}
+
 	public String getType() {
 		return type;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public String getTech() {
 		return tech;
 	}

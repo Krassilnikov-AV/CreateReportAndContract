@@ -1,7 +1,7 @@
 
 package servlets.servletUpload;
 
-import model.Shedules;
+import model.ShedulesSearch;
 import services.DataOperationsService;
 
 import javax.servlet.ServletException;
@@ -29,7 +29,8 @@ public class ServletOperation extends HttpServlet {
 					dos.insertDB();
 					break;
 				case VIEW:
-					Shedules shedules = dos.viewDataDB();
+//					Shedules shedules = dos.viewDataDB();
+					ShedulesSearch shedules=dos.viewDataDB();
 					req.setAttribute("shedules", shedules.getShedules());
 					break;
 			}

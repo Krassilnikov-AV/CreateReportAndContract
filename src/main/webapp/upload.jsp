@@ -39,20 +39,43 @@
 </form>
 <%--<%= %>--%>
 <table>
-  <tr>
-    <th>group</th>
-    <th>pro</th>
-    <th>audit</th>
-    <th>type</th>
-    <th>tech</th>
-  </tr>
-  <c:forEach items="${requestScope.shedules}" var="shedule">
+  <%--<tr>--%>
+    <%--<th>group</th>--%>
+    <%--<th>pro</th>--%>
+    <%--<th>audit</th>--%>
+    <%--<th>type</th>--%>
+    <%--<th>tech</th>--%>
+  <%--</tr>--%>
     <tr>
-      <td>"<c:out value="${shedule.group}"></c:out>"</td>
-      <td>"<c:out value="${shedule.pro}"></c:out>"</td>
-      <td>"<c:out value="${shedule.audit}"></c:out>"</td>
-      <td>"<c:out value="${shedule.type}"></c:out>"</td>
-      <td>"<c:out value="${shedule.tech}"></c:out>"</td>
+      <th>group</th>--%>
+      <th>pro</th>
+      <th>dateStart</th>
+      <th>timeStart</th>
+      <th>dateFinish</th>
+      <th>timeFinish</th>
+      <th>audit</th>
+      <th>type</th>
+      <th>tech</th>
+      </tr>
+
+    <c:forEach items="${requestScope.shedules}" var="shedule">
+      <%--<tr>--%>
+      <%--<td>"<c:out value="${shedule.group}"></c:out>"</td>--%>
+      <%--<td>"<c:out value="${shedule.pro}"></c:out>"</td>--%>
+      <%--<td>"<c:out value="${shedule.audit}"></c:out>"</td>--%>
+      <%--<td>"<c:out value="${shedule.type}"></c:out>"</td>--%>
+      <%--<td>"<c:out value="${shedule.tech}"></c:out>"</td>--%>
+
+    <tr>
+    <td>"<c:out value="${shedule.group}"></c:out>"</td>
+    <td>"<c:out value="${shedule.pro}"></c:out>"</td>
+      <td>"<c:out value="${shedule.dateStart}"></c:out>"</td>
+      <td>"<c:out value="${shedule.timeStart}"></c:out>"</td>
+      <td>"<c:out value="${shedule.dateFinish}"></c:out>"</td>
+      <td>"<c:out value="${shedule.timeFinish}"></c:out>"</td>
+    <td>"<c:out value="${shedule.audit}"></c:out>"</td>
+    <td>"<c:out value="${shedule.type}"></c:out>"</td>
+    <td>"<c:out value="${shedule.tech}"></c:out>"</td>
     </tr>
     <%--<tr>--%>
       <%--<ol>--%>
@@ -74,6 +97,11 @@
 <p><a href="gph.jsp">
   <h>Договор ГПХ внештатных сотрудников</h>
 </a></p>
-
+<script type="text/javascript">
+  function check(field, flag) {
+    if (flag==1) { for (i=0; i<field.length; i++) field[i].checked = true; }
+    else { for (i=0; i<field.length; i++) field[i].checked = false; }
+  }
+</script>
 </body>
 </html>

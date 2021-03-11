@@ -60,7 +60,7 @@ public class ReadExcelDataImpl implements ReadData {
 //	}
 
 	public java.sql.Date columndataDateSql;
-	List<java.sql.Date> columnListDateSql;
+	List<java.sql.Date> columnListDateSql=new LinkedList<>();
 	private List<String> columndataStr;
 
 	/**
@@ -127,8 +127,10 @@ public class ReadExcelDataImpl implements ReadData {
 					Iterator<Cell> cellIterator = row.cellIterator();
 					while (cellIterator.hasNext()) {
 						Cell cell = cellIterator.next();
+
 						if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
 							if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
+
 								columndataStr.add(cell.getStringCellValue());
 							}
 						}

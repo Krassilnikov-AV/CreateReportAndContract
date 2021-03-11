@@ -4,7 +4,7 @@
 
 package servlets.servletSchedule;
 
-import model.Shedules;
+import model.ShedulesSearch;
 import services.DataOperationsService;
 import servlets.servletUpload.Operation;
 
@@ -24,13 +24,21 @@ public class ServletSchedule extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Operation operationType = Operation.fromString(req.getParameter("operation"));
 		DataOperationsService dos = new DataOperationsService();
+//		ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
+		//getJDBCConnect();
+//		SQLQueryDataImpl sqd = new SQLQueryDataImpl();
+//		Connection connection = connectionManager.getConnection();
+		String dateMonth = req.getParameter("calendar");
+		String searh = req.getParameter("pathToSave");
+
 		try {
 			switch (operationType) {
 				case CREATE_SHEDULE:
 					dos.createDoc();
 					break;
 				case SELECT_SHEDULE:
-					Shedules shedules = dos.viewDataDB();
+					ShedulesSearch shedules = dos.searcheShedule(searh, dateMonth);
+
 					req.setAttribute("shedules", shedules.getShedules());
 					break;
 			}

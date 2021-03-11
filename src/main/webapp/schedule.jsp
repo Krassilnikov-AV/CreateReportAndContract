@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
+<html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Расписание занятий</title>
@@ -12,8 +13,7 @@
   <h>Назад</h>
 </a></p>
 
-</body>
-<body>
+<%--</body>--%>
 <h2>Создание отчёта расписания занятий</h2>
 
 <p>Должность: <input type="text" name="post" size="30"></p>
@@ -40,10 +40,15 @@
   </form>
   <form type="hidden">
     <p>Результаты поиска: </p>
-    <table >
+    <table>
       <tr>
+        <th>id</th>
         <th>group</th>
         <th>pro</th>
+        <th>dateStart</th>
+        <th>timeStart</th>
+        <th>dateFinish</th>
+        <th>timeFinish</th>
         <th>audit</th>
         <th>type</th>
         <th>tech</th>
@@ -52,12 +57,17 @@
 
         <tr>
           <ol>
-            <td><input type="checkbox" name="list" value="<c:out value="${shedule.id}"></c:out>"></td>
-            <td>"<c:out value="${shedule.group}"></c:out>"</td>
-            <td>"<c:out value="${shedule.pro}"></c:out>"</td>
-            <td>"<c:out value="${shedule.audit}"></c:out>"</td>
-            <td>"<c:out value="${shedule.type}"></c:out>"</td>
-            <td>"<c:out value="${shedule.tech}"></c:out>"</td>
+            <td><input type="checkbox" name="data_shedule" value="<c:out value="${data_shedule.id}"></c:out>"></td>
+            <td>"<c:out value="${data_shedule.id}"></c:out>"</td>
+            <td>"<c:out value="${data_shedule.group}"></c:out>"</td>
+            <td>"<c:out value="${data_shedule.pro}"></c:out>"</td>
+            <td>"<c:out value="${data_shedule.dateStart}"></c:out>"</td>
+            <td>"<c:out value="${data_shedule.timeStart}"></c:out>"</td>
+            <td>"<c:out value="${data_shedule.dateFinish}"></c:out>"</td>
+            <td>"<c:out value="${data_shedule.timeFinish}"></c:out>"</td>
+            <td>"<c:out value="${data_shedule.audit}"></c:out>"</td>
+            <td>"<c:out value="${data_shedule.type}"></c:out>"</td>
+            <td>"<c:out value="${data_shedule.tech}"></c:out>"</td>
           </ol>
         </tr>
       </c:forEach>
@@ -67,8 +77,8 @@
     <input type="button" value="Снять выделение" onclick="check(this.form.list, 0)">
     <tr>
 
-      <input type="hidden" name="operation" id="delete_program" value="delete_program" style="display:none"/>
-      <input type="submit" value="Удалить" name="delete_program"/>
+      <%--<input type="hidden" name="operation" id="delete_program" value="delete_program" style="display:none"/>--%>
+      <%--<input type="submit" value="Удалить" name="delete_program"/>--%>
 
     </tr>
   </form>
@@ -89,4 +99,6 @@
       }
     }
   </script>
+</form>
 </body>
+</html>
