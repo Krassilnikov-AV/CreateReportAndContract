@@ -379,16 +379,10 @@ public class SQLQueryDataImpl implements SQLQuery {
 				dateStart = df.format(new java.util.Date());
 
 				timeStart = resultSet.getString("timestart");
-//				SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm:ss a");
-//				sdfTime.setTimeZone(java.util.TimeZone.getTimeZone("IST"));
-//				String timeSt = sdfTime.format(timeStart);
 
 				dateFinish = resultSet.getString("datefinish");
 				dateFinish = df.format(new java.util.Date());
 				timeFinish = resultSet.getString("timefinish");
-//				SimpleDateFormat sdfTimeEnd = new SimpleDateFormat("hh:mm:ss a");
-//				sdfTimeEnd.setTimeZone(java.util.TimeZone.getTimeZone("IST"));
-//				String timeEnd = sdfTime.format(timeFinish);
 
 				auditorium = resultSet.getString("auditorium");
 				typelesson = resultSet.getString("typelesson");
