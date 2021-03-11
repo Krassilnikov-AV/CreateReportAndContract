@@ -33,7 +33,7 @@ public class DataOperationsService {
 
 	}
 
-//	public Shedules viewDataDB() throws SQLException {
+	//	public Shedules viewDataDB() throws SQLException {
 	public ShedulesSearch viewDataDB() throws SQLException {
 		return sqd.view(connection);
 	}
@@ -46,9 +46,7 @@ public class DataOperationsService {
 		contractTeacher.createDocTeacher();
 	}
 
-	public ShedulesSearch searcheShedule(String searh, String dateMonth) throws SQLException, ParseException,
-		IOException {
-
+	public ShedulesSearch searcheShedule(String searh, String dateMonth) throws SQLException, ParseException {
 		return sqd.addValueTableShedule(connection, searh, dateMonth);
 	}
 //public void searcheShedule() throws SQLException, ParseException {

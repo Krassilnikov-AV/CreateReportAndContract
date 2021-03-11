@@ -53,8 +53,11 @@ public class CreateScheduleReport implements CreateDocument {
 	/**
 	 * @param args the command line arguments
 	 */
-
-	@Override
+String pathFile;
+// 1. прописать путь в котором будет лежать файл
+// 2. вписать строу поиска
+// 3. вписать дату поиска
+@Override
 	public void createDoc(Connection connection) throws SQLException, ParseException {
 		LinkedList<String> listDateStart;
 		String search = "Java"; // слово для поиска

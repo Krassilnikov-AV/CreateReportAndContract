@@ -15,9 +15,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 
-/**
- * Класс ServletSchedule
- */
 @WebServlet(name = "ServletSchedule", urlPatterns = {"/servletSchedule"})
 public class ServletSchedule extends HttpServlet {
 	@Override

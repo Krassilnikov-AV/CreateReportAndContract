@@ -38,7 +38,7 @@
     <td><p><input type="hidden" name="operation" id="data_shedule" value="data_shedule" style="display:none"/>
       <input type="submit" value="Получить данные" name="data_shedule"></p></td>
   </form>
-  <form type="hidden">
+  <form>
     <p>Результаты поиска: </p>
     <table>
       <tr>

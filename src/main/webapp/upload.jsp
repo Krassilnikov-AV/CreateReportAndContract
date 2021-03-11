@@ -91,7 +91,7 @@
 </table>
 
 <body>
-<p><a href="schedule.jsp">
+<p><a href="shedule.jsp">
   <h>Отчёт расписания занятий</h>
 </a></p>
 <p><a href="gph.jsp">
