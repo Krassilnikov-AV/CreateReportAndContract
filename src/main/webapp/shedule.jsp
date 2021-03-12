@@ -13,7 +13,6 @@
   <h>Назад</h>
 </a></p>
 
-<%--</body>--%>
 <h2>Создание отчёта расписания занятий</h2>
 
 <p>Должность: <input type="text" name="post" size="30"></p>
@@ -24,11 +23,11 @@
     <col width="250" valign="top">
   </table>
   <tbody>
-  <%--<tr>--%>
-  <%--<td>--%>
+
   <form action="servletSchedule" method="POST">
 
-    <td><p><input type="text" name="pathToSave" size="57"></p>
+    <td><p>Наименование программы обучения по ключевому слову:</p>
+      <p><input type="text" name="wordName" size="57"></p>
     </td>
 
     <td>
@@ -58,7 +57,7 @@
         <tr>
           <ol>
             <td><input type="checkbox" name="data_shedule" value="<c:out value="${data_shedule.id}"></c:out>"></td>
-            <td>"<c:out value="${data_shedule.id}"></c:out>"</td>
+              <%--<td>"<c:out value="${data_shedule.id}"></c:out>"</td>--%>
             <td>"<c:out value="${data_shedule.group}"></c:out>"</td>
             <td>"<c:out value="${data_shedule.pro}"></c:out>"</td>
             <td>"<c:out value="${data_shedule.dateStart}"></c:out>"</td>
@@ -83,9 +82,8 @@
     </tr>
   </form>
   </tbody>
-
-
   <form action="servletSchedule" method="POST">
+    <p>Путь сохранения файла: <input type="text" name="post" size="30"></p>
     <input type="hidden" name="operation" id="create" value="create" style="display:none"/>
     <td><p><input type="submit" value="СОЗДАТЬ ОТЧЁТ" name="create"></p></td>
   </form>

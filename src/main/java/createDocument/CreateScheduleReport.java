@@ -60,8 +60,8 @@ String pathFile;
 @Override
 	public void createDoc(Connection connection) throws SQLException, ParseException {
 		LinkedList<String> listDateStart;
-		String search = "Java"; // слово для поиска
-		String dateMonth = "2020-06-01";
+		String search = "JS"; // слово для поиска
+		String dateMonth = "2020-06";
 		SQLQueryDataImpl sqlQueryDataImpl = new SQLQueryDataImpl();
 		try (OutputStream outputStream
 				 = new FileOutputStream("D:\\REPOSITORIES-2\\WordTest.docx")) {

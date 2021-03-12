@@ -12,8 +12,7 @@
 <body>
 <h2>Создание договора гражданско правового характера внештатных сотрудников</h2>
 <td>
-  <p>Выбрать период: <input type="month" name="calendar">
-    <input type="submit" value="Выбрать"></p>
+
   <p><input type="text" name="pathToSave" size="57">
     <input type="submit" value="Найти" name="searh"></p>
   <p>Результаты поиска: </p><br><br>
@@ -22,9 +21,9 @@
   <p>Должность: <input type="text" name="post" size="30"></p>
   <p>Ф.И.О.: <input type="text" name="fioPost" size="57"></p>
   <p>№ Доверенности:<input type="text" name="numberContract" size="25"> (пример: юр-323/20-д от 29.12.2020)</p>
-  <p> Предмет договора:</p>
-  <p>Наименование общеобразовательной общеразвивающей программы:
-    <input type="text" name="nameProgram"></p>
+  <%--<p> Предмет договора:</p>--%>
+  <%--<p>Наименование общеобразовательной общеразвивающей программы:--%>
+    <%--<input type="text" name="nameProgram"></p>--%>
   <p>Дата начала оказания услуг:
     <input type="text" name="dateStartContract"></p>
   <p>Дата окончания оказания услуг:

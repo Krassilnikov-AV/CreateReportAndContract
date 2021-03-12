@@ -26,7 +26,7 @@ public class ServletSchedule extends HttpServlet {
 //		SQLQueryDataImpl sqd = new SQLQueryDataImpl();
 //		Connection connection = connectionManager.getConnection();
 		String dateMonth = req.getParameter("calendar");
-		String searh = req.getParameter("pathToSave");
+		String searh = req.getParameter("wordName");
 
 		try {
 			switch (operationType) {

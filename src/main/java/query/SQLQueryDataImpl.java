@@ -200,7 +200,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 				java.util.Date dateResult;
 				dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
 				java.util.Date date1;
-				date1 = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateMonth);
+				date1 = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH).parse(dateMonth);
 
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(dateResult);
@@ -319,12 +319,12 @@ public class SQLQueryDataImpl implements SQLQuery {
 				DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
 				dateStart = resultSet.getString("datestart");
-				dateStart = df.format(new java.util.Date());
+//				dateStart = df.format(new java.util.Date());
 
 				timeStart = resultSet.getString("timestart");
 
 				dateFinish = resultSet.getString("datefinish");
-				dateFinish = df.format(new java.util.Date());
+//				dateFinish = df.format(new java.util.Date());
 				timeFinish = resultSet.getString("timefinish");
 
 				auditorium = resultSet.getString("auditorium");
