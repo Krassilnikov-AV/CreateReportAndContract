@@ -28,7 +28,9 @@
 
     <label><input type="text" name="name"></label>Имя<br>
 
-    <label><input type="number" name="age"></label>Возраст<br>
+    <label><input type="number" name="age"></label>Фамилия<br>
+    <label><input type="number" name="age"></label>Email<br>
+    <label><input type="number" name="age"></label>Пароль<br>
 
     <input type="submit" value="Ok" name="Ok"><br>
 </form>

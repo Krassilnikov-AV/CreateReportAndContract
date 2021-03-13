@@ -12,8 +12,8 @@ import java.util.*;
 
 import static java.util.Calendar.MONTH;
 /*
-* класс для создания запросов к таблицам в БД
-* **/
+ * класс для создания запросов к таблицам в БД
+ * **/
 
 public class SQLQueryDataImpl implements SQLQuery {
 	//public class SQLQueryDataImpl {
@@ -39,7 +39,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 	final static int academHour = 19;   // академических часов (число)
 	final static int academRecord = 20;   // академических записей (число)
 
-//	ConnectionApp connection = new ConnectionApp();
+	//	ConnectionApp connection = new ConnectionApp();
 	ReadExcelDataImpl read = new ReadExcelDataImpl();
 
 	/**
@@ -56,26 +56,68 @@ public class SQLQueryDataImpl implements SQLQuery {
 	/*
 главный метод порверки выполнения запросов
  */
-	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParseException {
-		long start = System.currentTimeMillis();
-		String search = "C";
-		String dateMonth = "2020-03-01";
-		SQLQueryDataImpl sql = new SQLQueryDataImpl();
+//	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParseException {
+//		long start = System.currentTimeMillis();
+//		String search = "C";
+//		String dateMonth = "2020-03-01";
+//	SQLQueryDataImpl sql = new SQLQueryDataImpl();
+
+//		sql.insertDataContractTeacherSQL();
 //		sql.searchToProgram("Java", "2020-06-01");
 //		sql.addValueTableShedule(search, dateMonth);
 //		sql.searchToCodegroup("Java", "2020-06-01");
 //		sql.searchToDateStart(search, dateMonth);  // выбор по дате
 //		sql.searchToAuditorium("Java", "2020-06-01");
-		//		sql.searchToTeacher("Java", "2020-06-01");
+	//		sql.searchToTeacher("Java", "2020-06-01");
 //		sql.searchToTimeStart(search, dateMonth);
 //		sql.regexExample();
 //		sql.view();
 //		sql.prog();
 //		sql.deletedDataSQLloc();
 //		sql.insertExecuteBatchQuerySQL();
-		long finish = System.currentTimeMillis();
-		System.out.println("Время выпонения: " + (finish - start) + " ms");
-	}
+//		long finish = System.currentTimeMillis();
+//		System.out.println("Время выпонения: " + (finish - start) + " ms");
+//	}
+//	@Override
+//	public boolean insertDataContractTeacherSQL() throws IOException, SQLException {
+//		ConnectionApp connection = new ConnectionApp();
+//		String insertTeacherData = "INSERT INTO contract_teacher(contract_id, name_teacher, title_program) " +
+//			"VALUES(?, ?, ?)";
+//		try (PreparedStatement stm = connection.prepareStatement(insertTeacherData)) {
+//
+//			LinkedList<String> listProgram = (LinkedList<String>) read.getString(discipline);
+//
+//			LinkedList<String> listTeacher = (LinkedList<String>) read.getString(teacher);
+//
+//			int size = listProgram.size();
+//
+//			long start = System.currentTimeMillis();
+//			for (int i = 0; i < size; i++) {
+//
+//				String prog = listProgram.pop();
+//				stm.setString(1, prog);
+//
+//				String cod = listTeacher.pop();
+//				stm.setString(2, cod);
+//
+//				/*
+//				 * вставить метод проверки
+//				 * **/
+//				stm.addBatch();
+//			}
+//			long end = System.currentTimeMillis();
+//			System.out.println("Вставлено: " + size + " строк");
+//			System.out.println("суммарное время вставки: " + (end - start) + " ms");
+//			int[] operationResult = stm.executeBatch();
+//			if (operationResult.length > 0) {
+//				return true;
+//			}
+//		} catch (Exception e) {
+//			System.out.println("Данные не занесены, ошибка при выполнении....!!!");
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
 
 	/**
 	 * метод добавления данных  с применением executeBatch()
@@ -95,9 +137,9 @@ public class SQLQueryDataImpl implements SQLQuery {
 //			"SELECT program, codgroup, datestart, timestart, datefinish, timefinish, auditorium, typelesson, teacher" +
 //			"FROM schedule WHERE program =? AND codgroup =? AND datestart =? AND timestart =? AND datefinish=?" +
 //			"AND timefinish=? AND auditorium =? AND typelesson =? AND teacher =?) LIMIT 1";
-		String insertStartSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, " +
-			"timefinish, auditorium, typelesson, teacher) " +
-			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String insertStartSQL = "INSERT INTO sheduleid(program, codgroup, datestart, timestart, datefinish, " +
+			"timefinish, auditorium, typelesson, teacher, period) " +
+			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (PreparedStatement stm = connection.prepareStatement(insertStartSQL)) {
 
 			LinkedList<String> listProgram = (LinkedList<String>) read.getString(discipline);
@@ -109,7 +151,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 			LinkedList<String> listAuditorium = (LinkedList<String>) read.getString(clasRum);
 			LinkedList<String> listTypelesson = (LinkedList<String>) read.getString(typeLearn);
 			LinkedList<String> listTeacher = (LinkedList<String>) read.getString(teacher);
-
+			LinkedList<Integer> listPeriod = (LinkedList<Integer>) read.getDataInteger(period);
 			int size = listDateStart.size();
 
 			long start = System.currentTimeMillis();
@@ -141,9 +183,9 @@ public class SQLQueryDataImpl implements SQLQuery {
 
 				String teach = listTeacher.pop();
 				stm.setString(9, teach);
-				/*
-				 * вставить метод проверки
-				 * **/
+				Integer period = listPeriod.pop();
+				stm.setInt(10, period);
+
 				stm.addBatch();
 			}
 			long end = System.currentTimeMillis();
@@ -183,7 +225,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 		ParseException {
 		List<String> dateStart = new LinkedList<>();
 
-		String SQL = "SELECT * FROM schedule";
+		String SQL = "SELECT * FROM sheduleid";
 		try (Statement statement =
 				 connection.createStatement(
 					 ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -230,13 +272,12 @@ public class SQLQueryDataImpl implements SQLQuery {
 	}
 
 	@Override
-	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException
-		{
+	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException {
 		List<SheduleSearch> shedules = new ArrayList();
 		String id, program, codegroup, timeStart, dateEnd, timeEnd, auditorium, typelesson, teacher;
 		String searchSql = "%" + search + "%";
 		String dateMonthSql = "%" + dateMonth + "%";
-		String SQL = "SELECT * FROM schedule WHERE  UPPER(program) LIKE UPPER(?) AND  text(datestart) like ?";
+		String SQL = "SELECT * FROM sheduleid WHERE  UPPER(program) LIKE UPPER(?) AND  text(datestart) like ?";
 		try (PreparedStatement stm = connection.prepareStatement(SQL)) {
 			stm.setString(1, searchSql);
 			stm.setString(2, dateMonthSql);
@@ -245,7 +286,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 			String dateSearh;
 			SheduleSearch shedule;
 			while (resultSet.next()) {
-				id = resultSet.getString("id");
+				id = resultSet.getString("id_shedule");
 				codegroup = resultSet.getString("codgroup");
 				program = resultSet.getString("program");
 				dateSearh = String.valueOf(resultSet.getDate("datestart"));
@@ -307,13 +348,13 @@ public class SQLQueryDataImpl implements SQLQuery {
 	@Override
 	public ShedulesSearch view(Connection connection) throws SQLException {
 		List<SheduleSearch> shedules = new ArrayList<>();
-		String SQL = "SELECT * FROM schedule";
+		String SQL = "SELECT * FROM sheduleid";
 		try (Statement statement = connection.createStatement()) {
 			ResultSet resultSet = statement.executeQuery(SQL);
 			String id, program, codegroup, dateStart, timeStart, dateFinish, timeFinish, auditorium, typelesson, teacher;
 			SheduleSearch shedule = null;
 			while (resultSet.next()) {
-				id = resultSet.getString("id");
+				id = resultSet.getString("id_shedule");
 				codegroup = resultSet.getString("codgroup");
 				program = resultSet.getString("program");
 				DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
@@ -381,7 +422,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 	/*для удаления с бразера данных в таблице*/
 	@Override
 	public boolean deletedDataSQL(Connection connection) throws SQLException {
-		String deletedSQL = "DELETE FROM schedule";
+		String deletedSQL = "DELETE FROM sheduleid";
 		try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
 			int result = stm.executeUpdate();
 			if (result != 0) {

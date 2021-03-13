@@ -30,7 +30,6 @@ public class DataOperationsService {
 
 	public boolean insertDB() throws IOException, SQLException {
 		return sqd.insertExecuteBatchQuerySQL(connection);
-
 	}
 
 	//	public Shedules viewDataDB() throws SQLException {

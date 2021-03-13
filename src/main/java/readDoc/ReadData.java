@@ -8,5 +8,8 @@ import java.util.*;
  */
 public interface ReadData {
 	public LinkedList<Date> getDate(int columnIndex);
+
 	public List<String> getString(int columnIndex);
+
+	public List<Integer> getDataInteger(int columnIndex);
 }

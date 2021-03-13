@@ -29,7 +29,6 @@ public class ServletOperation extends HttpServlet {
 					dos.insertDB();
 					break;
 				case VIEW:
-//					Shedules shedules = dos.viewDataDB();
 					ShedulesSearch shedules=dos.viewDataDB();
 					req.setAttribute("shedules", shedules.getShedules());
 					break;

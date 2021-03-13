@@ -20,7 +20,7 @@
   <input type="hidden" name="ws_code" id="shopCode" value="shopCode" style="display:none"/>
   <input type="text" name="token" id="123414" value="123414" style="display:none">
   <!--<input type="hidden" name="ws_code" value="shopCode" style="display:none">-->
-  <input type="submit" value="Загрузите файл"/>
+  <input type="submit" value="Загрузить файл"/>
 </form>
 
 

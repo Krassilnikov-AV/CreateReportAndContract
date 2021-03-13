@@ -18,7 +18,7 @@ public interface SQLQuery {
 	public boolean deletedDataSQL(Connection connection) throws SQLException;
 
 	boolean insertExecuteBatchQuerySQL(Connection connection) throws IOException, SQLException;
-
+//	public boolean insertDataContractTeacherSQL() throws IOException, SQLException;
 //	boolean searchToTeacher(String teacher, String dateSearch, String timeSearch) throws SQLException,		ParseException;
 
 //	public List<String> searchToDateStart(String search, String dateMonth) throws SQLException, ParseException;
