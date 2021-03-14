@@ -18,9 +18,10 @@ public class DataOperationsService {
 	private CreateScheduleReport createScheduleReport = new CreateScheduleReport();
 	private ContractTeacher contractTeacher = new ContractTeacher();
 
-	ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
+
+	private ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
 	//getJDBCConnect();
-	Connection connection = connectionManager.getConnection();
+	private Connection connection = connectionManager.getConnection();
 
 	public boolean deleteDB() throws SQLException {
 
@@ -29,6 +30,7 @@ public class DataOperationsService {
 	}
 
 	public boolean insertDB() throws IOException, SQLException {
+
 		return sqd.insertExecuteBatchQuerySQL(connection);
 	}
 

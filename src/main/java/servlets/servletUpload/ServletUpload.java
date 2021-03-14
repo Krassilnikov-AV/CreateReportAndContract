@@ -1,31 +1,40 @@
 package servlets.servletUpload;
 
+import services.FilePathTransferOperation;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 import java.io.*;
 import java.nio.file.*;
 
-/**
- * Класс ServletUpload
- */
+
 @MultipartConfig
 @WebServlet(name = "ServletUpload", urlPatterns = {"/servletUpload"})
 public class ServletUpload extends HttpServlet {
 
-	String path = null;
-	String name = "";
+	private String path = null;
+	private String name = "";
+	FilePathTransferOperation fpto = new FilePathTransferOperation();
+	private Object strPath, strName;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");       // распознавание русского текста
+
 		path = request.getParameter("path");
+
 		Part part = request.getPart("file");
-		name = part.getSubmittedFileName();          // получить в классе чтения, создать в свойствах->читать и
-		// получать в необходимом классе для чтения
+		name = part.getSubmittedFileName();
+
 		download(part.getInputStream(), name);
+		//******попытки сохранить путь файла*****////
+		Path pathDir = Paths.get(path + name);
+		strPath = pathDir.getParent();
+		strName = pathDir.getFileName();
+		String fp = strPath.toString() + strName.toString();
+		fpto.setFileToRead(fp);
 		request.getRequestDispatcher("/upload.jsp").forward(request, response);
-//		insertDeleteView(request, response);
 	}
 
 	private void download(InputStream fileStream, String name) {
@@ -38,9 +47,11 @@ public class ServletUpload extends HttpServlet {
 				bufferedOutputStream.write(readByte, 0, read);
 			}
 			bufferedOutputStream.flush();     // загрузка на диск
+
 		} catch (IOException e) {
 			System.out.println("the file is corrupted!!!");
 			e.printStackTrace();
 		}
 	}
+
 }

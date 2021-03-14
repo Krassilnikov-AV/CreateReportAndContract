@@ -76,9 +76,7 @@ public class ContractTeacher implements CreateDocument {
 // вставка в таблицу ФИО
 // доработать таблицу, по аналогии следующие
 			String fio = "Отличная фамилия";
-			/*
-			---------------новый метод!!!!!!--------------
-			*/
+
 
 			XWPFTable tableName = document.createTable(2, 1);
 			getWidth(tableName, 9150);                      //определение ширины таблицы

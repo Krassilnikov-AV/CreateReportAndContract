@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2021 Tander, All Rights Reserved.
- */
 
 package connection.dbConnection;
 
@@ -8,10 +5,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
-/**
- * Класс ConnectionManagerPostgeImpl
- * получает
- */
+
 public class ConnectionManagerPostgeImpl implements ConnectionManager {
 	private static ConnectionManager connectionManager;
 	private Properties properties = new Properties();
@@ -49,8 +43,8 @@ public class ConnectionManagerPostgeImpl implements ConnectionManager {
 				getDbUsername(),
 				getDbPassword()
 			);
-
 		} catch (ClassNotFoundException e) {
+
 		} catch (SQLException e) {
 		}
 		return connection;

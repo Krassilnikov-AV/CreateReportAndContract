@@ -41,7 +41,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 
 	//	ConnectionApp connection = new ConnectionApp();
 	ReadExcelDataImpl read = new ReadExcelDataImpl();
-
+//	static String fileToRead = "D:\\REPOSITORIES-2\\Primer_raspisania.xlsx";
 	/**
 	 * метод извлечения данных из БД (преполавателя, даты и времени начала занятий)
 	 * Данный метод позволит избежать внесения повторяющих значений в БД
@@ -130,13 +130,15 @@ public class SQLQueryDataImpl implements SQLQuery {
 	 * ) LIMIT 1;
 	 */
 	@Override
-	public boolean insertExecuteBatchQuerySQL(Connection connection) throws IOException, SQLException {
+	public boolean insertExecuteBatchQuerySQL(Connection connection) throws IOException,
+		SQLException {
 //		String insertUnikSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, timefinish, " +
 //			"auditorium, typelesson, teacher) " +
 //			"SELECT * FROM(SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?) AS tmp WHERE NOT EXISTS(" +
 //			"SELECT program, codgroup, datestart, timestart, datefinish, timefinish, auditorium, typelesson, teacher" +
 //			"FROM schedule WHERE program =? AND codgroup =? AND datestart =? AND timestart =? AND datefinish=?" +
 //			"AND timefinish=? AND auditorium =? AND typelesson =? AND teacher =?) LIMIT 1";
+
 		String insertStartSQL = "INSERT INTO sheduleid(program, codgroup, datestart, timestart, datefinish, " +
 			"timefinish, auditorium, typelesson, teacher, period) " +
 			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
