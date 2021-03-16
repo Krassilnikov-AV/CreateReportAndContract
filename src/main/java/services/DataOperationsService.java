@@ -6,10 +6,10 @@ package services;
 
 import connection.dbConnection.*;
 import createDocument.*;
-import model.*;
+import model.ShedulesSearch;
 import query.SQLQueryDataImpl;
 
-import java.io.IOException;
+import java.io.*;
 import java.sql.*;
 import java.text.ParseException;
 
@@ -29,9 +29,9 @@ public class DataOperationsService {
 
 	}
 
-	public boolean insertDB() throws IOException, SQLException {
+	public boolean insertDB(InputStream fileStream) throws IOException, SQLException {
 
-		return sqd.insertExecuteBatchQuerySQL(connection);
+		return sqd.insertExecuteBatchQuerySQL(connection, fileStream);
 	}
 
 	//	public Shedules viewDataDB() throws SQLException {

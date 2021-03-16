@@ -4,28 +4,30 @@
 
 package services;
 
+import java.util.Arrays;
+
 public class FilePathTransferOperation {
 
 	private String fileToRead;
+
 	public FilePathTransferOperation() {
 		}
 
-	public FilePathTransferOperation(String fileToRead) {
-		this.fileToRead=fileToRead;
+	public FilePathTransferOperation(byte[] fileToRead) {
+		this.fileToRead= Arrays.toString(fileToRead);
 	}
-
 	public String getFileToRead() {
-		return fileToRead;
+		return String.valueOf(fileToRead);
 	}
-
-	public String setFileToRead(String fileToRead) {
-		this.fileToRead = fileToRead;
-		return fileToRead;
+	public void setFileToRead(byte[] fileToRead) {
+		this.fileToRead = Arrays.toString(fileToRead);
 	}
 
 	@Override
 	public String toString() {
-		return fileToRead;
+		return "FilePathTransferOperation{" +
+			"fileToRead=" + Arrays.toString(new String[]{fileToRead}) +
+			'}';
 	}
 
 }

@@ -4,8 +4,7 @@ package query;
 import model.*;
 import readDoc.ReadExcelDataImpl;
 
-import java.io.IOException;
-import java.sql.Date;
+import java.io.*;
 import java.sql.*;
 import java.text.*;
 import java.util.*;
@@ -40,7 +39,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 	final static int academRecord = 20;   // академических записей (число)
 
 	//	ConnectionApp connection = new ConnectionApp();
-	ReadExcelDataImpl read = new ReadExcelDataImpl();
+
 //	static String fileToRead = "D:\\REPOSITORIES-2\\Primer_raspisania.xlsx";
 	/**
 	 * метод извлечения данных из БД (преполавателя, даты и времени начала занятий)
@@ -130,8 +129,10 @@ public class SQLQueryDataImpl implements SQLQuery {
 	 * ) LIMIT 1;
 	 */
 	@Override
-	public boolean insertExecuteBatchQuerySQL(Connection connection) throws IOException,
+	public boolean insertExecuteBatchQuerySQL(Connection connection, InputStream fileStream) throws IOException,
 		SQLException {
+		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
+
 //		String insertUnikSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, timefinish, " +
 //			"auditorium, typelesson, teacher) " +
 //			"SELECT * FROM(SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?) AS tmp WHERE NOT EXISTS(" +
@@ -143,55 +144,35 @@ public class SQLQueryDataImpl implements SQLQuery {
 			"timefinish, auditorium, typelesson, teacher, period) " +
 			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (PreparedStatement stm = connection.prepareStatement(insertStartSQL)) {
-
-			LinkedList<String> listProgram = (LinkedList<String>) read.getString(discipline);
-			LinkedList<String> listCodgroup = (LinkedList<String>) read.getString(codeGroup);
-			LinkedList<Date> listDateStart = read.getDate(dateStart);     //
-			LinkedList<Date> listTimeStart = read.getDate(timeStart);
-			LinkedList<Date> listDateFinish = read.getDate(dateEnd);
-			LinkedList<Date> listTimeFinish = read.getDate(timeEnd);
-			LinkedList<String> listAuditorium = (LinkedList<String>) read.getString(clasRum);
-			LinkedList<String> listTypelesson = (LinkedList<String>) read.getString(typeLearn);
-			LinkedList<String> listTeacher = (LinkedList<String>) read.getString(teacher);
-			LinkedList<Integer> listPeriod = (LinkedList<Integer>) read.getDataInteger(period);
-			int size = listDateStart.size();
+			List<SheduleInsert> shedulesInsert = read.getShedulesSearch();
 
 			long start = System.currentTimeMillis();
-			for (int i = 0; i < size; i++) {
+			for (SheduleInsert sheduleInsert: shedulesInsert) {
+				stm.setString(1, sheduleInsert.getPro());
 
-				String prog = listProgram.pop();
-				stm.setString(1, prog);
+				stm.setString(2, sheduleInsert.getGroup());
 
-				String cod = listCodgroup.pop();
-				stm.setString(2, cod);
+				stm.setTimestamp(3, new Timestamp(sheduleInsert.getDateStart().getTime()));
 
-				Date ds = listDateStart.pop();
-				stm.setTimestamp(3, new Timestamp(ds.getTime()));
+				stm.setTime(4, new Time(sheduleInsert.getTimeStart().getTime()));
 
-				Date ts = listTimeStart.pop();
-				stm.setTime(4, new Time(ts.getTime()));
+				stm.setTimestamp(5, new Timestamp(sheduleInsert.getDateFinish().getTime()));
 
-				Date df = listDateFinish.pop();     //возвращает в LinkedList
-				stm.setTimestamp(5, new Timestamp(df.getTime()));
+				stm.setTime(6, new Time(sheduleInsert.getTimeFinish().getTime()));
 
-				Date tf = listTimeFinish.pop();
-				stm.setTime(6, new Time(tf.getTime()));
+				stm.setString(7, sheduleInsert.getAudit());
 
-				String audit = listAuditorium.pop();
-				stm.setString(7, audit);
+				stm.setString(8, sheduleInsert.getType());
 
-				String typeLes = listTypelesson.pop();
-				stm.setString(8, typeLes);
-
-				String teach = listTeacher.pop();
-				stm.setString(9, teach);
-				Integer period = listPeriod.pop();
-				stm.setInt(10, period);
+				stm.setString(9, sheduleInsert.getTech());
+				stm.setInt(10, sheduleInsert.getPeriod());
 
 				stm.addBatch();
+
 			}
+
 			long end = System.currentTimeMillis();
-			System.out.println("Вставлено: " + size + " строк");
+			System.out.println("Вставлено: " + shedulesInsert.size() + " строк");
 			System.out.println("суммарное время вставки: " + (end - start) + " ms");
 			int[] operationResult = stm.executeBatch();
 			if (operationResult.length > 0) {

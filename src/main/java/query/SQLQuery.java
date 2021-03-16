@@ -2,7 +2,7 @@ package query;
 
 import model.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
@@ -23,7 +23,7 @@ public interface SQLQuery {
 
 //	public List<String> searchToDateStart(String search, String dateMonth) throws SQLException, ParseException;
 
-	boolean insertExecuteBatchQuerySQL(Connection connection) throws IOException,
+	boolean insertExecuteBatchQuerySQL(Connection connection, InputStream fileStream) throws IOException,
 		SQLException;
 
 	List<String> searchToDateStart(Connection connection, String search, String dateMonth) throws SQLException,
