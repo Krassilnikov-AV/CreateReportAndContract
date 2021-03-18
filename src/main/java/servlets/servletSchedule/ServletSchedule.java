@@ -5,13 +5,14 @@
 package servlets.servletSchedule;
 
 import model.ShedulesSearch;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import services.DataOperationsService;
 import servlets.servletUpload.Operation;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 
@@ -21,27 +22,34 @@ public class ServletSchedule extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Operation operationType = Operation.fromString(req.getParameter("operation"));
 		DataOperationsService dos = new DataOperationsService();
-//		ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
-		//getJDBCConnect();
-//		SQLQueryDataImpl sqd = new SQLQueryDataImpl();
-//		Connection connection = connectionManager.getConnection();
+
 		String dateMonth = req.getParameter("calendar");
 		String searh = req.getParameter("wordName");
-
 		try {
 			switch (operationType) {
-				case CREATE_SHEDULE:
-					dos.createDoc();
-					break;
 				case SELECT_SHEDULE:
 					ShedulesSearch shedules = dos.searcheShedule(searh, dateMonth);
 
 					req.setAttribute("shedules", shedules.getShedules());
+
+					break;
+
+				case CREATE_SHEDULE:
+					String idList[] = req.getParameterValues("data_shedule");
+
+					ShedulesSearch createShedules = dos.getSheduleBy(idList);
+					XWPFDocument file = dos.createDoc(createShedules);
+
+					resp.setContentType("application/msword");;
+					BufferedOutputStream bos = new BufferedOutputStream(resp.getOutputStream());
+					file.write(bos);
+					bos.flush();
+					bos.close();
 					break;
 			}
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
 		}
-		req.getRequestDispatcher("/shedule.jsp").forward(req, resp);
+	//	req.getRequestDispatcher("/shedule.jsp").forward(req, resp);
 	}
 }

@@ -147,7 +147,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 			List<SheduleInsert> shedulesInsert = read.getShedulesSearch();
 
 			long start = System.currentTimeMillis();
-			for (SheduleInsert sheduleInsert: shedulesInsert) {
+			for (SheduleInsert sheduleInsert : shedulesInsert) {
 				stm.setString(1, sheduleInsert.getPro());
 
 				stm.setString(2, sheduleInsert.getGroup());
@@ -253,9 +253,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 		}
 		return dateStart;
 	}
-	/**
-	 * метод для поиска данных с выбором ключевого слова программы обучения и даты
-	 */
+
 	@Override
 	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException {
 		List<SheduleSearch> shedules = new ArrayList();
@@ -303,7 +301,33 @@ public class SQLQueryDataImpl implements SQLQuery {
 	 * добавить дату и время!!!
 	 * метод для просмотра имеющихся данных в БД на странице браузера после загрузки данных
 	 */
-
+//	@Override
+//	public Shedules view(Connection connection) throws SQLException {
+//		List<Shedule> shedules = new ArrayList<>();
+//		String SQL = "SELECT * FROM schedule";
+//		try (Statement statement = connection.createStatement()) {
+//			ResultSet resultSet = statement.executeQuery(SQL);
+//			String program, codegroup, auditorium, typelesson, teacher;
+//			while (resultSet.next()) {
+//				program = resultSet.getString("program");
+//				codegroup = resultSet.getString("codgroup");
+//				auditorium = resultSet.getString("auditorium");
+//				typelesson = resultSet.getString("typelesson");
+//				teacher = resultSet.getString("teacher");
+//				Shedule shedule = new model.Shedule(
+//					program
+//					, codegroup
+//					, auditorium
+//					, typelesson
+//					, teacher
+//				);
+//				shedules.add(shedule);
+//				System.out.println(shedule.toString());
+//			}
+//			System.out.println("Запрошенные данные успешно выбраны!");
+//			return new Shedules(shedules);
+//		}
+//	}
 	@Override
 	public ShedulesSearch view(Connection connection) throws SQLException {
 		List<SheduleSearch> shedules = new ArrayList<>();
@@ -349,6 +373,53 @@ public class SQLQueryDataImpl implements SQLQuery {
 			return new ShedulesSearch(shedules);
 		}
 	}
+
+	@Override
+	public ShedulesSearch getSheduleBy(Connection connection, String[] idList) throws SQLException {
+		String sqlQuery = "SELECT * FROM sheduleid WHERE id_shedule IN (" + String.join(",", idList) + ")";
+
+		try (PreparedStatement stm = connection.prepareStatement(sqlQuery)) {
+			List<SheduleSearch> shedulesInsert = new ArrayList<>();
+
+			ResultSet resultSet = stm.executeQuery();
+			String id, program, codegroup, dateStart, timeStart, dateFinish, timeFinish, auditorium, typelesson, teacher;
+			SheduleSearch shedule = null;
+			while (resultSet.next()) {
+				id = resultSet.getString("id_shedule");
+				codegroup = resultSet.getString("codgroup");
+				program = resultSet.getString("program");
+
+				dateStart = resultSet.getString("datestart");
+
+				timeStart = resultSet.getString("timestart");
+
+				dateFinish = resultSet.getString("datefinish");
+				timeFinish = resultSet.getString("timefinish");
+
+				auditorium = resultSet.getString("auditorium");
+				typelesson = resultSet.getString("typelesson");
+				teacher = resultSet.getString("teacher");
+				shedule = new model.SheduleSearch(
+					codegroup
+					, program
+					, dateStart
+					, timeStart
+					, dateFinish
+					, timeFinish
+					, auditorium
+					, typelesson
+					, teacher
+				);
+				shedule.setId(id);
+				shedulesInsert.add(shedule);
+				System.out.println(shedule.toString());
+			}
+			System.out.println("Запрошенные данные успешно выбраны!");
+			return new ShedulesSearch(shedulesInsert);
+		}
+
+	}
+
 
 	/*
 	- setConnectionBuilder - сеттер установления пул соединения

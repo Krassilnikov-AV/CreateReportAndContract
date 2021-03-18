@@ -1,5 +1,8 @@
 package createDocument;
 
+import model.ShedulesSearch;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+
 import java.sql.*;
 import java.text.ParseException;
 
@@ -8,8 +11,7 @@ import java.text.ParseException;
  */
 public interface CreateDocument {
 
-	default void createDoc(Connection connection) throws SQLException, ParseException {
-	}
+	XWPFDocument createDoc(ShedulesSearch connection) throws SQLException, ParseException;
 
 	default void createDocTeacher() throws SQLException, ParseException {
 

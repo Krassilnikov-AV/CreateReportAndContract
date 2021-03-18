@@ -1,11 +1,11 @@
 package query;
 
-import model.*;
+import model.ShedulesSearch;
 
 import java.io.*;
 import java.sql.*;
 import java.text.ParseException;
-import java.util.*;
+import java.util.List;
 
 /**
  * Класс SQLQuery
@@ -37,6 +37,8 @@ public interface SQLQuery {
 //	public Shedules view(Connection connection) throws SQLException;
 
 	public ShedulesSearch view(Connection connection) throws SQLException;
+
+	ShedulesSearch getSheduleBy(Connection connection, String[] idList) throws SQLException;
 
 	//	public LinkedList<String> searchToCodegroup(String search, String dateMonth) throws SQLException, ParseException;
 //	public LinkedList<String> searchToProgram(String search, String dateMonth) throws SQLException, ParseException;

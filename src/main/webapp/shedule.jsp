@@ -37,9 +37,9 @@
     <td><p><input type="hidden" name="operation" id="data_shedule" value="data_shedule" style="display:none"/>
       <input type="submit" value="Получить данные" name="data_shedule"></p></td>
   </form>
-  <form>
+  <form  action="servletSchedule" method="POST">
     <p>Результаты поиска: </p>
-    <table>
+    <table name="table">
       <tr>
         <th>id</th>
         <th>group</th>
@@ -80,14 +80,14 @@
       <%--<input type="submit" value="Удалить" name="delete_program"/>--%>
 
     </tr>
-  </form>
-  </tbody>
-  <form action="servletSchedule" method="POST">
+
+
+
     <p>Путь сохранения файла: <input type="text" name="post" size="30"></p>
     <input type="hidden" name="operation" id="create" value="create" style="display:none"/>
     <td><p><input type="submit" value="СОЗДАТЬ ОТЧЁТ" name="create"></p></td>
   </form>
-
+</tbody>
   <script type="text/javascript">
     function check(field, flag) {
       if (flag == 1) {
@@ -98,5 +98,8 @@
     }
   </script>
 </form>
+<script>
+
+</script>
 </body>
 </html>

@@ -7,6 +7,7 @@ package services;
 import connection.dbConnection.*;
 import createDocument.*;
 import model.ShedulesSearch;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import query.SQLQueryDataImpl;
 
 import java.io.*;
@@ -39,8 +40,8 @@ public class DataOperationsService {
 		return sqd.view(connection);
 	}
 
-	public void createDoc() throws SQLException, ParseException {
-		createScheduleReport.createDoc(connection);
+	public XWPFDocument createDoc(ShedulesSearch createShedules) throws SQLException, ParseException {
+		return createScheduleReport.createDoc(createShedules);
 	}
 
 	public void createDocTeacher() throws SQLException, ParseException {
@@ -50,7 +51,8 @@ public class DataOperationsService {
 	public ShedulesSearch searcheShedule(String searh, String dateMonth) throws SQLException, ParseException {
 		return sqd.addValueTableShedule(connection, searh, dateMonth);
 	}
-//public void searcheShedule() throws SQLException, ParseException {
-//	sqd.addValueTableShedule(connection, "java", "01/") ;
-//}
+
+	public ShedulesSearch getSheduleBy(String[] idList) throws SQLException {
+		return sqd.getSheduleBy(connection, idList);
+	}
 }
