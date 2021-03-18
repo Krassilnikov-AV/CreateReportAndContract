@@ -156,7 +156,7 @@ public class CreateScheduleReport implements CreateDocument {
 //				String resultMonth = String.valueOf(shedulesSearch.getShedules().get(0));
 
 		DateFormat date = new SimpleDateFormat("yyyy.MM.dd", Locale.US);
-		Date date1 = date.parse("");
+		Date date1 = date.parse("2020.06.01");
 
 		String dateStr = new SimpleDateFormat("MMMM yyyy").format(date1);
 
