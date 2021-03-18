@@ -253,7 +253,9 @@ public class SQLQueryDataImpl implements SQLQuery {
 		}
 		return dateStart;
 	}
-
+	/**
+	 * метод для поиска данных с выбором ключевого слова программы обучения и даты
+	 */
 	@Override
 	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException {
 		List<SheduleSearch> shedules = new ArrayList();
@@ -301,33 +303,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 	 * добавить дату и время!!!
 	 * метод для просмотра имеющихся данных в БД на странице браузера после загрузки данных
 	 */
-//	@Override
-//	public Shedules view(Connection connection) throws SQLException {
-//		List<Shedule> shedules = new ArrayList<>();
-//		String SQL = "SELECT * FROM schedule";
-//		try (Statement statement = connection.createStatement()) {
-//			ResultSet resultSet = statement.executeQuery(SQL);
-//			String program, codegroup, auditorium, typelesson, teacher;
-//			while (resultSet.next()) {
-//				program = resultSet.getString("program");
-//				codegroup = resultSet.getString("codgroup");
-//				auditorium = resultSet.getString("auditorium");
-//				typelesson = resultSet.getString("typelesson");
-//				teacher = resultSet.getString("teacher");
-//				Shedule shedule = new model.Shedule(
-//					program
-//					, codegroup
-//					, auditorium
-//					, typelesson
-//					, teacher
-//				);
-//				shedules.add(shedule);
-//				System.out.println(shedule.toString());
-//			}
-//			System.out.println("Запрошенные данные успешно выбраны!");
-//			return new Shedules(shedules);
-//		}
-//	}
+
 	@Override
 	public ShedulesSearch view(Connection connection) throws SQLException {
 		List<SheduleSearch> shedules = new ArrayList<>();

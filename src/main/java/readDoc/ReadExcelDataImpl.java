@@ -3,7 +3,6 @@ package readDoc;
 import model.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
-import services.FilePathTransferOperation;
 
 import java.io.*;
 import java.util.*;
@@ -35,23 +34,9 @@ public class ReadExcelDataImpl implements ReadData {
 	final static int academHour = 19;   // академических часов (число)
 	final static int academRecord = 20;   // академических записей (число)
 
-//
-//	String fileToRead = "fileToRead";
-//	private LinkedList<String> columnStrData;
 
-	//	static int columnIndex = 15;
-//	static int columnInt = 1;
-	private FilePathTransferOperation filePath = new FilePathTransferOperation();
 	private final InputStream ios;
-	// основной метод класса для проверки считывания данных с таблицы
-//	public static void main(String[] args) throws IOException {
-//		ReadExcelDataImpl exr = new ReadExcelDataImpl();
-////		exr.getString(0);
-//		exr.getDataInteger(columnIndex);
-////		exr.buildingTable();
-////		exr.getDate(columnIndex);
-////		exr.getTime(columnIndex);
-//	}
+
 
 	private java.sql.Date columndataDateSql;
 	private List<java.sql.Date> columnListDateSql = new LinkedList<>();

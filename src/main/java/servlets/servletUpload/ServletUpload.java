@@ -13,22 +13,15 @@ import java.sql.SQLException;
 @WebServlet(name = "ServletUpload", urlPatterns = {"/servletUpload"})
 public class ServletUpload extends HttpServlet {
 
-	private String path = null;
+//	private String path = null;
 	private String name = "";
-//	FilePathTransferOperation fpto = new FilePathTransferOperation();
 
-//	private Object strPath, strName;
-//	String fullPath;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");       // распознавание русского текста
 
-//		path = request.getParameter("path");
-//
 	Part part = request.getPart("file");
-//		name = part.getSubmittedFileName();
-
 		download(part.getInputStream());
 		request.getRequestDispatcher("/upload.jsp").forward(request, response);
 	}
@@ -40,7 +33,5 @@ public class ServletUpload extends HttpServlet {
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
-
-
 	}
 }

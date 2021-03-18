@@ -5,64 +5,60 @@
 
 <html>
 <head>
-  <title>Загрузка данных на сервер</title>
+  <title>Загрузка и просмотр данных</title>
 </head>
 <br>
-<h1>Загрузка файла</h1>
+<h1>Загрузка данных</h1>
 <form action="servletUpload" method="post"
       enctype="multipart/form-data">
-  <p>
-    укажите путь сохранения: <input type="text" name="path" value=""/>
-  </p>
   <p>
     <input type="file" name="file" size="50"/>
   </p>
   <input type="hidden" name="ws_code" id="shopCode" value="shopCode" style="display:none"/>
   <input type="text" name="token" id="123414" value="123414" style="display:none">
   <!--<input type="hidden" name="ws_code" value="shopCode" style="display:none">-->
-  <input type="submit" value="Загрузить файл"/>
+  <input type="submit" value="Сохранить данные"/>
 </form>
 
-
-<h1>Выбор операции: </h1>
-<form action="servletOperation" method="POST">
-  <input type="hidden" name="operation" id="upload" value="insert" style="display:none"/>
-  <input type="submit" value="Сохранить данные" name="insert"/>
-</form>
 <form action="servletOperation" method="POST">
   <input type="hidden" name="operation" id="delete" value="delete" style="display:none"/>
   <input type="submit" value="Удалить" name="delete"/>
 </form>
+
+<h1>Выбор операции: </h1>
+
 <form action="servletOperation" method="POST">
   <input type="hidden" name="operation" id="view" value="view" style="display:none"/>
   <input type="submit" value="Просмотр" name="view"/>
 </form>
 
+
+
 <table>
 
-    <tr>
-      <th>group</th>
-      <th>pro</th>
-      <th>dateStart</th>
-      <th>timeStart</th>
-      <th>dateFinish</th>
-      <th>timeFinish</th>
-      <th>audit</th>
-      <th>type</th>
-      <th>tech</th>
-      </tr>
-    <c:forEach items="${requestScope.shedules}" var="shedule">
+  <tr>
+    <th>group</th>
+    <th>pro</th>
+    <th>dateStart</th>
+    <th>timeStart</th>
+    <th>dateFinish</th>
+    <th>timeFinish</th>
+    <th>audit</th>
+    <th>type</th>
+    <th>tech</th>
+  </tr>
+  <c:forEach items="${requestScope.shedules}" var="shedule">
 
     <tr>
-    <td>"<c:out value="${shedule.group}"></c:out>"</td>
-    <td>"<c:out value="${shedule.pro}"></c:out>"</td>
+      <td>"<c:out value="${shedule.group}"></c:out>"</td>
+      <td>"<c:out value="${shedule.pro}"></c:out>"</td>
       <td>"<c:out value="${shedule.dateStart}"></c:out>"</td>
       <td>"<c:out value="${shedule.timeStart}"></c:out>"</td>
       <td>"<c:out value="${shedule.dateFinish}"></c:out>"</td>
       <td>"<c:out value="${shedule.timeFinish}"></c:out>"</td>
-    <td>"<c:out value="${shedule.audit}"></c:out>"</td>
-    <td>"<c:out value="${shedule.type}"></c:out>"</td>
-    <td>"<c:out value="${shedule.tech}"></c:out>"</td>
+      <td>"<c:out value="${shedule.audit}"></c:out>"</td>
+      <td>"<c:out value="${shedule.type}"></c:out>"</td>
+      <td>"<c:out value="${shedule.tech}"></c:out>"</td>
     </tr>
 
   </c:forEach>
