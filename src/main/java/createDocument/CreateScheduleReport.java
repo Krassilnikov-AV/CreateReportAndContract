@@ -152,11 +152,12 @@ public class CreateScheduleReport implements CreateDocument {
 		 * необходимо получить первый элемент пропарсить и получить
 		 * название месяца для заголовка расписания
 		 * */
-		String resMonth = createShedules.getShedules().get(0).getDateStart();
+		String  resMonth= createShedules.getShedules().get(0).getDateStart();
 //				String resultMonth = String.valueOf(shedulesSearch.getShedules().get(0));
 
-		DateFormat date = new SimpleDateFormat("yyyy.MM.dd", Locale.US);
-		Date date1 = date.parse("2020.06.01");
+		DateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+//		Date date1 = date.parse("2020.06.01");
+		Date date1 = date.parse(resMonth);
 
 		String dateStr = new SimpleDateFormat("MMMM yyyy").format(date1);
 

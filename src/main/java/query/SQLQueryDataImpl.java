@@ -8,8 +8,6 @@ import java.io.*;
 import java.sql.*;
 import java.text.*;
 import java.util.*;
-
-import static java.util.Calendar.MONTH;
 /*
  * класс для создания запросов к таблицам в БД
  * **/
@@ -52,31 +50,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 //		}
 //	}
 
-	/*
-главный метод порверки выполнения запросов
- */
-//	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException, ParseException {
-//		long start = System.currentTimeMillis();
-//		String search = "C";
-//		String dateMonth = "2020-03-01";
-//	SQLQueryDataImpl sql = new SQLQueryDataImpl();
 
-//		sql.insertDataContractTeacherSQL();
-//		sql.searchToProgram("Java", "2020-06-01");
-//		sql.addValueTableShedule(search, dateMonth);
-//		sql.searchToCodegroup("Java", "2020-06-01");
-//		sql.searchToDateStart(search, dateMonth);  // выбор по дате
-//		sql.searchToAuditorium("Java", "2020-06-01");
-	//		sql.searchToTeacher("Java", "2020-06-01");
-//		sql.searchToTimeStart(search, dateMonth);
-//		sql.regexExample();
-//		sql.view();
-//		sql.prog();
-//		sql.deletedDataSQLloc();
-//		sql.insertExecuteBatchQuerySQL();
-//		long finish = System.currentTimeMillis();
-//		System.out.println("Время выпонения: " + (finish - start) + " ms");
-//	}
 //	@Override
 //	public boolean insertDataContractTeacherSQL() throws IOException, SQLException {
 //		ConnectionApp connection = new ConnectionApp();
@@ -192,67 +166,59 @@ public class SQLQueryDataImpl implements SQLQuery {
 	 * 3. если нет совпадений, то заносятся в БД
 	 */
 
-
-	/**
-	 * метод для получения запрашиваемых данных по на правлению с таблицы
-	 *
-	 * @throws SQLException
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
 	/**
 	 * метод для поиска данных с выбором ключевого слова программы обучения и даты
 	 */
-	@Override
-	public List<String> searchToDateStart(Connection connection, String search, String dateMonth) throws SQLException,
-		ParseException {
-		List<String> dateStart = new LinkedList<>();
-
-		String SQL = "SELECT * FROM sheduleid";
-		try (Statement statement =
-				 connection.createStatement(
-					 ResultSet.TYPE_SCROLL_INSENSITIVE,
-					 ResultSet.CONCUR_READ_ONLY)) {
-
-			ResultSet resultSet = statement.executeQuery(SQL);
-			String programs = null;
-			String dateSearh;
-			int row;
-
-			while (resultSet.next()) {
-				programs = resultSet.getString("program");
-				dateSearh = String.valueOf(resultSet.getDate("datestart"));
-				java.util.Date dateResult;
-				dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
-				java.util.Date date1;
-				date1 = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH).parse(dateMonth);
-
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(dateResult);
-				Calendar cal1;
-				cal1 = Calendar.getInstance();
-				cal1.setTime(date1);
-
-				boolean sameDay = cal.get(MONTH) == cal1.get(MONTH);
-				if (programs.contains(search) && sameDay) {
-					row = resultSet.getRow();
-					resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
-					java.util.Date dates = new SimpleDateFormat("yyyy-MM-dd").parse(dateSearh);  // парсит
-					SimpleDateFormat simplDate = new SimpleDateFormat("yyyy.MM.dd");
-					String exp = simplDate.format(dates);
-					((LinkedList<String>) dateStart).add(exp);  // добвляет указанный
-				}
-			}
-			if (!programs.isEmpty()) {
-				System.out.println("Запрошенные данные по дате начала успешно выбраны!");
-			} else {
-				System.out.println("Совпадений не нашлось");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return dateStart;
-	}
+//	@Override
+//	public List<String> searchToDateStart(Connection connection, String search, String dateMonth) throws SQLException,
+//		ParseException {
+//		List<String> dateStart = new LinkedList<>();
+//
+//		String SQL = "SELECT * FROM sheduleid";
+//		try (Statement statement =
+//				 connection.createStatement(
+//					 ResultSet.TYPE_SCROLL_INSENSITIVE,
+//					 ResultSet.CONCUR_READ_ONLY)) {
+//
+//			ResultSet resultSet = statement.executeQuery(SQL);
+//			String programs = null;
+//			String dateSearh;
+//			int row;
+//
+//			while (resultSet.next()) {
+//				programs = resultSet.getString("program");
+//				dateSearh = String.valueOf(resultSet.getDate("datestart"));
+//				java.util.Date dateResult;
+//				dateResult = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(dateSearh);
+//				java.util.Date date1;
+//				date1 = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH).parse(dateMonth);
+//
+//				Calendar cal = Calendar.getInstance();
+//				cal.setTime(dateResult);
+//				Calendar cal1;
+//				cal1 = Calendar.getInstance();
+//				cal1.setTime(date1);
+//
+//				boolean sameDay = cal.get(MONTH) == cal1.get(MONTH);
+//				if (programs.contains(search) && sameDay) {
+//					row = resultSet.getRow();
+//					resultSet.absolute(row);    // перемещение курсора к заданному номеру строки
+//					java.util.Date dates = new SimpleDateFormat("yyyy-MM-dd").parse(dateSearh);  // парсит
+//					SimpleDateFormat simplDate = new SimpleDateFormat("yyyy.MM.dd");
+//					String exp = simplDate.format(dates);
+//					((LinkedList<String>) dateStart).add(exp);  // добвляет указанный
+//				}
+//			}
+//			if (!programs.isEmpty()) {
+//				System.out.println("Запрошенные данные по дате начала успешно выбраны!");
+//			} else {
+//				System.out.println("Совпадений не нашлось");
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return dateStart;
+//	}
 
 	@Override
 	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException {

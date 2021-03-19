@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
   </table>
   <tbody>
 
-  <form action="servletSchedule" method="POST">
+  <form action="servletSchedule" method="POST" accept-charset="UTF-8">
 
     <td><p>Наименование программы обучения по ключевому слову:</p>
       <p><input type="text" name="wordName" size="57"></p>
@@ -37,7 +37,7 @@
     <td><p><input type="hidden" name="operation" id="data_shedule" value="data_shedule" style="display:none"/>
       <input type="submit" value="Получить данные" name="data_shedule"></p></td>
   </form>
-  <form  action="servletSchedule" method="POST">
+  <form  action="servletSchedule" method="POST" accept-charset="UTF-8">
     <p>Результаты поиска: </p>
     <table name="table">
       <tr>

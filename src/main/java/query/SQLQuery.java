@@ -5,7 +5,6 @@ import model.ShedulesSearch;
 import java.io.*;
 import java.sql.*;
 import java.text.ParseException;
-import java.util.List;
 
 /**
  * Класс SQLQuery
@@ -26,8 +25,8 @@ public interface SQLQuery {
 	boolean insertExecuteBatchQuerySQL(Connection connection, InputStream fileStream) throws IOException,
 		SQLException;
 
-	List<String> searchToDateStart(Connection connection, String search, String dateMonth) throws SQLException,
-		ParseException;
+//	List<String> searchToDateStart(Connection connection, String search, String dateMonth) throws SQLException,
+//		ParseException;
 
 //	public LinkedList<String> searchToTeacher(String search, String dateMonth) throws SQLException, ParseException;
 

@@ -4,6 +4,7 @@
 
 package createDocument;
 
+import model.ShedulesSearch;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
@@ -12,16 +13,15 @@ import java.math.BigInteger;
 import java.sql.*;
 import java.text.ParseException;
 
+
 public class ContractTeacher implements CreateDocument {
 	private enum Border {LEFT, TOP, BOTTOM, RIGHT}
 
-//	public static void main(String[] args) throws SQLException, ParseException {
-//		long start = System.currentTimeMillis();
-//		ContractTeacher contr = new ContractTeacher();
-//		contr.createDoc();
-//		long finish = System.currentTimeMillis();
-//		System.out.println("Время выполнения: " + (finish - start) + "_ms");
-//	}
+
+	@Override
+	public XWPFDocument createDoc(ShedulesSearch connection) throws SQLException, ParseException {
+		return null;
+	}
 
 	@Override
 	public void createDocTeacher() throws SQLException, ParseException {

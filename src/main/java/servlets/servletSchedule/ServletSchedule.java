@@ -25,13 +25,14 @@ public class ServletSchedule extends HttpServlet {
 
 		String dateMonth = req.getParameter("calendar");
 		String searh = req.getParameter("wordName");
+//		new String(req.getParameter("wordName").getBytes("ISO-8859-1"), Charset.forName("UTF-8"));
 		try {
 			switch (operationType) {
 				case SELECT_SHEDULE:
 					ShedulesSearch shedules = dos.searcheShedule(searh, dateMonth);
 
 					req.setAttribute("shedules", shedules.getShedules());
-
+					req.getRequestDispatcher("/shedule.jsp").forward(req, resp);
 					break;
 
 				case CREATE_SHEDULE:
@@ -40,7 +41,7 @@ public class ServletSchedule extends HttpServlet {
 					ShedulesSearch createShedules = dos.getSheduleBy(idList);
 					XWPFDocument file = dos.createDoc(createShedules);
 
-					resp.setContentType("application/msword");;
+					resp.setContentType("application/msword");
 					BufferedOutputStream bos = new BufferedOutputStream(resp.getOutputStream());
 					file.write(bos);
 					bos.flush();
@@ -50,6 +51,6 @@ public class ServletSchedule extends HttpServlet {
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
 		}
-	//	req.getRequestDispatcher("/shedule.jsp").forward(req, resp);
+
 	}
 }
