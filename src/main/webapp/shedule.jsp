@@ -72,8 +72,8 @@
       </c:forEach>
     </table>
 
-    <input type="button" value="Выделить все" onclick="check(this.form.list, 1)">
-    <input type="button" value="Снять выделение" onclick="check(this.form.list, 0)">
+    <input type="button" value="Выделить все" onclick="check(this.form.data_shedule, 1)">
+    <input type="button" value="Снять выделение" onclick="check(this.form.data_shedule, 0)">
     <tr>
     </tr>
 
