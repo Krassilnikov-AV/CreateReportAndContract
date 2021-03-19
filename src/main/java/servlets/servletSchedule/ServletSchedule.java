@@ -18,20 +18,23 @@ import java.text.ParseException;
 
 @WebServlet(name = "ServletSchedule", urlPatterns = {"/servletSchedule"})
 public class ServletSchedule extends HttpServlet {
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html;charset=UTF-8");
 		Operation operationType = Operation.fromString(req.getParameter("operation"));
 		DataOperationsService dos = new DataOperationsService();
 
 		String dateMonth = req.getParameter("calendar");
 		String searh = req.getParameter("wordName");
-//		new String(req.getParameter("wordName").getBytes("ISO-8859-1"), Charset.forName("UTF-8"));
 		try {
 			switch (operationType) {
 				case SELECT_SHEDULE:
 					ShedulesSearch shedules = dos.searcheShedule(searh, dateMonth);
-
+//					req.setCharacterEncoding("UTF-8");
 					req.setAttribute("shedules", shedules.getShedules());
+
 					req.getRequestDispatcher("/shedule.jsp").forward(req, resp);
 					break;
 

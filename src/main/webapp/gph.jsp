@@ -66,11 +66,7 @@
       <input type="hidden" name="operation" id="create_contract" value="create_contract" style="display:none"/>
 <td><p><input type="submit" value="Создать договор" name="create_contract"</p></td>
 </form>
-<%--ПРИМЕР ПРИВЯЗКИ КНОПКИ--%>
-<%--<form action="servletOperation" method="POST">--%>
-<%----%>
-<%--<input type="submit" value="Просмотр" name="view"/>--%>
-<%----%>
+
 
 </body>
 </html>

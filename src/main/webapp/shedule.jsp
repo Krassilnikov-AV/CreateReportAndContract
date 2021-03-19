@@ -1,11 +1,11 @@
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%@page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%--<% request.setCharacterEncoding("UTF-8"); %>--%>
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <%--<meta http-equiv="Content-Type" content="text/html">--%>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <title>Расписание занятий</title>
 </head>
 <body>
@@ -24,10 +24,10 @@
   </table>
   <tbody>
 
-  <form action="servletSchedule" method="POST" accept-charset="UTF-8">
+  <form action="servletSchedule" method="POST">
 
     <td><p>Наименование программы обучения по ключевому слову:</p>
-      <p><input type="text" name="wordName" size="57"></p>
+      <p><input type="text" name="wordName" size="57" accept-charset="UTF-8"></p>
     </td>
 
     <td>
@@ -36,7 +36,7 @@
 
     <td><p><input type="hidden" name="operation" id="data_shedule" value="data_shedule" style="display:none"/>
       <input type="submit" value="Получить данные" name="data_shedule"></p></td>
-  </form>
+    </form>
   <form  action="servletSchedule" method="POST" accept-charset="UTF-8">
     <p>Результаты поиска: </p>
     <table name="table">
@@ -75,15 +75,8 @@
     <input type="button" value="Выделить все" onclick="check(this.form.list, 1)">
     <input type="button" value="Снять выделение" onclick="check(this.form.list, 0)">
     <tr>
-
-      <%--<input type="hidden" name="operation" id="delete_program" value="delete_program" style="display:none"/>--%>
-      <%--<input type="submit" value="Удалить" name="delete_program"/>--%>
-
     </tr>
 
-
-
-    <p>Путь сохранения файла: <input type="text" name="post" size="30"></p>
     <input type="hidden" name="operation" id="create" value="create" style="display:none"/>
     <td><p><input type="submit" value="СОЗДАТЬ ОТЧЁТ" name="create"></p></td>
   </form>
