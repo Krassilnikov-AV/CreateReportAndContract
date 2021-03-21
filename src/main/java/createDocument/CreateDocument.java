@@ -11,10 +11,14 @@ import java.text.ParseException;
  */
 public interface CreateDocument {
 
-	XWPFDocument createDoc(ShedulesSearch connection) throws SQLException, ParseException;
+//	XWPFDocument createDoc(ShedulesSearch connection) throws SQLException, ParseException;
 
-	default void createDocTeacher() throws SQLException, ParseException {
+	default XWPFDocument createDocTeacher() throws SQLException, ParseException {
+		return null;
+	}
 
+	default XWPFDocument createDoc(ShedulesSearch createShedules, String fio) throws SQLException, ParseException {
+		return null;
 	}
 
 //	void createDocTeacher() throws SQLException, ParseException;

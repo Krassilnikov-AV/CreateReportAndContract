@@ -23,11 +23,7 @@ public class Shedule {
 		this.tech = tech;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public String getId() {
 		return id;
 	}
@@ -36,60 +32,32 @@ public class Shedule {
 		this.id = id;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public String getPro() {
 		return pro;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public String getGroup() {
 		return group;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public String getAudit() {
 		return audit;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public String getType() {
 		return type;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public String getTech() {
 		return tech;
 	}
 
 	@Override
 	public String toString() {
-//		return "Shedule{" +
-//			"pro='" + pro + '\'' +
-//			", group='" + group + '\'' +
-//			", audit='" + audit + '\'' +
-//			", type='" + type + '\'' +
-//			", tech='" + tech + '\'' +
-//			'}';
 		return " //код группы: " + group + " //программа: " + pro + " //аудитория: " + audit +
 			" //тип занятия: " + type + " //преподаватель: " + tech;
 	}

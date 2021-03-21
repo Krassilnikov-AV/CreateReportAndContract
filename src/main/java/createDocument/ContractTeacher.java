@@ -4,13 +4,11 @@
 
 package createDocument;
 
-import model.ShedulesSearch;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
-import java.io.*;
 import java.math.BigInteger;
-import java.sql.*;
+import java.sql.SQLException;
 import java.text.ParseException;
 
 
@@ -19,15 +17,10 @@ public class ContractTeacher implements CreateDocument {
 
 
 	@Override
-	public XWPFDocument createDoc(ShedulesSearch connection) throws SQLException, ParseException {
-		return null;
-	}
+	public XWPFDocument createDocTeacher() throws SQLException, ParseException {
 
-	@Override
-	public void createDocTeacher() throws SQLException, ParseException {
-
-		try (OutputStream outputStream
-				 = new FileOutputStream("D:\\REPOSITORIES-2\\ContractTeach.docx")) {
+//		try (OutputStream outputStream
+//				 = new FileOutputStream("D:\\REPOSITORIES-2\\ContractTeach.docx")) {
 			XWPFDocument document = new XWPFDocument();
 // настройка полей документа
 			CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
@@ -375,12 +368,13 @@ public class ContractTeacher implements CreateDocument {
 
 			creteActReceptionDelivery(document);
 			/*создание документа*/
-			document.write(outputStream);
+//			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Файл к сожалению не создан");
-		}
+			return document;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println("Файл к сожалению не создан");
+//		}
 
 	}
 
@@ -543,7 +537,7 @@ public class ContractTeacher implements CreateDocument {
 		run24.setFontSize(9);
 		run24.setFontFamily("Times New Roman");
 		run24.setText("                                                                                           " +
-			                          "(подпись)");
+			"(подпись)");
 		run24.addBreak();
 		run24.setText("                                                                                           " +
 			"                          М.П.");

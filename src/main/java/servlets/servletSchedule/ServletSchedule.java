@@ -25,14 +25,14 @@ public class ServletSchedule extends HttpServlet {
 		resp.setContentType("text/html;charset=UTF-8");
 		Operation operationType = Operation.fromString(req.getParameter("operation"));
 		DataOperationsService dos = new DataOperationsService();
-
+		String fio = req.getParameter("fioPost");
 		String dateMonth = req.getParameter("calendar");
 		String searh = req.getParameter("wordName");
+
 		try {
 			switch (operationType) {
 				case SELECT_SHEDULE:
 					ShedulesSearch shedules = dos.searcheShedule(searh, dateMonth);
-//					req.setCharacterEncoding("UTF-8");
 					req.setAttribute("shedules", shedules.getShedules());
 
 					req.getRequestDispatcher("/shedule.jsp").forward(req, resp);
@@ -42,7 +42,7 @@ public class ServletSchedule extends HttpServlet {
 					String idList[] = req.getParameterValues("data_shedule");
 
 					ShedulesSearch createShedules = dos.getSheduleBy(idList);
-					XWPFDocument file = dos.createDoc(createShedules);
+					XWPFDocument file = dos.createDoc(createShedules, fio);
 
 					resp.setContentType("application/msword");
 					BufferedOutputStream bos = new BufferedOutputStream(resp.getOutputStream());
@@ -54,6 +54,5 @@ public class ServletSchedule extends HttpServlet {
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
 		}
-
 	}
 }

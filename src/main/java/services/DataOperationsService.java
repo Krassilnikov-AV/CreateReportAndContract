@@ -19,7 +19,6 @@ public class DataOperationsService {
 	private CreateScheduleReport createScheduleReport = new CreateScheduleReport();
 	private ContractTeacher contractTeacher = new ContractTeacher();
 
-
 	private ConnectionManager connectionManager = ConnectionManagerPostgeImpl.getInstance();
 	//getJDBCConnect();
 	private Connection connection = connectionManager.getConnection();
@@ -35,17 +34,17 @@ public class DataOperationsService {
 		return sqd.insertExecuteBatchQuerySQL(connection, fileStream);
 	}
 
-	//	public Shedules viewDataDB() throws SQLException {
 	public ShedulesSearch viewDataDB() throws SQLException {
 		return sqd.view(connection);
 	}
 
-	public XWPFDocument createDoc(ShedulesSearch createShedules) throws SQLException, ParseException {
-		return createScheduleReport.createDoc(createShedules);
+	public XWPFDocument createDoc(ShedulesSearch createShedules, String fio) throws SQLException, ParseException {
+		return createScheduleReport.createDoc(createShedules, fio);
 	}
 
-	public void createDocTeacher() throws SQLException, ParseException {
-		contractTeacher.createDocTeacher();
+	public XWPFDocument createDocTeacher() throws SQLException, ParseException {
+		return contractTeacher.createDocTeacher();
+
 	}
 
 	public ShedulesSearch searcheShedule(String searh, String dateMonth) throws SQLException, ParseException {

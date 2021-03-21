@@ -15,9 +15,10 @@
     <input type="file" name="file" size="50"/>
   </p>
   <input type="hidden" name="ws_code" id="shopCode" value="shopCode" style="display:none"/>
-  <input type="text" name="token" id="123414" value="123414" style="display:none">
-  <!--<input type="hidden" name="ws_code" value="shopCode" style="display:none">-->
+  <%--<input type="text" name="token" id="123414" value="123414" style="display:none">--%>
+
   <input type="submit" value="Сохранить данные"/>
+
 </form>
 
 <form action="servletOperation" method="POST">
@@ -31,8 +32,6 @@
   <input type="hidden" name="operation" id="view" value="view" style="display:none"/>
   <input type="submit" value="Просмотр" name="view"/>
 </form>
-
-
 
 <table>
 

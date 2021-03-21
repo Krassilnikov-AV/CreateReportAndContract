@@ -1,8 +1,5 @@
 package servlets.servletUpload;
 
-/**
- * Класс Operation
- */
 public enum Operation {
 	DELETE("delete"), INSERT("insert"), VIEW("view"),
 	CREATE_SHEDULE("create"), CREATE_CONTRACT("create_contract"),
@@ -14,11 +11,6 @@ public enum Operation {
 		this.title = title;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public String getTitle() {
 		return title;
 	}

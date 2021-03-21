@@ -151,9 +151,8 @@ public class ReadExcelDataImpl implements ReadData {
 					}
 				}
 			}
-			Iterator it = columndataInt.iterator();
-			while (it.hasNext()) {
-				System.out.println(it.next());
+			for (Integer integer : columndataInt) {
+				System.out.println(integer);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -224,9 +223,7 @@ public class ReadExcelDataImpl implements ReadData {
 							case period:
 								periodInt = (int) cell.getNumericCellValue();
 								break;
-
 						}
-
 					}
 				}
 				if (codeStr != null &&
@@ -255,15 +252,43 @@ public class ReadExcelDataImpl implements ReadData {
 			for (SheduleInsert sheduleInsert : shedulesInsert) {
 				System.out.println(sheduleInsert.toString());
 			}
-
-
-			/*			просмотр прочитанного			 */
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return shedulesInsert;
+	}
 
+	@Override
+	public List<GroupInsert> getGroupInsert() {
+
+		List<GroupInsert> groupsInsert = new ArrayList<>();
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			Iterator<Row> rowIterator = sheet.iterator();
+			columndataStr = new LinkedList<>();
+			while (rowIterator.hasNext()) {
+				Row row = rowIterator.next();
+				Iterator<Cell> cellIterator = row.cellIterator();
+				String codeStr = null;
+
+				while (cellIterator.hasNext()) {
+					Cell cell = cellIterator.next();
+					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
+						if (cell.getColumnIndex() == codeGroup) {
+							codeStr = cell.getStringCellValue();
+						}
+					}
+				}
+				if (codeStr != null) {
+					GroupInsert groupInsert = new GroupInsert(codeStr);
+					groupsInsert.add(groupInsert);
+				}
+			}
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return groupsInsert;
 	}
 }

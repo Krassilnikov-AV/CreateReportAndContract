@@ -36,92 +36,42 @@ public class SheduleInsert {
 		this.period = period;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public String getGroup() {
 		return group;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public String getPro() {
 		return pro;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public java.sql.Date getDateStart() {
 		return dateStart;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public java.sql.Date getTimeStart() {
 		return timeStart;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public java.sql.Date getDateFinish() {
 		return dateFinish;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public java.sql.Date getTimeFinish() {
 		return timeFinish;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public String getAudit() {
 		return audit;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public String getType() {
 		return type;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public String getTech() {
 		return tech;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public int getPeriod() {
 		return period;
 	}

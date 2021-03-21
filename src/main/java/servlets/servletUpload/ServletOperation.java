@@ -25,8 +25,6 @@ public class ServletOperation extends HttpServlet {
 				case DELETE:
 					dos.deleteDB();
 					break;
-
-
 				case VIEW:
 					ShedulesSearch shedules=dos.viewDataDB();
 					req.setAttribute("shedules", shedules.getShedules());

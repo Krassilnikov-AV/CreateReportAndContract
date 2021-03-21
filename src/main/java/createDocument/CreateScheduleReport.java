@@ -34,45 +34,21 @@ import model.*;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
-import query.SQLQueryDataImpl;
 
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.text.*;
 import java.util.*;
 
-/**
- * Класс WriteWordRaspisanie
- */
 public class CreateScheduleReport implements CreateDocument {
 
-	//	private XWPFTable tab;
-//	private final OutputStream outputStream;
-
-	String pathFile;
-
-	public CreateScheduleReport() {
-	}
-
-//	public CreateScheduleReport(OutputStream outputStream) {
-//		this.outputStream = outputStream;
-//	}
-// 1. прописать путь в котором будет лежать файл
-// 2. вписать строу поиска
-// 3. вписать дату поиска
-
 	@Override
-	public XWPFDocument createDoc(ShedulesSearch createShedules) throws SQLException, ParseException {
-		LinkedList<String> listDateStart;
-		String search = "JS"; // слово для поиска
-		String dateMonth = "";
-		String fio = "О.С. Ипатов";
+	public XWPFDocument createDoc(ShedulesSearch createShedules, String fio) throws SQLException, ParseException {
 
-		SQLQueryDataImpl sqlQueryDataImpl = new SQLQueryDataImpl();
+//		SQLQueryDataImpl sqlQueryDataImpl = new SQLQueryDataImpl();
 
 		// создаем  документа docx, к которому будем прикручивать наполнение (колонтитулы, текст)
 		XWPFDocument document = new XWPFDocument();
-//			CTSectPr ctSectPr = document.getDocument().getBody().addNewSectPr();
 
 		CTDocument1 doc = document.getDocument();
 		CTBody body = doc.getBody();
@@ -89,25 +65,28 @@ public class CreateScheduleReport implements CreateDocument {
 		pageSize.setH(BigInteger.valueOf(12240));     //
 		pageSize.setOrient(STPageOrientation.LANDSCAPE);
 // получаем экземпляр XWPFHeaderFooterPolicy для работы с колонтитулами
+
 		XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(document, ctSectPr);
 
 		// устанавливаем сформированный верхний колонтитул в модель документа Word
 		CTP ctpHeaderFIO = createHeaderModel("__________" + fio);
 		XWPFParagraph headerParagraphFIO = new XWPFParagraph(ctpHeaderFIO, document);
 		headerParagraphFIO.setAlignment(ParagraphAlignment.RIGHT);
+//
 		headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT,
 			new XWPFParagraph[]{headerParagraphFIO});
 
 		// создаем верхний колонтитул Word файла
-		CTP ctpHeaderStatement = createHeaderModel("УТВЕРЖДАЮ");
+//		CTP ctpHeaderStatement = createHeaderModel("Ипатов");
+//
+//		ctpHeaderStatement.addNewR().addNewT().setStringValue("_________ ");
+//		XWPFParagraph headerParagraphStatement = new XWPFParagraph(ctpHeaderStatement, document);
+//		headerParagraphStatement.setAlignment(ParagraphAlignment.RIGHT);
+//		headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT,
+//			new XWPFParagraph[]{headerParagraphStatement});
+//		setFooter(document, fio);
 
-		ctpHeaderStatement.addNewR().addNewT().setStringValue("_________О.С.Ипатов");
-		XWPFParagraph headerParagraphStatement = new XWPFParagraph(ctpHeaderStatement, document);
-		headerParagraphStatement.setAlignment(ParagraphAlignment.RIGHT);
-		headerFooterPolicy.createHeader(XWPFHeaderFooterPolicy.DEFAULT,
-			new XWPFParagraph[]{headerParagraphStatement});
-
-		// создаем нижний колонтитул docx файла
+	/*------------------создание нижнего колонтитула-----------------------*/
 		CTP ctpFooterModel = createFooterModel("Просто нижний колонтитул");
 		// устанавливаем сформированый нижний
 		// колонтитул в модель документа Word
@@ -125,7 +104,7 @@ public class CreateScheduleReport implements CreateDocument {
 		paragraphConfig.setColor("000000");  // цвет текста
 		paragraphConfig.setFontFamily("Times New Roman"); // задание текств
 		paragraphConfig.setText("федеральное государственное автономное образовательное учреждение высшего " +
-			"образования <<Санкт-Петербургский политехнический университет Петра Великого (ФГАОУ ВО<<СПбПУ>>)");
+			"образования «Санкт-Петербургский политехнический университет Петра Великого» (ФГАОУ ВО«СПбПУ»)");
 		paragraphConfig.addCarriageReturn();     // новый абзац
 		paragraphConfig.setText("Институт дополнительного образования");
 		paragraphConfig.addCarriageReturn();     // новый абзац
@@ -152,17 +131,17 @@ public class CreateScheduleReport implements CreateDocument {
 		 * необходимо получить первый элемент пропарсить и получить
 		 * название месяца для заголовка расписания
 		 * */
-		String  resMonth= createShedules.getShedules().get(0).getDateStart();
-//				String resultMonth = String.valueOf(shedulesSearch.getShedules().get(0));
+		String resMonth = createShedules.getShedules().get(0).getDateStart();
 
 		DateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-//		Date date1 = date.parse("2020.06.01");
+
 		Date date1 = date.parse(resMonth);
 
 		String dateStr = new SimpleDateFormat("MMMM yyyy").format(date1);
 
 //			XWPFRun paragraphMonth = bodyParagraph.createRun();
 		paragraphProg.addCarriageReturn();     // новый абзац
+		paragraphProg.setText(fio);
 		paragraphProg.setText(dateStr);
 		paragraphProg.addCarriageReturn();     // новый абзац
 		paragraphProg.setText("____________________________________________________________________________");
@@ -230,6 +209,22 @@ public class CreateScheduleReport implements CreateDocument {
 
 		cttFooter.setStringValue(footerContent);
 		return ctpFooterModel;
+	}
+
+	public static void setFooter(XWPFDocument document, String footerText) {
+		CTP ctpFooter = CTP.Factory.newInstance();
+		ctpFooter.addNewR().addNewT();
+
+		XWPFParagraph footerParagraph = new XWPFParagraph(ctpFooter, document);
+		XWPFRun footerRun = footerParagraph.createRun();
+		footerRun.setFontSize(12);
+		footerRun.setText(footerText);
+		XWPFParagraph[] parsFooter = new XWPFParagraph[1];
+		parsFooter[0] = footerParagraph;
+
+		CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
+		XWPFHeaderFooterPolicy policy = new XWPFHeaderFooterPolicy(document, sectPr);
+		policy.createFooter(XWPFHeaderFooterPolicy.DEFAULT, parsFooter);
 	}
 
 	//CTPageSz

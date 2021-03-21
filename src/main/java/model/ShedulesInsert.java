@@ -17,11 +17,7 @@ public class ShedulesInsert {
 		this.shedules = shedules;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
+
 	public List<SheduleInsert> getShedules() {
 		return shedules;
 	}

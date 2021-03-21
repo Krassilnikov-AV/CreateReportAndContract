@@ -1,14 +1,11 @@
 package readDoc;
 
-import model.SheduleInsert;
+import model.*;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.util.*;
 
-/**
- * Класс ReadData
- */
 public interface ReadData {
 	public LinkedList<Date> getDate(int columnIndex);
 
@@ -17,4 +14,5 @@ public interface ReadData {
 	public List<Integer> getDataInteger(int columnIndex);
 
 	List<SheduleInsert> getShedulesSearch();
+	public List<GroupInsert> getGroupInsert();
 }

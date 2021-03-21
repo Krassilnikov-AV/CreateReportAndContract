@@ -15,15 +15,16 @@
 
 <h2>Создание отчёта расписания занятий</h2>
 
-<p>Должность: <input type="text" name="post" size="30"></p>
-<p>Ф.И.О.: <input type="text" name="fioPost" size="57"></p>
 <form action="servletSchedule" method="POST">
   <table width="400" border="0" cellpadding="3" cellspacing="0">
     <col width="100" valign="top">
     <col width="250" valign="top">
   </table>
   <tbody>
-
+  <form action="servletSchedule" method="POST">
+    <p>Должность: <input type="text" name="post" size="30"></p>
+    <p>Ф.И.О.: <input type="text" name="fioPost" size="57"></p>
+  </form>
   <form action="servletSchedule" method="POST">
 
     <td><p>Наименование программы обучения по ключевому слову:</p>

@@ -43,12 +43,6 @@ public class SQLQueryDataImpl implements SQLQuery {
 	 * метод извлечения данных из БД (преполавателя, даты и времени начала занятий)
 	 * Данный метод позволит избежать внесения повторяющих значений в БД
 	 */
-//	public void gettingLearnTime() throws IOException, SQLException {
-//		try (Connection conn = con.getPostConnection()) {
-//			String getLearnTime = "SELECT teacher, datestart, timestart FROM schedule";
-//
-//		}
-//	}
 
 
 //	@Override
@@ -102,6 +96,35 @@ public class SQLQueryDataImpl implements SQLQuery {
 	 * SELECT name FROM table_listnames WHERE name = 'Rupert'
 	 * ) LIMIT 1;
 	 */
+
+	@Override
+	public boolean insertGroupData(Connection connection, InputStream fileStream) throws IOException, SQLException {
+		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
+		String insertGroup="INSERT INTO group(number_group) VALUES(?)";
+		try(PreparedStatement stm = connection.prepareStatement(insertGroup)) {
+			List<GroupInsert> groupsInsert = read.getGroupInsert();
+
+			long start = System.currentTimeMillis();
+			for (GroupInsert groupInsert : groupsInsert) {
+
+				stm.setString(2, groupInsert.getNumber());
+
+				stm.addBatch();
+			}
+			long end = System.currentTimeMillis();
+			System.out.println("Вставлено: " + groupsInsert.size() + " строк");
+			System.out.println("суммарное время вставки: " + (end - start) + " ms");
+			int[] operationResult = stm.executeBatch();
+			if (operationResult.length > 0) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("Данные не занесены, ошибка при выполнении....!!!");
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	@Override
 	public boolean insertExecuteBatchQuerySQL(Connection connection, InputStream fileStream) throws IOException,
 		SQLException {
@@ -339,6 +362,8 @@ public class SQLQueryDataImpl implements SQLQuery {
 			return new ShedulesSearch(shedules);
 		}
 	}
+
+
 
 	@Override
 	public ShedulesSearch getSheduleBy(Connection connection, String[] idList) throws SQLException {
