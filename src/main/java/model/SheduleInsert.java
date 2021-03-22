@@ -1,12 +1,5 @@
-/*
- * Copyright (c) 2021 Tander, All Rights Reserved.
- */
-
 package model;
 
-/**
- * Класс SheduleInsert
- */
 public class SheduleInsert {
 	private final String group;
 	private final String pro;

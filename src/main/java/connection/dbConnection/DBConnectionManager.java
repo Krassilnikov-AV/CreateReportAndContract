@@ -1,12 +1,6 @@
-/*
- * Copyright (c) 2021 Tander, All Rights Reserved.
- */
 
 package connection.dbConnection;
 
-/**
- * Класс DBConnectionManager
- */
 //public class DBConnectionManager {
 //
 //	private Connection connection;

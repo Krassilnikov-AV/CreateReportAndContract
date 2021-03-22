@@ -1,26 +1,35 @@
-/*
- * Copyright (c) 2021 Tander, All Rights Reserved.
- */
-
 package createDocument;
 
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
+import java.io.*;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.text.ParseException;
 
 
 public class ContractTeacher implements CreateDocument {
-	private enum Border {LEFT, TOP, BOTTOM, RIGHT}
+	enum Border {LEFT, TOP, BOTTOM, RIGHT}
 
+	/*лОКАЛЬНО СОЗДАЁТСЯ*/
+//	public static void main(String[] args) throws SQLException, ParseException {
+//		ContractTeacher cct = new ContractTeacher();
+//		cct.createDocTeacher();
+//	}
 
 	@Override
-	public XWPFDocument createDocTeacher() throws SQLException, ParseException {
+	public void createDocTeacher(
+		String strDate, String FIOpost
+		, String NUMContract, String POST, String FIOTeacher
+		, String dataStartContract, String dataEndContract, String PaymentAmount
+		, String adresPlace, String contractPrice, String contractPeriod
+		, String dateBirth, String placeBirth, String registrationAddress
+		, String education, String detailsDiploma, String serialDiploma
+		, String dateDiploma) throws SQLException, ParseException {
 
-//		try (OutputStream outputStream
-//				 = new FileOutputStream("D:\\REPOSITORIES-2\\ContractTeach.docx")) {
+		try (OutputStream outputStream
+				 = new FileOutputStream("D:\\REPOSITORIES-2\\ContractTeach.docx")) {
 			XWPFDocument document = new XWPFDocument();
 // настройка полей документа
 			CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
@@ -38,8 +47,6 @@ public class ContractTeacher implements CreateDocument {
 			при помощи текстового поля
 			для понимания процесса работы вставка пока будет продемонстрирована локально в методом  main
 			 */
-			String strDate = "25.12.2020";
-
 			XWPFParagraph stadtdate = document.createParagraph();
 
 			stadtdate.setAlignment(ParagraphAlignment.CENTER);     // выравнить по левому краю
@@ -57,18 +64,19 @@ public class ContractTeacher implements CreateDocument {
 			 * 1. FIO - должность и Ф.И.О. заказчика
 			 * 2. numContract - доверенность по которой осуществляется подпись заказчика*/
 			XWPFRun runFirst = getIndentationRun(document);
-			String FIO = "Хорошая фамилия";
-			String numContract = "юр-323/20-д от 29.12.2020";
+//			 = "Хорошая фамилия";
+//			 = " юр-323/20-д от 29.12.2020";
+//			="";
 			runFirst.setText("Федеральное государственное автономное образовательное учреждение" +
 				" высшего образования «Санкт-Петербургский политехнический университет Петра Великого»" +
-				" (ФГАОУ ВО «СПбПУ), именуемое в дальнейшем «Заказчик», в лице " + FIO + ", действующей " +
-				"на основании Доверенности №" + numContract + "с одной стороны и гражданина Российской Федерации:");
+				" (ФГАОУ ВО «СПбПУ), именуемое в дальнейшем «Заказчик», в лице " + POST + FIOpost + ", действующей " +
+				"на основании Доверенности №" + NUMContract + "с одной стороны и гражданина Российской Федерации:");
 
 //			XWPFTable tableFIO = document.createTable(2, 1);
 //			tableFIO.setColBandSize();
 // вставка в таблицу ФИО
 // доработать таблицу, по аналогии следующие
-			String fio = "Отличная фамилия";
+//			 = "Отличная фамилия - фио преподавателя из БД";
 
 
 			XWPFTable tableName = document.createTable(2, 1);
@@ -80,7 +88,7 @@ public class ContractTeacher implements CreateDocument {
 			paragraph.setAlignment(ParagraphAlignment.CENTER);
 			paragraph.setSpacingAfter(0);
 			setRun(paragraph.createRun(), "Times New Roman", 12,
-				"2b5079", fio, false, true, false);
+				"2b5079", FIOTeacher, false, true, false);
 			rowOne.getCell(0).removeParagraph(0);
 /*
 вывод границы необходимой для видимости
@@ -120,15 +128,15 @@ public class ContractTeacher implements CreateDocument {
 			 * 2. наименование программы прописным, полужирным
 			 *
 			 */
+			/*сделать с БД*/
 			String program = "дополнительной общеобразовательной общеразвивающей программе:";
 			XWPFRun subject1 = getItems(document);
 			subject1.setText("1.1. Исполнитель обязуется по заданию Заказчика оказать" +
 				" образовательные услуги по " + program);
-
 /*
 получение таблицы для вставки наименования прпограммы
 */
-			String nameProgram = "«наименование»";
+			String nameProgram = "«наименование»";     //!!!!!!!!! из БД
 			XWPFTable tableProgram = document.createTable(2, 1);
 			getWidth(tableProgram, 9150);
 
@@ -161,41 +169,43 @@ public class ContractTeacher implements CreateDocument {
 			 * 1.
 			 */
 			XWPFParagraph subject2 = document.createParagraph();
-			String dataSt = null;  // дата начала договора
-			String dataEnd = null; // дата окончания договора
+
+//			 = "";  // дата начала договора
+//			 = ""; // дата окончания договора
+			/*из БД*/
+			String ScopeServices = "";   // из БД
+
 			subject2.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
 			XWPFRun subject2Run = subject2.createRun();
 			subject2Run.setFontFamily("Times New Roman");
 			subject2Run.setFontSize(12);
 			subject2Run.addBreak();
-			subject2Run.setText("1.2. Исполнитель оказывает услуги с 00.00.2021" +
-				dataSt + "по" + dataEnd + ". " +
-				"Общий объем оказываемых услуг составляет 00 академических часов. Оплата услуг " +
-				"Исполнителю производится в размере 00 (                 ) рублей в час. ");
+
+			subject2Run.setText("1.2. Исполнитель оказывает услуги с " +
+				dataStartContract + "по" + dataEndContract + ". " +
+				"Общий объем оказываемых услуг составляет" + ScopeServices + "академических часов. Оплата услуг " +
+				"Исполнителю производится в размере " + PaymentAmount + " рублей в час. ");
 			subject2Run.addBreak();
 
 			XWPFRun TermPlace = methodRunTitle(document);
 			TermPlace.setText("2. Срок и место оказания услуг");
 
 			XWPFRun TermPlace1 = getItems(document);
-			String dSt = "01.09.2021";
-			String dEnd = "30.09.2021";
-			TermPlace1.setText("2.1. Период оказания услуг: с " + dSt + " по " + dEnd);
+
+			TermPlace1.setText("2.1. Период оказания услуг: с " + dataStartContract + " по " + dataEndContract);
 
 			XWPFRun termPlace2 = getItems(document);
-			String adresPlace = "ул. Обручевых, дом 1";
 			termPlace2.setText("2.2. Место оказания услуг: г. Санкт- Петербург, " + adresPlace);
 			termPlace2.addBreak();
 
 			/*цена договора*/
-			XWPFRun contractPrice = methodRunTitle(document);
-			contractPrice.setText("3. Цена договора и порядок расчётов");
+			XWPFRun contractPriceСhapter = methodRunTitle(document);
+			contractPriceСhapter.setText("3. Цена договора и порядок расчётов");
 
 			XWPFRun ContractPrice1 = getItems(document);
-			String priceNum = "10000";
-			String price = "Десять тысяч";
-			ContractPrice1.setText("3.1. Общая цена Договора составляет " + priceNum + "(" + price + ")" +
-				" рублей 00 копеек, в том числе НДФЛ.");
+//			= "10000";
+
+			ContractPrice1.setText("3.1. Общая цена Договора составляет " + contractPrice + " рублей 00 копеек, в том числе НДФЛ.");
 
 			XWPFRun contractPrice2 = getItems(document);
 			contractPrice2.setText("3.2. Оплата оказанных Исполнителем услуг производится Заказчиком поэтапно " +
@@ -302,7 +312,8 @@ public class ContractTeacher implements CreateDocument {
 			basisValidityPeriod.addBreak();
 			basisValidityPeriod.setText("7. Срок действия, основания и порядок изменения и расторжения Договора");
 			XWPFRun basisValidityPeriod71 = getItems(document);
-			basisValidityPeriod71.setText("7.1. Договор вступает в силу со дня его подписания Сторонами и действует до 00.00.2021.");
+			basisValidityPeriod71.setText("7.1. Договор вступает в силу со дня его подписания Сторонами и действует " +
+				"до " + contractPeriod + ".");
 			XWPFRun basisValidityPeriod72 = getItems(document);
 			basisValidityPeriod72.setText("7.2. Любые изменения и дополнения к Договору действительны при условии, если они совершены" +
 				" в письменной форме и подписаны уполномоченными представителями Сторон.\n");
@@ -356,26 +367,25 @@ public class ContractTeacher implements CreateDocument {
 			XWPFRun finalProvisions94 = getItems(document);
 			finalProvisions94.setText("9.4. Договор составлен в 3 (трех) экземплярах, имеющих равную юридическую силу.");
 
-			/*
-
-			 */
+			/*10 Раздел___ */
 			XWPFRun addressBankdetails = methodRunTitle(document);
 			addressBankdetails.setText("10. Адреса и реквизиты сторон");
-			createTableDetalsCustomerExecutor(document);
+			createTableDetalsCustomerExecutor(document, FIOTeacher, dateBirth
+				, placeBirth, registrationAddress, education, detailsDiploma
+				, serialDiploma, dateDiploma);
 			XWPFParagraph xwpfParagraph = document.createParagraph();
 			XWPFRun runEnd = xwpfParagraph.createRun();
 			runEnd.addBreak(BreakType.PAGE);
 
 			creteActReceptionDelivery(document);
 			/*создание документа*/
-//			document.write(outputStream);
+			document.write(outputStream);
 			System.out.println("Файл успешно создан!");
-			return document;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			System.out.println("Файл к сожалению не создан");
-//		}
-
+//			return document;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Файл к сожалению не создан");
+		}
 	}
 
 	/*метод для получения акта №1*/
@@ -554,10 +564,7 @@ public class ContractTeacher implements CreateDocument {
 		run25.addBreak();
 		run25.setText("Телефон: 7030202 (доб.536)");
 		run25.addBreak(BreakType.PAGE);
-		/*
-		 *
 
-		 * */
 	}
 
 	private void deleteParagraph(XWPFDocument document, XWPFParagraph par) {
@@ -568,7 +575,10 @@ public class ContractTeacher implements CreateDocument {
 	/*
 	 * получение прозрачных границ таблицы с заполнением
 	 * */
-	private void createTableDetalsCustomerExecutor(XWPFDocument document) {
+	private void createTableDetalsCustomerExecutor(XWPFDocument document
+		, String FIOTeacher, String dateBirth, String placeBirth
+		, String registrationAddress, String education, String detailsDiploma
+		, String serialDiploma, String dateDiploma) {
 		XWPFTable tabBank = document.createTable(6, 2);
 // доработать: равномерные колонки по ширине
 		getWidth(tabBank, 9700);
@@ -638,28 +648,26 @@ public class ContractTeacher implements CreateDocument {
 			12, "000000", "Факс: (812) 552-60-80 ", false, false, true);
 		setRun(parBankDet.createRun(), "Times New Roman",
 			12, "000000", "E-mail: office.ido@spbstu.ru ", false, false, false);
-
+		/*Данные преподавателя*/
 		XWPFTableRow rowExecutorDetal = tabBank.getRow(1);
 		XWPFParagraph parExecutorDet = rowExecutorDetal.getCell(1).addParagraph();
 		rowExecutorDetal.getCell(1).removeParagraph(0);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Ф.И.О.", false, true, true);
+			12, "2b5079", "Ф.И.О. " + FIOTeacher, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Дата рождения", false, true, true);
+			12, "2b5079", "Дата рождения " + dateBirth, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Место рождения:", false, true, true);
+			12, "2b5079", "Место рождения: " + placeBirth, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Адрес регистрации:", false, true, true);
+			12, "2b5079", "Адрес регистрации: " + registrationAddress, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Образование: высшее", false, true, true);
+			12, "2b5079", "Образование: высшее" + education, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Образование: высшее", false, true, true);
-		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Данные диплома вуза:", false, true, true);
+			12, "2b5079", "Данные диплома вуза: " + detailsDiploma, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
 			12, "2b5079", " ", false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "серия  №  от", false, true, true);
+			12, "2b5079", "серия  № " + serialDiploma + " от " + dateDiploma, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
 			12, "2b5079", " ", false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
@@ -742,9 +750,6 @@ public class ContractTeacher implements CreateDocument {
 				"(Подпись)", false, false, false);
 	}
 
-	/*
-	 *
-	 */
 	private void getMergeCell(XWPFTable tab, int numRow1, int numCell1, int numRow2, int numCell2) {
 // First Row
 		CTHMerge hMerge = CTHMerge.Factory.newInstance();

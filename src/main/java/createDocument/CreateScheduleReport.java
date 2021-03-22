@@ -1,34 +1,4 @@
-/*
- * Copyright (c) 2021 Tander, All Rights Reserved.
- */
-
 package createDocument;
-/**
- * XWPFTable
- * Это класс в пакете org.apache.poi.xwpf.usermodel и используется для добавления табличных данных в текстовый документ.
- * * Методы класса
- * Sr.No.	Метод и описание
- * addNewCol () - Добавляет новый столбец для каждой строки в этой таблице.
- * <p>
- * addRow (строка XWPFTableRow, int pos) - Добавляет новую строку в таблицу в позиции поз.
- * <p>
- * createRow () -  Создает новый объект XWPFTableRow с количеством ячеек,
- * равным количеству столбцов, определенных в данный момент.
- * <p>
- * setWidth (int width) -  Устанавливает ширину столбца.
- * <p>
- * addNewCol () - Добавляет новый столбец для каждой строки в этой таблице.
- * <p>
- * addRow (строка XWPFTableRow, int pos) - Добавляет новую строку в таблицу в позиции поз.
- * <p>
- * createRow () - Создает новый объект XWPFTableRow с количеством ячеек,
- * равным количеству столбцов, определенных в данный момент.
- * <p>
- * setWidth (int width) - Устанавливает ширину столбца.
- * <p>
- * Остальные методы этого класса см. В полном документе API по адресу: Документация по POI API.
- * (https://poi.apache.org/apidocs/index.html?org/apache/poi/openxml4j/opc/internal/package-summary.html.)
- */
 
 import model.*;
 import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
@@ -93,8 +63,7 @@ public class CreateScheduleReport implements CreateDocument {
 		XWPFParagraph footerParagraph = new XWPFParagraph(ctpFooterModel, document);
 		headerFooterPolicy.createFooter(XWPFHeaderFooterPolicy.DEFAULT, new XWPFParagraph[]{footerParagraph});
 
-		// создаем обычный параграф, который будет расположен слева,
-		// будет синим курсивом со шрифтом 11 размера
+
 		XWPFParagraph bodyParagraph = document.createParagraph();
 		bodyParagraph.setAlignment(ParagraphAlignment.CENTER);
 		XWPFRun paragraphConfig = bodyParagraph.createRun();
@@ -119,18 +88,8 @@ public class CreateScheduleReport implements CreateDocument {
 		XWPFRun paragraphProg = bodyParagraph.createRun();
 		paragraphProg.setColor("000000");
 
-//			listTimeStart = (LinkedList<String>) sqlQueryDataImpl.searchToTimeStart(search, dateMonth);
-//			listAuditorium = sqlQueryDataImpl.searchToAuditorium(search, dateMonth);
-//			listTeach = sqlQueryDataImpl.searchToTeacher(search, dateMonth);
-
-
 		paragraphProg.setText("по программе профессиональной переподготовки ___________________");
 
-		/*
-		 * Доработать_название месяца, окончание на -ь вместо -я!
-		 * необходимо получить первый элемент пропарсить и получить
-		 * название месяца для заголовка расписания
-		 * */
 		String resMonth = createShedules.getShedules().get(0).getDateStart();
 
 		DateFormat date = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -148,16 +107,11 @@ public class CreateScheduleReport implements CreateDocument {
 
 		int listTableSize = createShedules.getShedules().size();  // определяет количество строкразмер
 		// вставляемых значений из
-		// списка и заголовка таблицы
-//			int listSelectData = listDateStart.size();  // кол-во строк вставляемых в таблицу с БД
 
 		XWPFTable table = document.createTable(listTableSize + 2, 6);
-		getWidth(table, 13500);         // установка ширины таблицы
-//			table.setWidth(100);
+		getWidth(table, 13500);
 
-		/*
-		 *метод для задания ширтны таблицы
-		 */
+		/*		 *метод для задания ширтны таблицы	 */
 
 		table.getRow(0).getCell(0).setText("Группа");
 		table.getRow(0).getCell(1).setText("Образовательная программа");

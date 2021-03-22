@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.Properties;
 
 
+
 public class ConnectionManagerPostgeImpl implements ConnectionManager {
 	private static ConnectionManager connectionManager;
 	private Properties properties = new Properties();

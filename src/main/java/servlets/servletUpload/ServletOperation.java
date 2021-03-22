@@ -1,4 +1,3 @@
-
 package servlets.servletUpload;
 
 import model.ShedulesSearch;
@@ -10,9 +9,6 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
-/**
- * Класс ServletOperation
- */
 @WebServlet(name = "ServletOperation", urlPatterns = {"/servletOperation"})
 public class ServletOperation extends HttpServlet {
 

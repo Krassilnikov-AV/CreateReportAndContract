@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%--<% request.setCharacterEncoding("UTF-8"); %>--%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,8 +75,8 @@
 
     <input type="button" value="Выделить все" onclick="check(this.form.data_shedule, 1)">
     <input type="button" value="Снять выделение" onclick="check(this.form.data_shedule, 0)">
-    <tr>
-    </tr>
+    <%--<tr>--%>
+    <%--</tr>--%>
 
     <input type="hidden" name="operation" id="create" value="create" style="display:none"/>
     <td><p><input type="submit" value="СОЗДАТЬ ОТЧЁТ" name="create"></p></td>

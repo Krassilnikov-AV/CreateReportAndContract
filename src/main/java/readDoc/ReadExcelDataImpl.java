@@ -7,9 +7,7 @@ import org.apache.poi.xssf.usermodel.*;
 import java.io.*;
 import java.util.*;
 
-/**
- * Класс ExReadExcelData
- */
+
 public class ReadExcelDataImpl implements ReadData {
 
 	final static int code = 0;    // код (строка)
@@ -43,18 +41,7 @@ public class ReadExcelDataImpl implements ReadData {
 	private List<String> columndataStr;
 	private List<Integer> columndataInt;
 
-	/**
-	 * метод для построения таблицы из прчитанных данных и просмотра данных
-	 * Вопросы:
-	 * 1. формат даты считывается как ссылка
-	 */
-
-	/**
-	 * метод должен получить определённые номера колонок, вызвать метод, который обработает тип ячейки
-	 * и вернуть считанные данные
-	 */
-
-	public ReadExcelDataImpl(InputStream ios) {
+		public ReadExcelDataImpl(InputStream ios) {
 		this.ios = ios;
 	}
 
@@ -83,12 +70,6 @@ public class ReadExcelDataImpl implements ReadData {
 			}
 
 		}
-//			ios.close();
-		/*			просмотр прочитанного			 */
-//			Iterator it = columndataDate.iterator();
-//			while (it.hasNext()) {
-//				System.out.println(it.next());
-//			}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -285,7 +266,6 @@ public class ReadExcelDataImpl implements ReadData {
 					groupsInsert.add(groupInsert);
 				}
 			}
-
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

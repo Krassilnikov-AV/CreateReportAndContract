@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2021 Tander, All Rights Reserved.
- */
-
 package services;
 
 import connection.dbConnection.*;
@@ -42,9 +38,21 @@ public class DataOperationsService {
 		return createScheduleReport.createDoc(createShedules, fio);
 	}
 
-	public XWPFDocument createDocTeacher() throws SQLException, ParseException {
-		return contractTeacher.createDocTeacher();
-
+	public void createDocTeacher(
+		String strDate, String FIOpost
+		, String NUMContract, String POST, String FIOTeacher
+		, String dataStartContract, String dataEndContract, String PaymentAmount
+		, String adresPlace, String contractPrice, String contractPeriod
+		, String dateBirth, String placeBirth, String registrationAddress
+		, String education, String detailsDiploma, String serialDiploma
+		, String dateDiploma) throws SQLException, ParseException {
+		contractTeacher.createDocTeacher(strDate, FIOpost
+			, NUMContract, POST, FIOTeacher, dataStartContract,
+			dataEndContract, PaymentAmount, adresPlace, contractPrice,
+			contractPeriod,
+			dateBirth, placeBirth, registrationAddress
+			, education, detailsDiploma, serialDiploma
+			, dateDiploma);
 	}
 
 	public ShedulesSearch searcheShedule(String searh, String dateMonth) throws SQLException, ParseException {

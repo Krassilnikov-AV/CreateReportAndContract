@@ -1,12 +1,6 @@
-/*
- * Copyright (c) 2021 Tander, All Rights Reserved.
- */
-
 package model;
 
-/**
- * Класс SheduleSearch
- */
+
 public class SheduleSearch {
 	private String id;
 	private final String group;

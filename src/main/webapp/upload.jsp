@@ -9,7 +9,7 @@
 </head>
 <br>
 <h1>Загрузка данных</h1>
-<form action="servletUpload" method="post"
+<p action="servletUpload" method="post"
       enctype="multipart/form-data">
   <p>
     <input type="file" name="file" size="50"/>
@@ -17,7 +17,7 @@
   <input type="hidden" name="ws_code" id="shopCode" value="shopCode" style="display:none"/>
   <%--<input type="text" name="token" id="123414" value="123414" style="display:none">--%>
 
-  <input type="submit" value="Сохранить данные"/>
+  <p></p><input type="submit" value="Сохранить данные"/></p>
 
 </form>
 

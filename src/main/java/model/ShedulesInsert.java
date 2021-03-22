@@ -6,9 +6,6 @@ package model;
 
 import java.util.List;
 
-/**
- * Класс ShedulesInsert
- */
 public class ShedulesInsert {
 
 	private final List<SheduleInsert> shedules;
