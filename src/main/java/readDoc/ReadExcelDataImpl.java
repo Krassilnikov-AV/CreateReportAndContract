@@ -254,9 +254,105 @@ public class ReadExcelDataImpl implements ReadData {
 		return teachersInsert;
 	}
 
-	public List<SheduleTable> getTable() {
-		List<SheduleTable> sheduleTables = new ArrayList<>();
 
+	@Override
+	public List<SheduleTable> getSheduleTable() {
+		List<SheduleTable> shedulesTable = new ArrayList<>();
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			Iterator<Row> rowIterator = sheet.iterator();
+			columndataStr = new LinkedList<>();
+
+			while (rowIterator.hasNext()) {
+				Row row = rowIterator.next();
+				Iterator<Cell> cellIterator = row.cellIterator();
+				String codeStr = null;
+				String groupStr = null;
+				String disciplineStr = null;
+				java.sql.Date dateStartDate = null;
+				java.sql.Date timeStartDate = null;
+				java.sql.Date dateFinish = null;
+				java.sql.Date timeFinish = null;
+				String audit = null;
+				String type = null;
+				String tech = null;
+				int periodInt = 0;
+				while (cellIterator.hasNext()) {
+					Cell cell = cellIterator.next();
+					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
+						switch (cell.getColumnIndex()) {
+							case codeGroup:
+								codeStr = cell.getStringCellValue();
+								break;
+							case group:
+								groupStr = cell.getStringCellValue();
+							case discipline:
+								disciplineStr = cell.getStringCellValue();
+								break;
+							case dateStart:
+								Date date = cell.getDateCellValue();
+								dateStartDate = new java.sql.Date(date.getTime());
+								break;
+							case timeStart:
+								Date timeStart = cell.getDateCellValue();
+								timeStartDate = new java.sql.Date(timeStart.getTime());
+								break;
+							case dateEnd:
+								Date dateFinishD = cell.getDateCellValue();
+								dateFinish = new java.sql.Date(dateFinishD.getTime());
+								break;
+							case timeEnd:
+								if (cell.getDateCellValue() != null) {
+									Date timeEndDate = cell.getDateCellValue();
+									timeFinish = new java.sql.Date(timeEndDate.getTime());
+								}
+								break;
+							case clasRum:
+								audit = cell.getStringCellValue();
+								break;
+							case typeLearn:
+								type = cell.getStringCellValue();
+								break;
+							case teacher:
+								tech = cell.getStringCellValue();
+								break;
+							case period:
+								periodInt = (int) cell.getNumericCellValue();
+								break;
+						}
+					}
+				}
+				if (codeStr != null && groupStr!=null &&
+					disciplineStr != null &&
+					dateStartDate != null &&
+					timeStartDate != null &&
+					dateFinish != null &&
+					timeFinish != null &&
+					audit != null &&
+					type != null &&
+					tech != null) {
+					SheduleTable sheduleTable = new sheduleTable(
+						codeStr, groupStr,
+						disciplineStr,
+						dateStartDate,
+						timeStartDate,
+						dateFinish,
+						timeFinish,
+						audit,
+						type,
+						tech, periodInt
+					);
+					shedulesTable.add(sheduleTable);
+				}
+			}
+			for (SheduleTable sheduleTable : shedulesTable) {
+				System.out.println(sheduleTable.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return shedulesTable;
 	}
 
 
