@@ -21,12 +21,14 @@ public class ContractTeacher implements CreateDocument {
 	@Override
 	public void createDocTeacher(
 		String strDate, String FIOpost
-		, String NUMContract, String POST, String FIOTeacher
-		, String dataStartContract, String dataEndContract, String PaymentAmount
-		, String adresPlace, String contractPrice, String contractPeriod
+		, String NUMContract, String POST, String FIOTeacher, String dataStartContract
+		, String dataEndContract, String academicHour , String PaymentAmount
+		, String adresPlace, String contractPrice
 		, String dateBirth, String placeBirth, String registrationAddress
 		, String education, String detailsDiploma, String serialDiploma
-		, String dateDiploma) throws SQLException, ParseException {
+		, String dateDiploma, String passportSerial, String passportNumber, String issuedWhomWhen
+		, String numberINN, String certificateInsurance, String nameBank
+		, String bikBank, String numberScore, String numberCard, String numberTel) throws SQLException, ParseException {
 
 		try (OutputStream outputStream
 				 = new FileOutputStream("D:\\REPOSITORIES-2\\ContractTeach.docx")) {
@@ -55,6 +57,9 @@ public class ContractTeacher implements CreateDocument {
 			stadtdateRun.setFontFamily("Times New Roman");
 			stadtdateRun.setFontSize(12);
 			stadtdateRun.setText("Санкт-Петербург");
+			stadtdateRun.addTab();
+			stadtdateRun.addTab();
+			stadtdateRun.addTab();
 			stadtdateRun.addTab();
 			stadtdateRun.addTab();
 			stadtdateRun.setText(strDate);
@@ -173,7 +178,7 @@ public class ContractTeacher implements CreateDocument {
 //			 = "";  // дата начала договора
 //			 = ""; // дата окончания договора
 			/*из БД*/
-			String ScopeServices = "";   // из БД
+//			 = "";   // из БД
 
 			subject2.setAlignment(ParagraphAlignment.LEFT);     // выравнить по левому краю
 			XWPFRun subject2Run = subject2.createRun();
@@ -183,7 +188,7 @@ public class ContractTeacher implements CreateDocument {
 
 			subject2Run.setText("1.2. Исполнитель оказывает услуги с " +
 				dataStartContract + "по" + dataEndContract + ". " +
-				"Общий объем оказываемых услуг составляет" + ScopeServices + "академических часов. Оплата услуг " +
+				"Общий объем оказываемых услуг составляет" + academicHour + "академических часов. Оплата услуг " +
 				"Исполнителю производится в размере " + PaymentAmount + " рублей в час. ");
 			subject2Run.addBreak();
 
@@ -313,7 +318,7 @@ public class ContractTeacher implements CreateDocument {
 			basisValidityPeriod.setText("7. Срок действия, основания и порядок изменения и расторжения Договора");
 			XWPFRun basisValidityPeriod71 = getItems(document);
 			basisValidityPeriod71.setText("7.1. Договор вступает в силу со дня его подписания Сторонами и действует " +
-				"до " + contractPeriod + ".");
+				"до " + dataEndContract + ".");
 			XWPFRun basisValidityPeriod72 = getItems(document);
 			basisValidityPeriod72.setText("7.2. Любые изменения и дополнения к Договору действительны при условии, если они совершены" +
 				" в письменной форме и подписаны уполномоченными представителями Сторон.\n");
@@ -370,9 +375,11 @@ public class ContractTeacher implements CreateDocument {
 			/*10 Раздел___ */
 			XWPFRun addressBankdetails = methodRunTitle(document);
 			addressBankdetails.setText("10. Адреса и реквизиты сторон");
-			createTableDetalsCustomerExecutor(document, FIOTeacher, dateBirth
+			createTableDetalsCustomerExecutor(document, POST, FIOTeacher, dateBirth
 				, placeBirth, registrationAddress, education, detailsDiploma
-				, serialDiploma, dateDiploma);
+				, serialDiploma, dateDiploma, passportSerial, passportNumber, issuedWhomWhen
+				, numberINN, certificateInsurance, nameBank
+				, bikBank, numberScore, numberCard, numberTel);
 			XWPFParagraph xwpfParagraph = document.createParagraph();
 			XWPFRun runEnd = xwpfParagraph.createRun();
 			runEnd.addBreak(BreakType.PAGE);
@@ -575,10 +582,13 @@ public class ContractTeacher implements CreateDocument {
 	/*
 	 * получение прозрачных границ таблицы с заполнением
 	 * */
-	private void createTableDetalsCustomerExecutor(XWPFDocument document
+	private void createTableDetalsCustomerExecutor(XWPFDocument document, String POST
 		, String FIOTeacher, String dateBirth, String placeBirth
 		, String registrationAddress, String education, String detailsDiploma
-		, String serialDiploma, String dateDiploma) {
+		, String serialDiploma, String dateDiploma
+		, String passportSerial, String passportNumber, String issuedWhomWhen
+		, String numberINN, String certificateInsurance, String nameBank
+		, String bikBank, String numberScore, String numberCard, String numberTel) {
 		XWPFTable tabBank = document.createTable(6, 2);
 // доработать: равномерные колонки по ширине
 		getWidth(tabBank, 9700);
@@ -661,50 +671,51 @@ public class ContractTeacher implements CreateDocument {
 		setRun(parExecutorDet.createRun(), "Times New Roman",
 			12, "2b5079", "Адрес регистрации: " + registrationAddress, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Образование: высшее" + education, false, true, true);
+			12, "2b5079", "Образование: " + education, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
 			12, "2b5079", "Данные диплома вуза: " + detailsDiploma, false, true, true);
-		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", " ", false, true, true);
+//		setRun(parExecutorDet.createRun(), "Times New Roman",
+//			12, "2b5079", " ", false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
 			12, "2b5079", "серия  № " + serialDiploma + " от " + dateDiploma, false, true, true);
+//		setRun(parExecutorDet.createRun(), "Times New Roman",
+//			12, "2b5079", " ", false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", " ", false, true, true);
+			12, "2b5079", "Паспорт серия " + passportSerial + " №" + passportNumber, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Паспорт серия  №", false, true, true);
+			12, "2b5079", "Выдан кем/когда " + issuedWhomWhen, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Выдан кем/когда", false, true, true);
+			12, "2b5079", "ИНН " + numberINN, false, true, true);
 		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "ИНН", false, true, true);
-		setRun(parExecutorDet.createRun(), "Times New Roman",
-			12, "2b5079", "Номер страхового свидетельства", false, true, false);
+			12, "2b5079", "Номер страхового свидетельства " + certificateInsurance
+			, false, true, false);
 
 		XWPFTableRow rowExecutorBank = tabBank.getRow(2);
 		XWPFParagraph parExecutorBank = rowExecutorBank.getCell(1).addParagraph();
 		rowExecutorBank.getCell(1).removeParagraph(0);
 		setRun(parExecutorBank.createRun(), "Times New Roman",
-			12, "2b5079", "Наименование банка", false, true, true);
+			12, "2b5079", "Наименование банка " + nameBank, false, true, true);
 		setRun(parExecutorBank.createRun(), "Times New Roman",
-			12, "2b5079", "БИК банка 044030790", false, true, true);
+			12, "2b5079", "БИК банка " + bikBank, false, true, true);
 		setRun(parExecutorBank.createRun(), "Times New Roman",
-			12, "2b5079", "№ счета 40817810090700087671", false, true, true);
+			12, "2b5079", "№ счета " + numberScore, false, true, true);
 		setRun(parExecutorBank.createRun(), "Times New Roman",
-			12, "2b5079", "№ карты МИР 2200330564638743963", false, true, true);
+			12, "2b5079", "№ карты " + numberCard, false, true, true);
 		setRun(parExecutorBank.createRun(), "Times New Roman",
-			12, "2b5079", "Тел.8921-942-0888", false, true, false);
+			12, "2b5079", "Тел. " + numberTel, false, true, false);
 
 		XWPFTableRow rowСustomer = tabBank.getRow(3);
 		XWPFParagraph parСustomer = rowСustomer.getCell(0).addParagraph();
 		setRun(parСustomer.createRun(), "Times New Roman",
 			12, "000000", "Заказчик", true, false, true);
 		setRun(parСustomer.createRun(), "Times New Roman",
-			12, "2b5079", "И.о. Директора Института дополнительного", false, true, true);
+			12, "2b5079", POST, false, true, true);
 		setRun(parСustomer.createRun(), "Times New Roman",
 			12, "2b5079", "образования", false, true, true);
 		setRun(parСustomer.createRun(), "Times New Roman",
 			8, "2b5079", "", false, true, true);
 		setRun(parСustomer.createRun(), "Times New Roman",
-			12, "2b5079", "___________________/А.С. Курзанова/", true, false, false);
+			12, "2b5079", "___________________//", true, false, false);
 
 		XWPFTableRow rowExecutor = tabBank.getRow(3);
 		XWPFParagraph parExecutor = rowExecutor.getCell(1).addParagraph();

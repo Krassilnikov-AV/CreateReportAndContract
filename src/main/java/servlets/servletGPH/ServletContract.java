@@ -26,10 +26,12 @@ public class ServletContract extends HttpServlet {
 		String FIOTeacher=req.getParameter("fioTeacher");
 		String dataStartContract =req.getParameter("dateStartContract");
 		String dataEndContract=req.getParameter("dateFinishContract");
+		String academicHour=req.getParameter("academicHour");
+
 		String PaymentAmount=req.getParameter("payment");
 			String adresPlace=req.getParameter("workAddress");
 		String contractPrice=req.getParameter("contractPrice");
-		String contractPeriod=req.getParameter("contractPeriod");
+//		String contractPeriod=req.getParameter("contractPeriod");
 		// раздел 10
 		String dateBirth=req.getParameter("dateBirth");
 		String placeBirth=req.getParameter("placeBirth");
@@ -39,26 +41,28 @@ public class ServletContract extends HttpServlet {
 		String serialDiploma=req.getParameter("serialDiploma");
 		String dateDiploma=req.getParameter("dateDiploma");
 
-//		String passport=req.getParameter("passport");
-//		String numberINN=req.getParameter("numberINN");
-//		String certificateInsurance=req.getParameter("certificateInsurance");
-//		String serviceСost=req.getParameter("serviceСost");
-//		String PlaceServiceProvision=req.getParameter("PlaceServiceProvision");
-//		String TotalContractPrice=req.getParameter("TotalContractPrice");
-//		String TotalCostServices=req.getParameter("TotalCostServices");
-//		String PlaceServiceProvision=req.getParameter("PlaceServiceProvision");
-//		String PlaceServiceProvision=req.getParameter("PlaceServiceProvision");
-//		String PlaceServiceProvision=req.getParameter("PlaceServiceProvision");
-//		String PlaceServiceProvision=req.getParameter("PlaceServiceProvision");
+		String passportSerial=req.getParameter("passportSerial");
+		String passportNumber=req.getParameter("passportNumber");
+		String issuedWhomWhen=req.getParameter("issuedWhomWhen");
+		String numberINN=req.getParameter("numberINN");
+		String certificateInsurance=req.getParameter("certificateInsurance");
+		String nameBank=req.getParameter("nameBank");
+		String bikBank=req.getParameter("bikBank");
+		String numberScore=req.getParameter("numberScore");
+		String numberCard=req.getParameter("numberCard");
+		String numberTel=req.getParameter("numberTel");
+
 //		try {
 		if (operationType == Operation.CREATE_CONTRACT) {
 			try {
 				dos.createDocTeacher(strDate, FIOpost
-					, NUMContract, POST, FIOTeacher, dataStartContract
-					, dataEndContract, PaymentAmount, adresPlace, contractPrice
-					, contractPeriod, dateBirth, placeBirth, registrationAddress
+					, NUMContract, POST, FIOTeacher, dataStartContract, dataEndContract
+					, academicHour, PaymentAmount, adresPlace, contractPrice
+					, dateBirth, placeBirth, registrationAddress
 					, education, detailsDiploma, serialDiploma
-					, dateDiploma);
+					, dateDiploma, passportSerial, passportNumber, issuedWhomWhen
+					, numberINN, certificateInsurance, nameBank
+					, bikBank, numberScore, numberCard, numberTel);
 			} catch (SQLException | ParseException e) {
 				e.printStackTrace();
 			}

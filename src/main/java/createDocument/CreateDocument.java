@@ -15,9 +15,11 @@ public interface CreateDocument {
 	default public void createDocTeacher(
 		String strDate, String FIOpost
 		, String NUMContract, String POST, String FIOTeacher
-		, String dataStartContract, String dataEndContract, String PaymentAmount
-		, String adresPlace, String contractPrice, String contractPeriod
+		, String dataStartContract, String dataEndContract, String academicHour, String PaymentAmount
+		, String adresPlace, String contractPrice
 		, String dateBirth, String placeBirth, String registrationAddress
 		, String education, String detailsDiploma, String serialDiploma
-		, String dateDiploma) throws SQLException, ParseException {}
+		, String dateDiploma, String passportSerial, String passportNumber, String issuedWhomWhen
+		, String numberINN,	String certificateInsurance, String nameBank
+		, String bikBank, String numberScore, String numberCard,  String numberTel) throws SQLException, ParseException {}
 }
