@@ -6,9 +6,7 @@ package model;
 
 import java.util.List;
 
-/**
- * Класс ShedulesSearch
- */
+
 public class ShedulesSearch {
 
 	private final List<SheduleSearch> shedules;
@@ -17,11 +15,6 @@ public class ShedulesSearch {
 		this.shedules = shedules;
 	}
 
-	/**
-	 * Возвращает
-	 *
-	 * @return
-	 */
 	public List<SheduleSearch> getShedules() {
 		return shedules;
 	}

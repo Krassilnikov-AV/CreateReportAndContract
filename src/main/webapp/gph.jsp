@@ -13,7 +13,14 @@
 <body>
 <h2>Создание договора гражданско правового характера внештатных сотрудников</h2>
 <%--<td>--%>
+<h1>Загрузка данных</h1>
+ <form action="servletUploadDataDB" method="post"   enctype="multipart/form-data">
 
+  <input type="file" name="file" size="50"/>
+<input type="hidden" name="ws_code" id="shopCode" value="shopCode" style="display:none"/>
+<p><input type="submit" value="Сохранить данные"/></p>
+
+</form>
 <form action="servletContract" method="POST" accept-charset="UTF-8">
   <p>Дата создания договора: <input type="text" name="dateContract"> г.(пример: «05» сентября 2021 г.)</p>
   <p>Заказчик:</p>

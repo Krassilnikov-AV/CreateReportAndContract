@@ -86,29 +86,15 @@ public class SQLQueryDataImpl implements SQLQuery {
 //		return false;
 //	}
 
-	/**
-	 * метод добавления данных  с применением executeBatch()
-	 * для более быстрой вставки в БД
-	 * ------------------------------------------------
-	 * INSERT INTO table_listnames (name, address, tele)
-	 * SELECT * FROM (SELECT 'Rupert', 'Somewhere', '022') AS tmp
-	 * WHERE NOT EXISTS (
-	 * SELECT name FROM table_listnames WHERE name = 'Rupert'
-	 * ) LIMIT 1;
-	 */
-
-	@Override
-	public boolean insertGroupData(Connection connection, InputStream fileStream) throws IOException, SQLException {
+	public boolean insertGroupSQL(Connection connection, InputStream fileStream) throws IOException, SQLException {
 		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
-		String insertGroup="INSERT INTO group(number_group) VALUES(?)";
+		String insertGroup="INSERT INTO group(name_group) VALUES(?)";
 		try(PreparedStatement stm = connection.prepareStatement(insertGroup)) {
 			List<GroupInsert> groupsInsert = read.getGroupInsert();
 
 			long start = System.currentTimeMillis();
 			for (GroupInsert groupInsert : groupsInsert) {
-
-				stm.setString(2, groupInsert.getNumber());
-
+				stm.setString(1, groupInsert.getNumber());
 				stm.addBatch();
 			}
 			long end = System.currentTimeMillis();
@@ -124,6 +110,61 @@ public class SQLQueryDataImpl implements SQLQuery {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean insertProgramSQL(Connection connection,
+									InputStream fileStream) throws IOException, SQLException {
+		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
+		String insertProgramSQL = "INSERT INTO program(title_program, academic_hour) VALUES(?)";
+		try (PreparedStatement stm = connection.prepareStatement(insertProgramSQL)) {
+			HashSet<ProgramInsert> programsInsert = read.getProgram();
+		long start = System.currentTimeMillis();
+		for (ProgramInsert programInsert : programsInsert) {
+			stm.setString(1, programInsert.getTitleProgram());
+			stm.setInt(2, programInsert.getPeriod());
+			stm.addBatch();
+		}
+		long end = System.currentTimeMillis();
+		System.out.println("Вставлено: " + programsInsert.size() + " строк");
+		System.out.println("суммарное время вставки: " + (end - start) + " ms");
+		int[] operationResult = stm.executeBatch();
+		if (operationResult.length > 0) {
+			return true;
+		}
+	} catch (Exception e) {
+		System.out.println("Данные не занесены, ошибка при выполнении....!!!");
+		e.printStackTrace();
+	}
+		return false;
+}
+
+	@Override
+	public boolean insertTeacherSQL(Connection connection,
+									InputStream fileStream) throws IOException, SQLException {
+		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
+		String insertTeacherSQL = "INSERT INTO teacher(name_teacher) VALUES(?)";
+		try (PreparedStatement stm = connection.prepareStatement(insertTeacherSQL)) {
+			HashSet<TeacherInsert> teachersInserts = read.getTeacher();
+
+			long start = System.currentTimeMillis();
+			for (TeacherInsert teacherInserts : teachersInserts) {
+				stm.setString(1, teacherInserts.getNameTeacher());
+				stm.addBatch();
+			}
+			long end = System.currentTimeMillis();
+			System.out.println("Вставлено: " + teachersInserts.size() + " строк");
+			System.out.println("суммарное время вставки: " + (end - start) + " ms");
+			int[] operationResult = stm.executeBatch();
+			if (operationResult.length > 0) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println("Данные не занесены, ошибка при выполнении....!!!");
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 
 	@Override
 	public boolean insertExecuteBatchQuerySQL(Connection connection, InputStream fileStream) throws IOException,
@@ -242,7 +283,6 @@ public class SQLQueryDataImpl implements SQLQuery {
 //		}
 //		return dateStart;
 //	}
-
 	@Override
 	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException {
 		List<SheduleSearch> shedules = new ArrayList();
@@ -364,7 +404,6 @@ public class SQLQueryDataImpl implements SQLQuery {
 	}
 
 
-
 	@Override
 	public ShedulesSearch getSheduleBy(Connection connection, String[] idList) throws SQLException {
 		String sqlQuery = "SELECT * FROM sheduleid WHERE id_shedule IN (" + String.join(",", idList) + ")";
@@ -408,7 +447,6 @@ public class SQLQueryDataImpl implements SQLQuery {
 			System.out.println("Запрошенные данные успешно выбраны!");
 			return new ShedulesSearch(shedulesInsert);
 		}
-
 	}
 
 
@@ -440,7 +478,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 //		}
 //	}
 
-	/*для удаления с бразера данных в таблице*/
+	/*для удаления с бразера данных в таблицах*/
 	@Override
 	public boolean deletedDataSQL(Connection connection) throws SQLException {
 		String deletedSQL = "DELETE FROM sheduleid";

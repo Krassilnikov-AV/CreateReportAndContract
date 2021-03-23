@@ -41,7 +41,7 @@ public class ReadExcelDataImpl implements ReadData {
 	private List<String> columndataStr;
 	private List<Integer> columndataInt;
 
-		public ReadExcelDataImpl(InputStream ios) {
+	public ReadExcelDataImpl(InputStream ios) {
 		this.ios = ios;
 	}
 
@@ -68,9 +68,7 @@ public class ReadExcelDataImpl implements ReadData {
 					}
 				}
 			}
-
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return (LinkedList<java.sql.Date>) columnListDateSql;
@@ -140,6 +138,128 @@ public class ReadExcelDataImpl implements ReadData {
 		}
 		return columndataInt;
 	}
+
+	@Override
+	public HashSet<GroupInsert> getGroup() {
+		return null;
+	}
+
+
+//	public HashSet<GroupInsert> getGroup() {
+//		HashSet<GroupInsert> groupsInsert = new HashSet<>();
+//		try {
+//			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+//			XSSFSheet sheet = workbook.getSheetAt(0);
+//			Iterator<Row> rowIterator = sheet.iterator();
+//			columndataStr = new LinkedList<>();
+//			while (rowIterator.hasNext()) {
+//				Row row = rowIterator.next();
+//				Iterator<Cell> cellIterator = row.cellIterator();
+//				String groupStr = null;
+//				while (cellIterator.hasNext()) {
+//					Cell cell = cellIterator.next();
+//					if (row.getRowNum() > 0) {
+//						if (cell.getColumnIndex() == discipline) {
+//							groupStr = cell.getStringCellValue();
+//						}
+//					}
+//				}
+//				if (groupStr != null) {
+//					GroupInsert newProgram = new GroupInsert(groupStr);
+//					groupsInsert.add(newProgram);
+//				}
+//			}
+//			for (GroupInsert groupInsert : groupsInsert) {
+//				System.out.println(groupInsert.toString());
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return groupsInsert;
+//	}
+
+	public HashSet<ProgramInsert> getProgram() {
+		HashSet<ProgramInsert> programsInsert = new HashSet<>();
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			Iterator<Row> rowIterator = sheet.iterator();
+			columndataStr = new LinkedList<>();
+			while (rowIterator.hasNext()) {
+				Row row = rowIterator.next();
+				Iterator<Cell> cellIterator = row.cellIterator();
+				String programStr = null;
+				int periodInt=0;
+				while (cellIterator.hasNext()) {
+					Cell cell = cellIterator.next();
+					if (row.getRowNum() > 0) {
+						switch (cell.getColumnIndex()) {
+							case discipline:
+								programStr = cell.getStringCellValue();
+								break;
+								case period:
+									periodInt = (int) cell.getNumericCellValue();
+									break;
+						}
+					}
+				}
+				if (programStr != null &&
+					periodInt !=0) {
+					ProgramInsert newProgram = new ProgramInsert(programStr, periodInt);
+					programsInsert.add(newProgram);
+				}
+			}
+			for (ProgramInsert programInsert : programsInsert) {
+				System.out.println(programInsert.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return programsInsert;
+	}
+
+	@Override
+	public HashSet<TeacherInsert> getTeacher() {
+		HashSet<TeacherInsert> teachersInsert = new HashSet<>();
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+			XSSFSheet sheet = workbook.getSheetAt(0);
+			Iterator<Row> rowIterator = sheet.iterator();
+			columndataStr = new LinkedList<>();
+			while (rowIterator.hasNext()) {
+				Row row = rowIterator.next();
+				Iterator<Cell> cellIterator = row.cellIterator();
+				String teacherStr = null;
+				while (cellIterator.hasNext()) {
+					Cell cell = cellIterator.next();
+					if (row.getRowNum() > 0) {
+						switch (cell.getColumnIndex()) {
+							case teacher:
+								teacherStr = cell.getStringCellValue();
+								break;
+						}
+					}
+				}
+				if (teacherStr != null) {
+					TeacherInsert newTeacher = new TeacherInsert(teacherStr);
+					teachersInsert.add(newTeacher);
+				}
+			}
+			for (TeacherInsert teacherInsertInsert : teachersInsert) {
+				System.out.println(teacherInsertInsert.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return teachersInsert;
+	}
+
+	public List<SheduleTable> getTable() {
+		List<SheduleTable> sheduleTables = new ArrayList<>();
+
+	}
+
+
 
 	@Override
 	public List<SheduleInsert> getShedulesSearch() {

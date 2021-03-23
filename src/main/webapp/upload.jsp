@@ -9,8 +9,8 @@
 </head>
 <br>
 <h1>Загрузка данных</h1>
-<p action="servletUpload" method="post"
-      enctype="multipart/form-data">
+
+ <form action="servletUpload" method="post"  enctype="multipart/form-data">
   <p>
     <input type="file" name="file" size="50"/>
   </p>

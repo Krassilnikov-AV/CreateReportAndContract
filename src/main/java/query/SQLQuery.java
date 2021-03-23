@@ -6,9 +6,6 @@ import java.io.*;
 import java.sql.*;
 import java.text.ParseException;
 
-/**
- * Класс SQLQuery
- */
 public interface SQLQuery {
 
 	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException, IOException,
@@ -16,12 +13,13 @@ public interface SQLQuery {
 
 	public boolean deletedDataSQL(Connection connection) throws SQLException;
 
-
-	boolean insertGroupData(Connection connection, InputStream fileStream) throws IOException, SQLException;
+	public boolean insertTeacherSQL(Connection connection, InputStream fileStream) throws IOException,	SQLException;
+//	boolean insertGroupData(Connection connection, InputStream fileStream) throws IOException, SQLException;
 
 	boolean insertExecuteBatchQuerySQL(Connection connection, InputStream fileStream) throws IOException,
 		SQLException;
-
+	public boolean insertProgramSQL(Connection connection,
+									InputStream fileStream) throws IOException, SQLException;
 //	List<String> searchToDateStart(Connection connection, String search, String dateMonth) throws SQLException,
 //		ParseException;
 
@@ -35,14 +33,5 @@ public interface SQLQuery {
 	public ShedulesSearch view(Connection connection) throws SQLException;
 
 	ShedulesSearch getSheduleBy(Connection connection, String[] idList) throws SQLException;
-
-	//	public LinkedList<String> searchToCodegroup(String search, String dateMonth) throws SQLException, ParseException;
-//	public LinkedList<String> searchToProgram(String search, String dateMonth) throws SQLException, ParseException;
-
-	//	public List<String> searchToTimeStart(String search, String dateMonth) throws SQLException, ParseException;
-//	public List<String> searchToDateEnd(String search, String dateMonth) throws SQLException, ParseException;
-//	public List<String> searchToTimeEnd(String search, String dateMonth) throws SQLException, ParseException;
-	//	public LinkedList<String> searchToAuditorium(String search, String dateMonth) throws SQLException, ParseException;
-//
 
 }

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2021 Tander, All Rights Reserved.
+ */
+
 package servlets.servletUpload;
 
 import services.DataOperationsService;
@@ -8,32 +12,32 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.sql.SQLException;
 
-
 @MultipartConfig
-@WebServlet(name = "ServletUpload", urlPatterns = {"/servletUpload"})
-public class ServletUpload extends HttpServlet {
+@WebServlet(name = "ServletUploadDataDB", urlPatterns = {"/servletUploadDataDB"})
+public class ServletUploadDataDB extends HttpServlet {
 
-	private String path = null;
-	private String name = "";
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
 
-		Part part = request.getPart("file");
+	Part part = request.getPart("file");
 
-			download(part.getInputStream());
+	download(part.getInputStream());
 
-		request.getRequestDispatcher("/upload.jsp").forward(request, response);
-	}
+		request.getRequestDispatcher("/gph.jsp").forward(request, response);
+}
 
 	private void download(InputStream fileStream) {
 
 		DataOperationsService dos = new DataOperationsService();
 		try {
-			dos.insertDB(fileStream);
+			dos.insertTeacherDB(fileStream);
+			dos.insertGroupDB(fileStream);
+			dos.insertProgramDB(fileStream);
+
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

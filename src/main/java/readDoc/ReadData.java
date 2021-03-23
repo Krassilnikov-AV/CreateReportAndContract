@@ -13,6 +13,9 @@ public interface ReadData {
 
 	public List<Integer> getDataInteger(int columnIndex);
 
+	HashSet<GroupInsert> getGroup();
+
+	public HashSet<TeacherInsert> getTeacher();
 	List<SheduleInsert> getShedulesSearch();
 	public List<GroupInsert> getGroupInsert();
 }

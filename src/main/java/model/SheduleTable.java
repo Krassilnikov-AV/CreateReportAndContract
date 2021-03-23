@@ -1,8 +1,15 @@
+/*
+ * Copyright (c) 2021 Tander, All Rights Reserved.
+ */
+
 package model;
 
 
-public class SheduleSearch {
+public class SheduleTable {
+
 	private String id;
+
+	private final String codegroup;
 	private final String group;
 	private final String pro;
 	private String dateStart;
@@ -14,10 +21,11 @@ public class SheduleSearch {
 	private final String tech;
 
 
-	public SheduleSearch(String group, String pro,
-						 String dateStart, String timeStart,
-						 String dateFinish, String timeFinish,
-						 String audit, String type, String tech) {
+	public SheduleTable(String codegroup, String group, String pro,
+						String dateStart, String timeStart,
+						String dateFinish, String timeFinish,
+						String audit, String type, String tech) {
+		this.codegroup = codegroup;
 		this.group = group;
 		this.pro = pro;
 		this.dateStart = dateStart;
@@ -37,7 +45,9 @@ public class SheduleSearch {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	public String getCodegroup() {
+		return codegroup;
+	}
 	public String getGroup() {
 		return group;
 	}
@@ -100,16 +110,7 @@ public class SheduleSearch {
 
 	@Override
 	public String toString() {
-		return "SheduleSearch{" +
-			"group='" + group + '\'' +
-			", pro='" + pro + '\'' +
-			", dateStart='" + dateStart + '\'' +
-			", timeStart='" + timeStart + '\'' +
-			", dateFinish='" + dateFinish + '\'' +
-			", timeFinish='" + timeFinish + '\'' +
-			", audit='" + audit + '\'' +
-			", type='" + type + '\'' +
-			", tech='" + tech + '\'' +
-			'}';
+		return codegroup+group+ pro + dateStart + timeStart
+			+ dateFinish + timeFinish+ audit + type+ tech;
 	}
 }
