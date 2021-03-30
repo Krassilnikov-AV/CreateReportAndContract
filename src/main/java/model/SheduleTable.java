@@ -18,7 +18,7 @@ public class SheduleTable {
 	private final java.sql.Date  timeStart;
 	private final java.sql.Date  dateFinish;
 	private final java.sql.Date  timeFinish;
-	private String audit;
+	private final String audit;
 	private final String type;
 	private final String tech;
 

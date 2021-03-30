@@ -12,8 +12,6 @@ import java.text.ParseException;
 public class ContractTeacher implements CreateDocument {
 	enum Border {LEFT, TOP, BOTTOM, RIGHT}
 
-
-
 	@Override
 	public void createDocTeacher(
 		String strDate, String FIOpost

@@ -24,16 +24,6 @@ public class DataOperationsService {
 		return sqd.deletedDataSQL(connection);
 
 	}
-	public boolean insertGroupDB(InputStream fileStream) throws IOException, SQLException {
-		return sqd.insertGroupSQL(connection, fileStream);
-	}
-
-	public boolean insertProgramDB(InputStream fileStream) throws IOException, SQLException {
-		return sqd.insertProgramSQL(connection, fileStream);
-	}
-	public boolean insertTeacherDB(InputStream fileStream) throws IOException, SQLException {
-		return sqd.insertTeacherSQL(connection, fileStream);
-	}
 
 	public boolean insertDB(InputStream fileStream) throws IOException, SQLException {
 

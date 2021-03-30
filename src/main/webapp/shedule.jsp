@@ -22,8 +22,7 @@
   </table>
   <tbody>
   <form action="servletSchedule" method="POST">
-    <p>Должность: <input type="text" name="post" size="30"></p>
-    <p>Ф.И.О.: <input type="text" name="fioPost" size="57"></p>
+
   </form>
   <form action="servletSchedule" method="POST">
 
@@ -77,7 +76,8 @@
     <input type="button" value="Снять выделение" onclick="check(this.form.data_shedule, 0)">
     <%--<tr>--%>
     <%--</tr>--%>
-
+    <p>Должность: <input type="text" name="post" size="30"></p>
+    <p>Ф.И.О.: <input type="text" name="fioPost" size="57"></p>
     <input type="hidden" name="operation" id="create" value="create" style="display:none"/>
     <td><p><input type="submit" value="СОЗДАТЬ ОТЧЁТ" name="create"></p></td>
   </form>
