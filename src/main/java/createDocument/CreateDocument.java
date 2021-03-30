@@ -9,7 +9,7 @@ import java.text.ParseException;
 public interface CreateDocument {
 
 	default XWPFDocument createDoc(ShedulesSearch createShedules, String fio) throws SQLException, ParseException {
-		return null;
+		return new XWPFDocument();
 	}
 
 	default public void createDocTeacher(

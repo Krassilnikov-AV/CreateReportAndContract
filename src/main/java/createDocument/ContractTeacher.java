@@ -12,11 +12,7 @@ import java.text.ParseException;
 public class ContractTeacher implements CreateDocument {
 	enum Border {LEFT, TOP, BOTTOM, RIGHT}
 
-	/*лОКАЛЬНО СОЗДАЁТСЯ*/
-//	public static void main(String[] args) throws SQLException, ParseException {
-//		ContractTeacher cct = new ContractTeacher();
-//		cct.createDocTeacher();
-//	}
+
 
 	@Override
 	public void createDocTeacher(

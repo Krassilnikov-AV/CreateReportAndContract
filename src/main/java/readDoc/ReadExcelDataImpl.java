@@ -45,104 +45,104 @@ public class ReadExcelDataImpl implements ReadData {
 		this.ios = ios;
 	}
 
-	@Override
-	public LinkedList<java.sql.Date> getDate(int columnIndex) {
-		try {
-			XSSFWorkbook workbook = new XSSFWorkbook(ios);
-			XSSFSheet sheet = workbook.getSheetAt(0);
-			Iterator<Row> rowIterator = sheet.iterator();
-			columnListDateSql = new LinkedList<>();
-			while (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-
-				Iterator<Cell> cellIterator = row.cellIterator();
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-
-					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
-						if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
-							Date date = cell.getDateCellValue();
-							columndataDateSql = new java.sql.Date(date.getTime());
-							columnListDateSql.add(columndataDateSql);
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return (LinkedList<java.sql.Date>) columnListDateSql;
-	}
-
-	@Override
-	public List<String> getString(int columnIndex) throws IOException {
-		try {
-			XSSFWorkbook workbook = new XSSFWorkbook(ios);
-			XSSFSheet sheet = workbook.getSheetAt(0);
-			Iterator<Row> rowIterator = sheet.iterator();
-			columndataStr = new LinkedList<>();
-
-			while (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-				Iterator<Cell> cellIterator = row.cellIterator();
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-
-					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
-						if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
-							columndataStr.add(cell.getStringCellValue());
-						}
-					}
-				}
-			}
-
-			/*			просмотр прочитанного			 */
-			for (String s : columndataStr) {
-				System.out.println(s);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return columndataStr;
-	}
-
-	@Override
-	public List<Integer> getDataInteger(int columnIndex) {
-
-		try {
-			XSSFWorkbook workbook = new XSSFWorkbook(ios);
-			XSSFSheet sheet = workbook.getSheetAt(0);
-			Iterator<Row> rowIterator = sheet.iterator();
-			columndataInt = new LinkedList<>();
-
-			while (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-				Iterator<Cell> cellIterator = row.cellIterator();
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-
-					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
-						if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
-
-							columndataInt.add((int) cell.getNumericCellValue());
-							break;
-						}
-					}
-				}
-			}
-			for (Integer integer : columndataInt) {
-				System.out.println(integer);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return columndataInt;
-	}
-
-	@Override
-	public HashSet<GroupInsert> getGroup() {
-		return null;
-	}
+//	@Override
+//	public LinkedList<java.sql.Date> getDate(int columnIndex) {
+//		try {
+//			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+//			XSSFSheet sheet = workbook.getSheetAt(0);
+//			Iterator<Row> rowIterator = sheet.iterator();
+//			columnListDateSql = new LinkedList<>();
+//			while (rowIterator.hasNext()) {
+//				Row row = rowIterator.next();
+//
+//				Iterator<Cell> cellIterator = row.cellIterator();
+//				while (cellIterator.hasNext()) {
+//					Cell cell = cellIterator.next();
+//
+//					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
+//						if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
+//							Date date = cell.getDateCellValue();
+//							columndataDateSql = new java.sql.Date(date.getTime());
+//							columnListDateSql.add(columndataDateSql);
+//						}
+//					}
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return (LinkedList<java.sql.Date>) columnListDateSql;
+//	}
+/*старый метод, позволял по строчной переменной считывать данные*/
+//	@Override
+//	public List<String> getString(int columnIndex) throws IOException {
+//		try {
+//			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+//			XSSFSheet sheet = workbook.getSheetAt(0);
+//			Iterator<Row> rowIterator = sheet.iterator();
+//			columndataStr = new LinkedList<>();
+//
+//			while (rowIterator.hasNext()) {
+//				Row row = rowIterator.next();
+//				Iterator<Cell> cellIterator = row.cellIterator();
+//				while (cellIterator.hasNext()) {
+//					Cell cell = cellIterator.next();
+//
+//					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
+//						if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
+//							columndataStr.add(cell.getStringCellValue());
+//						}
+//					}
+//				}
+//			}
+//
+//			/*			просмотр прочитанного			 */
+//			for (String s : columndataStr) {
+//				System.out.println(s);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return columndataStr;
+//	}
+/*старый метод, позволял по целочисленной переменной считывать данные*/
+//	@Override
+//	public List<Integer> getDataInteger(int columnIndex) {
+//
+//		try {
+//			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+//			XSSFSheet sheet = workbook.getSheetAt(0);
+//			Iterator<Row> rowIterator = sheet.iterator();
+//			columndataInt = new LinkedList<>();
+//
+//			while (rowIterator.hasNext()) {
+//				Row row = rowIterator.next();
+//				Iterator<Cell> cellIterator = row.cellIterator();
+//				while (cellIterator.hasNext()) {
+//					Cell cell = cellIterator.next();
+//
+//					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
+//						if (cell.getColumnIndex() == columnIndex) {// соответствие индекса столбца
+//
+//							columndataInt.add((int) cell.getNumericCellValue());
+//							break;
+//						}
+//					}
+//				}
+//			}
+//			for (Integer integer : columndataInt) {
+//				System.out.println(integer);
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return columndataInt;
+//	}
+//
+//	@Override
+//	public HashSet<GroupInsert> getGroup() {
+//		return null;
+//	}
 
 
 //	public HashSet<GroupInsert> getGroup() {
@@ -178,182 +178,182 @@ public class ReadExcelDataImpl implements ReadData {
 //		return groupsInsert;
 //	}
 
-	public HashSet<ProgramInsert> getProgram() {
-		HashSet<ProgramInsert> programsInsert = new HashSet<>();
-		try {
-			XSSFWorkbook workbook = new XSSFWorkbook(ios);
-			XSSFSheet sheet = workbook.getSheetAt(0);
-			Iterator<Row> rowIterator = sheet.iterator();
-			columndataStr = new LinkedList<>();
-			while (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-				Iterator<Cell> cellIterator = row.cellIterator();
-				String programStr = null;
-				int periodInt=0;
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-					if (row.getRowNum() > 0) {
-						switch (cell.getColumnIndex()) {
-							case discipline:
-								programStr = cell.getStringCellValue();
-								break;
-								case period:
-									periodInt = (int) cell.getNumericCellValue();
-									break;
-						}
-					}
-				}
-				if (programStr != null &&
-					periodInt !=0) {
-					ProgramInsert newProgram = new ProgramInsert(programStr, periodInt);
-					programsInsert.add(newProgram);
-				}
-			}
-			for (ProgramInsert programInsert : programsInsert) {
-				System.out.println(programInsert.toString());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return programsInsert;
-	}
+//	public HashSet<ProgramInsert> getProgram() {
+//		HashSet<ProgramInsert> programsInsert = new HashSet<>();
+//		try {
+//			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+//			XSSFSheet sheet = workbook.getSheetAt(0);
+//			Iterator<Row> rowIterator = sheet.iterator();
+//			columndataStr = new LinkedList<>();
+//			while (rowIterator.hasNext()) {
+//				Row row = rowIterator.next();
+//				Iterator<Cell> cellIterator = row.cellIterator();
+//				String programStr = null;
+//				int periodInt=0;
+//				while (cellIterator.hasNext()) {
+//					Cell cell = cellIterator.next();
+//					if (row.getRowNum() > 0) {
+//						switch (cell.getColumnIndex()) {
+//							case discipline:
+//								programStr = cell.getStringCellValue();
+//								break;
+//								case period:
+//									periodInt = (int) cell.getNumericCellValue();
+//									break;
+//						}
+//					}
+//				}
+//				if (programStr != null &&
+//					periodInt !=0) {
+//					ProgramInsert newProgram = new ProgramInsert(programStr, periodInt);
+//					programsInsert.add(newProgram);
+//				}
+//			}
+//			for (ProgramInsert programInsert : programsInsert) {
+//				System.out.println(programInsert.toString());
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return programsInsert;
+//	}
+//
+//	@Override
+//	public HashSet<TeacherInsert> getTeacher() {
+//		HashSet<TeacherInsert> teachersInsert = new HashSet<>();
+//		try {
+//			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+//			XSSFSheet sheet = workbook.getSheetAt(0);
+//			Iterator<Row> rowIterator = sheet.iterator();
+//			columndataStr = new LinkedList<>();
+//			while (rowIterator.hasNext()) {
+//				Row row = rowIterator.next();
+//				Iterator<Cell> cellIterator = row.cellIterator();
+//				String teacherStr = null;
+//				while (cellIterator.hasNext()) {
+//					Cell cell = cellIterator.next();
+//					if (row.getRowNum() > 0) {
+//						switch (cell.getColumnIndex()) {
+//							case teacher:
+//								teacherStr = cell.getStringCellValue();
+//								break;
+//						}
+//					}
+//				}
+//				if (teacherStr != null) {
+//					TeacherInsert newTeacher = new TeacherInsert(teacherStr);
+//					teachersInsert.add(newTeacher);
+//				}
+//			}
+//			for (TeacherInsert teacherInsertInsert : teachersInsert) {
+//				System.out.println(teacherInsertInsert.toString());
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return teachersInsert;
+//	}
 
-	@Override
-	public HashSet<TeacherInsert> getTeacher() {
-		HashSet<TeacherInsert> teachersInsert = new HashSet<>();
-		try {
-			XSSFWorkbook workbook = new XSSFWorkbook(ios);
-			XSSFSheet sheet = workbook.getSheetAt(0);
-			Iterator<Row> rowIterator = sheet.iterator();
-			columndataStr = new LinkedList<>();
-			while (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-				Iterator<Cell> cellIterator = row.cellIterator();
-				String teacherStr = null;
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-					if (row.getRowNum() > 0) {
-						switch (cell.getColumnIndex()) {
-							case teacher:
-								teacherStr = cell.getStringCellValue();
-								break;
-						}
-					}
-				}
-				if (teacherStr != null) {
-					TeacherInsert newTeacher = new TeacherInsert(teacherStr);
-					teachersInsert.add(newTeacher);
-				}
-			}
-			for (TeacherInsert teacherInsertInsert : teachersInsert) {
-				System.out.println(teacherInsertInsert.toString());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return teachersInsert;
-	}
 
-
-	@Override
-	public List<SheduleTable> getSheduleTable() {
-		List<SheduleTable> shedulesTable = new ArrayList<>();
-		try {
-			XSSFWorkbook workbook = new XSSFWorkbook(ios);
-			XSSFSheet sheet = workbook.getSheetAt(0);
-			Iterator<Row> rowIterator = sheet.iterator();
-			columndataStr = new LinkedList<>();
-
-			while (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-				Iterator<Cell> cellIterator = row.cellIterator();
-				String codeStr = null;
-				String groupStr = null;
-				String disciplineStr = null;
-				java.sql.Date dateStartDate = null;
-				java.sql.Date timeStartDate = null;
-				java.sql.Date dateFinish = null;
-				java.sql.Date timeFinish = null;
-				String audit = null;
-				String type = null;
-				String tech = null;
-				int periodInt = 0;
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
-						switch (cell.getColumnIndex()) {
-							case codeGroup:
-								codeStr = cell.getStringCellValue();
-								break;
-							case group:
-								groupStr = cell.getStringCellValue();
-							case discipline:
-								disciplineStr = cell.getStringCellValue();
-								break;
-							case dateStart:
-								Date date = cell.getDateCellValue();
-								dateStartDate = new java.sql.Date(date.getTime());
-								break;
-							case timeStart:
-								Date timeStart = cell.getDateCellValue();
-								timeStartDate = new java.sql.Date(timeStart.getTime());
-								break;
-							case dateEnd:
-								Date dateFinishD = cell.getDateCellValue();
-								dateFinish = new java.sql.Date(dateFinishD.getTime());
-								break;
-							case timeEnd:
-								if (cell.getDateCellValue() != null) {
-									Date timeEndDate = cell.getDateCellValue();
-									timeFinish = new java.sql.Date(timeEndDate.getTime());
-								}
-								break;
-							case clasRum:
-								audit = cell.getStringCellValue();
-								break;
-							case typeLearn:
-								type = cell.getStringCellValue();
-								break;
-							case teacher:
-								tech = cell.getStringCellValue();
-								break;
-							case period:
-								periodInt = (int) cell.getNumericCellValue();
-								break;
-						}
-					}
-				}
-				if (codeStr != null && groupStr!=null &&
-					disciplineStr != null &&
-					dateStartDate != null &&
-					timeStartDate != null &&
-					dateFinish != null &&
-					timeFinish != null &&
-					audit != null &&
-					type != null &&
-					tech != null) {
-					SheduleTable sheduleTable = new sheduleTable(
-						codeStr, groupStr,
-						disciplineStr,
-						dateStartDate,
-						timeStartDate,
-						dateFinish,
-						timeFinish,
-						audit,
-						type,
-						tech, periodInt
-					);
-					shedulesTable.add(sheduleTable);
-				}
-			}
-			for (SheduleTable sheduleTable : shedulesTable) {
-				System.out.println(sheduleTable.toString());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return shedulesTable;
-	}
+//	@Override
+//	public List<SheduleTable> getSheduleTable() {
+//		List<SheduleTable> shedulesTable = new ArrayList<>();
+//		try {
+//			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+//			XSSFSheet sheet = workbook.getSheetAt(0);
+//			Iterator<Row> rowIterator = sheet.iterator();
+//			columndataStr = new LinkedList<>();
+//
+//			while (rowIterator.hasNext()) {
+//				Row row = rowIterator.next();
+//				Iterator<Cell> cellIterator = row.cellIterator();
+//				String codeStr = null;
+//				String groupStr = null;
+//				String disciplineStr = null;
+//				java.sql.Date dateStartDate = null;
+//				java.sql.Date timeStartDate = null;
+//				java.sql.Date dateFinish = null;
+//				java.sql.Date timeFinish = null;
+//				String audit = null;
+//				String type = null;
+//				String tech = null;
+//				int periodInt = 0;
+//				while (cellIterator.hasNext()) {
+//					Cell cell = cellIterator.next();
+//					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
+//						switch (cell.getColumnIndex()) {
+//							case codeGroup:
+//								codeStr = cell.getStringCellValue();
+//								break;
+//							case group:
+//								groupStr = cell.getStringCellValue();
+//							case discipline:
+//								disciplineStr = cell.getStringCellValue();
+//								break;
+//							case dateStart:
+//								Date date = cell.getDateCellValue();
+//								dateStartDate = new java.sql.Date(date.getTime());
+//								break;
+//							case timeStart:
+//								Date timeStart = cell.getDateCellValue();
+//								timeStartDate = new java.sql.Date(timeStart.getTime());
+//								break;
+//							case dateEnd:
+//								Date dateFinishD = cell.getDateCellValue();
+//								dateFinish = new java.sql.Date(dateFinishD.getTime());
+//								break;
+//							case timeEnd:
+//								if (cell.getDateCellValue() != null) {
+//									Date timeEndDate = cell.getDateCellValue();
+//									timeFinish = new java.sql.Date(timeEndDate.getTime());
+//								}
+//								break;
+//							case clasRum:
+//								audit = cell.getStringCellValue();
+//								break;
+//							case typeLearn:
+//								type = cell.getStringCellValue();
+//								break;
+//							case teacher:
+//								tech = cell.getStringCellValue();
+//								break;
+//							case period:
+//								periodInt = (int) cell.getNumericCellValue();
+//								break;
+//						}
+//					}
+//				}
+//				if (codeStr != null && groupStr!=null &&
+//					disciplineStr != null &&
+//					dateStartDate != null &&
+//					timeStartDate != null &&
+//					dateFinish != null &&
+//					timeFinish != null &&
+//					audit != null &&
+//					type != null &&
+//					tech != null) {
+//					SheduleTable sheduleTable = new SheduleTable(
+//						codeStr, groupStr,
+//						disciplineStr,
+//						dateStartDate,
+//						timeStartDate,
+//						dateFinish,
+//						timeFinish,
+//						audit,
+//						type,
+//						tech, periodInt
+//					);
+//					shedulesTable.add(sheduleTable);
+//				}
+//			}
+//			for (SheduleTable sheduleTable : shedulesTable) {
+//				System.out.println(sheduleTable.toString());
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return shedulesTable;
+//	}
 
 
 
@@ -455,36 +455,36 @@ public class ReadExcelDataImpl implements ReadData {
 		return shedulesInsert;
 	}
 
-	@Override
-	public List<GroupInsert> getGroupInsert() {
-
-		List<GroupInsert> groupsInsert = new ArrayList<>();
-		try {
-			XSSFWorkbook workbook = new XSSFWorkbook(ios);
-			XSSFSheet sheet = workbook.getSheetAt(0);
-			Iterator<Row> rowIterator = sheet.iterator();
-			columndataStr = new LinkedList<>();
-			while (rowIterator.hasNext()) {
-				Row row = rowIterator.next();
-				Iterator<Cell> cellIterator = row.cellIterator();
-				String codeStr = null;
-
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
-						if (cell.getColumnIndex() == codeGroup) {
-							codeStr = cell.getStringCellValue();
-						}
-					}
-				}
-				if (codeStr != null) {
-					GroupInsert groupInsert = new GroupInsert(codeStr);
-					groupsInsert.add(groupInsert);
-				}
-			}
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-		return groupsInsert;
-	}
+//	@Override
+//	public List<GroupInsert> getGroupInsert() {
+//
+//		List<GroupInsert> groupsInsert = new ArrayList<>();
+//		try {
+//			XSSFWorkbook workbook = new XSSFWorkbook(ios);
+//			XSSFSheet sheet = workbook.getSheetAt(0);
+//			Iterator<Row> rowIterator = sheet.iterator();
+//			columndataStr = new LinkedList<>();
+//			while (rowIterator.hasNext()) {
+//				Row row = rowIterator.next();
+//				Iterator<Cell> cellIterator = row.cellIterator();
+//				String codeStr = null;
+//
+//				while (cellIterator.hasNext()) {
+//					Cell cell = cellIterator.next();
+//					if (row.getRowNum() > 0) { //фильтрация заголовков столбцов
+//						if (cell.getColumnIndex() == codeGroup) {
+//							codeStr = cell.getStringCellValue();
+//						}
+//					}
+//				}
+//				if (codeStr != null) {
+//					GroupInsert groupInsert = new GroupInsert(codeStr);
+//					groupsInsert.add(groupInsert);
+//				}
+//			}
+//		} catch (IOException ex) {
+//			ex.printStackTrace();
+//		}
+//		return groupsInsert;
+//	}
 }

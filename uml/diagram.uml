@@ -2,17 +2,34 @@
 <Diagram>
   <ID>JAVA</ID>
   <OriginalElement />
-  <nodes />
+  <nodes>
+    <node x="634.5" y="322.0">model.ShedulesInsert</node>
+    <node x="105.0" y="322.0">model.ShedulesSearch</node>
+    <node x="528.0" y="0.0">model.SheduleInsert</node>
+    <node x="0.0" y="0.0">model.SheduleSearch</node>
+  </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic Group" zoom="1.0" x="366.5" y="243.5" />
+  <edges>
+    <edge source="model.ShedulesInsert" target="model.SheduleInsert">
+      <point x="-65.0" y="-37.0" />
+      <point x="699.5" y="297.0" />
+      <point x="646.25" y="297.0" />
+      <point x="-118.25" y="136.0" />
+    </edge>
+    <edge source="model.ShedulesSearch" target="model.SheduleSearch">
+      <point x="68.25" y="-37.0" />
+      <point x="309.75" y="297.0" />
+      <point x="362.25" y="297.0" />
+      <point x="120.75" y="136.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8383937316356513" x="500.5" y="198.2914719626168" />
   <SelectedNodes />
   <Categories>
-    <Category>Fields</Category>
+    <Category>Properties</Category>
     <Category>Constructors</Category>
-    <Category>Methods</Category>
   </Categories>
   <SCOPE>All</SCOPE>
-  <VISIBILITY>private</VISIBILITY>
+  <VISIBILITY>packageLocal</VISIBILITY>
 </Diagram>
 

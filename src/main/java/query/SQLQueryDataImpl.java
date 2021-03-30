@@ -44,7 +44,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 	 * Данный метод позволит избежать внесения повторяющих значений в БД
 	 */
 
-
+/* попытка разделить БД по сущностям*/
 //	@Override
 //	public boolean insertDataContractTeacherSQL() throws IOException, SQLException {
 //		ConnectionApp connection = new ConnectionApp();
@@ -85,92 +85,92 @@ public class SQLQueryDataImpl implements SQLQuery {
 //		}
 //		return false;
 //	}
-
-	public boolean insertGroupSQL(Connection connection, InputStream fileStream) throws IOException, SQLException {
-		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
-		String insertGroup="INSERT INTO group(name_group) VALUES(?)";
-		try(PreparedStatement stm = connection.prepareStatement(insertGroup)) {
-			List<GroupInsert> groupsInsert = read.getGroupInsert();
-
-			long start = System.currentTimeMillis();
-			for (GroupInsert groupInsert : groupsInsert) {
-				stm.setString(1, groupInsert.getNumber());
-				stm.addBatch();
-			}
-			long end = System.currentTimeMillis();
-			System.out.println("Вставлено: " + groupsInsert.size() + " строк");
-			System.out.println("суммарное время вставки: " + (end - start) + " ms");
-			int[] operationResult = stm.executeBatch();
-			if (operationResult.length > 0) {
-				return true;
-			}
-		} catch (Exception e) {
-			System.out.println("Данные не занесены, ошибка при выполнении....!!!");
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	@Override
-	public boolean insertProgramSQL(Connection connection,
-									InputStream fileStream) throws IOException, SQLException {
-		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
-		String insertProgramSQL = "INSERT INTO program(title_program, academic_hour) VALUES(?)";
-		try (PreparedStatement stm = connection.prepareStatement(insertProgramSQL)) {
-			HashSet<ProgramInsert> programsInsert = read.getProgram();
-		long start = System.currentTimeMillis();
-		for (ProgramInsert programInsert : programsInsert) {
-			stm.setString(1, programInsert.getTitleProgram());
-			stm.setInt(2, programInsert.getPeriod());
-			stm.addBatch();
-		}
-		long end = System.currentTimeMillis();
-		System.out.println("Вставлено: " + programsInsert.size() + " строк");
-		System.out.println("суммарное время вставки: " + (end - start) + " ms");
-		int[] operationResult = stm.executeBatch();
-		if (operationResult.length > 0) {
-			return true;
-		}
-	} catch (Exception e) {
-		System.out.println("Данные не занесены, ошибка при выполнении....!!!");
-		e.printStackTrace();
-	}
-		return false;
-}
-
-	@Override
-	public boolean insertTeacherSQL(Connection connection,
-									InputStream fileStream) throws IOException, SQLException {
-		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
-		String insertTeacherSQL = "INSERT INTO teacher(name_teacher) VALUES(?)";
-		try (PreparedStatement stm = connection.prepareStatement(insertTeacherSQL)) {
-			HashSet<TeacherInsert> teachersInserts = read.getTeacher();
-
-			long start = System.currentTimeMillis();
-			for (TeacherInsert teacherInserts : teachersInserts) {
-				stm.setString(1, teacherInserts.getNameTeacher());
-				stm.addBatch();
-			}
-			long end = System.currentTimeMillis();
-			System.out.println("Вставлено: " + teachersInserts.size() + " строк");
-			System.out.println("суммарное время вставки: " + (end - start) + " ms");
-			int[] operationResult = stm.executeBatch();
-			if (operationResult.length > 0) {
-				return true;
-			}
-		} catch (Exception e) {
-			System.out.println("Данные не занесены, ошибка при выполнении....!!!");
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-
+//
+//	public boolean insertGroupSQL(Connection connection, InputStream fileStream) throws IOException, SQLException {
+//		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
+//		String insertGroup="INSERT INTO group(name_group) VALUES(?)";
+//		try(PreparedStatement stm = connection.prepareStatement(insertGroup)) {
+//			List<GroupInsert> groupsInsert = read.getGroupInsert();
+//
+//			long start = System.currentTimeMillis();
+//			for (GroupInsert groupInsert : groupsInsert) {
+//				stm.setString(1, groupInsert.getNumber());
+//				stm.addBatch();
+//			}
+//			long end = System.currentTimeMillis();
+//			System.out.println("Вставлено: " + groupsInsert.size() + " строк");
+//			System.out.println("суммарное время вставки: " + (end - start) + " ms");
+//			int[] operationResult = stm.executeBatch();
+//			if (operationResult.length > 0) {
+//				return true;
+//			}
+//		} catch (Exception e) {
+//			System.out.println("Данные не занесены, ошибка при выполнении....!!!");
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
+//
+//	@Override
+//	public boolean insertProgramSQL(Connection connection,
+//									InputStream fileStream) throws IOException, SQLException {
+//		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
+//		String insertProgramSQL = "INSERT INTO program(title_program, academic_hour) VALUES(?)";
+//		try (PreparedStatement stm = connection.prepareStatement(insertProgramSQL)) {
+//			HashSet<ProgramInsert> programsInsert = read.getProgram();
+//		long start = System.currentTimeMillis();
+//		for (ProgramInsert programInsert : programsInsert) {
+//			stm.setString(1, programInsert.getTitleProgram());
+//			stm.setInt(2, programInsert.getPeriod());
+//			stm.addBatch();
+//		}
+//		long end = System.currentTimeMillis();
+//		System.out.println("Вставлено: " + programsInsert.size() + " строк");
+//		System.out.println("суммарное время вставки: " + (end - start) + " ms");
+//		int[] operationResult = stm.executeBatch();
+//		if (operationResult.length > 0) {
+//			return true;
+//		}
+//	} catch (Exception e) {
+//		System.out.println("Данные не занесены, ошибка при выполнении....!!!");
+//		e.printStackTrace();
+//	}
+//		return false;
+//}
+//
+//	@Override
+//	public boolean insertTeacherSQL(Connection connection,
+//									InputStream fileStream) throws IOException, SQLException {
+//		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
+//		String insertTeacherSQL = "INSERT INTO teacher(name_teacher) VALUES(?)";
+//		try (PreparedStatement stm = connection.prepareStatement(insertTeacherSQL)) {
+//			HashSet<TeacherInsert> teachersInserts = read.getTeacher();
+//
+//			long start = System.currentTimeMillis();
+//			for (TeacherInsert teacherInserts : teachersInserts) {
+//				stm.setString(1, teacherInserts.getNameTeacher());
+//				stm.addBatch();
+//			}
+//			long end = System.currentTimeMillis();
+//			System.out.println("Вставлено: " + teachersInserts.size() + " строк");
+//			System.out.println("суммарное время вставки: " + (end - start) + " ms");
+//			int[] operationResult = stm.executeBatch();
+//			if (operationResult.length > 0) {
+//				return true;
+//			}
+//		} catch (Exception e) {
+//			System.out.println("Данные не занесены, ошибка при выполнении....!!!");
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
+//*/
+	/*метод вставки данных в БД*/
 	@Override
 	public boolean insertExecuteBatchQuerySQL(Connection connection, InputStream fileStream) throws IOException,
 		SQLException {
 		ReadExcelDataImpl read = new ReadExcelDataImpl(fileStream);
-
+/*попытка создания запроса для занесения в БД не повторяющихся данных*/
 //		String insertUnikSQL = "INSERT INTO schedule(program, codgroup, datestart, timestart, datefinish, timefinish, " +
 //			"auditorium, typelesson, teacher) " +
 //			"SELECT * FROM(SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?) AS tmp WHERE NOT EXISTS(" +
@@ -178,7 +178,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 //			"FROM schedule WHERE program =? AND codgroup =? AND datestart =? AND timestart =? AND datefinish=?" +
 //			"AND timefinish=? AND auditorium =? AND typelesson =? AND teacher =?) LIMIT 1";
 
-		String insertStartSQL = "INSERT INTO sheduleid(program, codgroup, datestart, timestart, datefinish, " +
+		String insertStartSQL = "INSERT INTO shedule(program, codgroup, datestart, timestart, datefinish, " +
 			"timefinish, auditorium, typelesson, teacher, period) " +
 			"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try (PreparedStatement stm = connection.prepareStatement(insertStartSQL)) {
@@ -283,13 +283,14 @@ public class SQLQueryDataImpl implements SQLQuery {
 //		}
 //		return dateStart;
 //	}
+	/*метод для сортировки программы обучения по выбранному месяцу*/
 	@Override
 	public ShedulesSearch addValueTableShedule(Connection connection, String search, String dateMonth) throws SQLException {
 		List<SheduleSearch> shedules = new ArrayList();
 		String id, program, codegroup, timeStart, dateEnd, timeEnd, auditorium, typelesson, teacher;
 		String searchSql = "%" + search + "%";
 		String dateMonthSql = "%" + dateMonth + "%";
-		String SQL = "SELECT * FROM sheduleid WHERE  UPPER(program) LIKE UPPER(?) AND  text(datestart) like ?";
+		String SQL = "SELECT * FROM shedule WHERE  UPPER(program) LIKE UPPER(?) AND  text(datestart) like ?";
 		try (PreparedStatement stm = connection.prepareStatement(SQL)) {
 			stm.setString(1, searchSql);
 			stm.setString(2, dateMonthSql);
@@ -357,10 +358,12 @@ public class SQLQueryDataImpl implements SQLQuery {
 //			return new Shedules(shedules);
 //		}
 //	}
+
+	/*метод для просмотра занесённых данных*/
 	@Override
 	public ShedulesSearch view(Connection connection) throws SQLException {
 		List<SheduleSearch> shedules = new ArrayList<>();
-		String SQL = "SELECT * FROM sheduleid";
+		String SQL = "SELECT * FROM shedule";
 		try (Statement statement = connection.createStatement()) {
 			ResultSet resultSet = statement.executeQuery(SQL);
 			String id, program, codegroup, dateStart, timeStart, dateFinish, timeFinish, auditorium, typelesson, teacher;
@@ -403,10 +406,10 @@ public class SQLQueryDataImpl implements SQLQuery {
 		}
 	}
 
-
+	/*метод для получения данных данных из БД и внесения в таблицу расписания*/
 	@Override
 	public ShedulesSearch getSheduleBy(Connection connection, String[] idList) throws SQLException {
-		String sqlQuery = "SELECT * FROM sheduleid WHERE id_shedule IN (" + String.join(",", idList) + ")";
+		String sqlQuery = "SELECT * FROM shedule WHERE id_shedule IN (" + String.join(",", idList) + ")";
 
 		try (PreparedStatement stm = connection.prepareStatement(sqlQuery)) {
 			List<SheduleSearch> shedulesInsert = new ArrayList<>();
@@ -481,7 +484,7 @@ public class SQLQueryDataImpl implements SQLQuery {
 	/*для удаления с бразера данных в таблицах*/
 	@Override
 	public boolean deletedDataSQL(Connection connection) throws SQLException {
-		String deletedSQL = "DELETE FROM sheduleid";
+		String deletedSQL = "DELETE FROM shedule";
 		try (PreparedStatement stm = connection.prepareStatement(deletedSQL)) {
 			int result = stm.executeUpdate();
 			if (result != 0) {

@@ -13,8 +13,8 @@ import java.sql.SQLException;
 @WebServlet(name = "ServletUpload", urlPatterns = {"/servletUpload"})
 public class ServletUpload extends HttpServlet {
 
-	private String path = null;
-	private String name = "";
+//	private String path = null;
+//	private String name = "";
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
@@ -35,5 +35,4 @@ public class ServletUpload extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
 }

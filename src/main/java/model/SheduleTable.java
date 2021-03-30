@@ -5,6 +5,8 @@
 package model;
 
 
+import java.sql.Date;
+
 public class SheduleTable {
 
 	private String id;
@@ -12,18 +14,18 @@ public class SheduleTable {
 	private final String codegroup;
 	private final String group;
 	private final String pro;
-	private String dateStart;
-	private String timeStart;
-	private String dateFinish;
-	private String timeFinish;
+	private final java.sql.Date dateStart;
+	private final java.sql.Date  timeStart;
+	private final java.sql.Date  dateFinish;
+	private final java.sql.Date  timeFinish;
 	private String audit;
 	private final String type;
 	private final String tech;
 
 
 	public SheduleTable(String codegroup, String group, String pro,
-						String dateStart, String timeStart,
-						String dateFinish, String timeFinish,
+						java.sql.Date dateStart, java.sql.Date timeStart,
+						java.sql.Date dateFinish, java.sql.Date timeFinish,
 						String audit, String type, String tech) {
 		this.codegroup = codegroup;
 		this.group = group;
@@ -42,71 +44,28 @@ public class SheduleTable {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getCodegroup() {
-		return codegroup;
-	}
-	public String getGroup() {
-		return group;
-	}
+	public void setId(String id) {	this.id = id;}
 
-	public String getPro() {
-		return pro;
-	}
+	public String getCodegroup() {	return codegroup;	}
 
-	public String getDateStart() {
-		return dateStart;
-	}
+	public String getGroup() {	return group;	}
 
-	public void setDateStart(String dateStart) {
-		this.dateStart = dateStart;
-	}
+	public String getPro() {	return pro;	}
 
-	public String getTimeStart() {
-		return timeStart;
-	}
+	public Date getDateStart() {	return dateStart;	}
+
+	public Date getTimeStart() {	return timeStart;	}
 
 
-	public void setTimeStart(String timeStart) {
-		this.timeStart = timeStart;
-	}
+	public Date getDateFinish() {	return dateFinish;	}
 
+	public Date getTimeFinish() {	return timeFinish;	}
 
-	public String getDateFinish() {
-		return dateFinish;
-	}
+	public String getAudit() {	return audit;	}
 
-	public void setDateFinish(String dateFinish) {
-		this.dateFinish = dateFinish;
-	}
+	public String getType() {	return type;	}
 
-	public String getTimeFinish() {
-		return timeFinish;
-	}
-
-	public void setTimeFinish(String timeFinish) {
-		this.timeFinish = timeFinish;
-	}
-
-
-	public String getAudit() {
-		return audit;
-	}
-
-	public void setAudit(String audit) {
-		this.audit = audit;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-
-	public String getTech() {
-		return tech;
-	}
+	public String getTech() {	return tech;}
 
 	@Override
 	public String toString() {
